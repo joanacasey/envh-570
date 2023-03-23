@@ -3,7 +3,7 @@
 
 #Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
-pacman::p_load(here, usethis, dplyr, readr, tidyr, rlang, ggplot2)
+pacman::p_load(here, usethis, dplyr, readr, tidyr, rlang, ggplot2, RColorBrewer, sf, viridis)
 
 #Read in outcome data (fetal deaths; "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
 fetal_data <- read_csv("data/lab/01/fetal_death.csv")
@@ -14,7 +14,7 @@ glimpse(fetal_data)
 #How many states? 
 n_distinct(fetal_data$state) # 50 states + DC
 
-#Add another line of code to explore something else about the data
+#To-do: Add another line of code to explore something else about the data
 #ADD HERE
 
 # Some states do not have data for each year/race/death combo
@@ -37,8 +37,14 @@ fetal_data_new <- left_join(
   )
 )
 
+#Glimpse it
+glimpse(fetal_data_new)
+
 ## Let's create some data visualizations:
-# Look at the data in 2017
+# Look at the data in 2017 for counts of fetal deaths by race/ethnicity
+# First create variable to order the y-axis by total number of fetal deaths
+fetal_data_new <- fetal_data_new %>% group_by(state, year) %>% mutate(total_fetal_deaths=sum(fetal_deaths, na.rm=T))
+
 fetal_data_new %>%
   mutate(mom_race_eth = replace(
     mom_race_eth,
@@ -48,7 +54,7 @@ fetal_data_new %>%
   dplyr::filter(year == 2017) %>%
   ggplot(aes(
     x = fetal_deaths,
-    y = reorder(state, fetal_deaths),
+    y = reorder(state, total_fetal_deaths),
     color = mom_race_eth
   )) +
   geom_point() +
@@ -65,7 +71,7 @@ fetal_data_new %>%
   )) %>%
   ggplot(aes(
     x = fetal_deaths,
-    y = reorder(state, fetal_deaths),
+    y = reorder(state, total_fetal_deaths),
     color = mom_race_eth
   )) +
   geom_point() +
@@ -77,6 +83,7 @@ fetal_data_new %>%
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
 
 # That's pretty impossible to see change over time, what about another way?
+# To-do: after plotting change it so that the y-axis is consistent across plots
 fetal_data_new %>%
   mutate(mom_race_eth = replace(
     mom_race_eth,
@@ -100,11 +107,16 @@ fetal_data_new %>%
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
 
 # How does this look spatially?
-states = st_read("data/US_State_Albers.shp")
-head(states)
+states <- st_read("data/lab/01/US_State_Albers.shp")
+head(states) 
+ 
+#What is the CRS? Read about crs here: https://rspatial.org/spatial/6-crs.html
+#Projected CRS = North America Albers Equal Area Conic 
+#read more here: http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm
+st_crs(states)
 
 # Add fetal death data to states shapefile
-states = left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
+states <- left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
 head(states)
 
 # Plot 2017, grey shows where we have missing values
@@ -204,3 +216,99 @@ states %>%
         panel.grid.minor = element_blank()) +
   theme(legend.position = "bottom",
         legend.box = "horizontal")
+
+# Go to CDC Wonder and download total births by state 
+births <- read_csv("data/lab/01/births.csv") 
+glimpse(births)
+
+#Drop births to other race/ethnicities
+births <- drop_na(births)
+table(births$year)
+
+# OK, let's add total live birth counts
+fetal_data_new <- left_join(fetal_data_new, 
+                           births, 
+                           by = c("state" = "state", 
+                                  "mom_race_eth" = "mom_race_eth", 
+                                  "year" = "year", 
+                                  "state_code" = "state_code"))
+
+# Create variable scaling fetal deaths by total life births
+fetal_data_new <- fetal_data_new %>% mutate(fetal_death_scaled = fetal_deaths/births*1000)
+
+# Look at scaled prevalence
+fetal_data_new %>% 
+  dplyr::filter(year == 2017) %>%
+  ggplot(aes(x = fetal_death_scaled, 
+             y = reorder(state, fetal_death_scaled), 
+             color = mom_race_eth)) + 
+  geom_point() +
+  theme_minimal() +
+  ylab("") + 
+  xlab("Fetal deaths per 1000 live births, N") +
+  scale_color_brewer("Mom race/ethnicity", palette = "Set1")
+
+# To-do: Order y-axis by disparity in Black-white birth
+# hint: create a variable that measures the difference
+fetal_wide <- fetal_data_new %>% dplyr::select(state, year, mom_race_eth, fetal_death_scaled)
+fetal_wide <- pivot_wider(fetal_wide, names_from=mom_race_eth, values_from=fetal_death_scaled)
+fetal_wide <- fetal_wide %>% mutate(fetal_diff = `Black or African American` - White)
+fetal_wide <- fetal_wide %>% dplyr::select(state, year, fetal_diff)
+#add back to original data
+fetal_data_new <- left_join(fetal_data_new, fetal_wide)
+
+# Add fetal death scaled data to states shapefile
+states <- st_read("data/lab/01/US_State_Albers.shp")
+states <- left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
+glimpse(states)
+
+#Map the number of fetal deaths per 1000 live births by race/ethnicity
+# Plot all years
+states %>%
+  mutate(mom_race_eth = replace(
+    mom_race_eth,
+    mom_race_eth == "Black or African American",
+    "Black"
+  )) %>%
+  ggplot() +
+  geom_sf(aes(fill = fetal_death_scaled),
+          color = "white",
+          lwd = 0.1) +
+  scale_fill_viridis_c("Fetal deaths per 1000 live births", na.value = "grey") +
+  theme_minimal(base_size = 14) +
+  facet_grid(year ~ mom_race_eth) + #does using facet_grid make sense here? seems no to me as you can't see the variability in white fetal death
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    rect = element_blank()
+  ) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(legend.position = "bottom", legend.box = "horizontal")
+
+#Map disparity 
+states %>%
+  mutate(mom_race_eth = replace(
+    mom_race_eth,
+    mom_race_eth == "Black or African American",
+    "Black"
+  )) %>%
+  ggplot() +
+  geom_sf(aes(fill = fetal_diff),
+          color = "white",
+          lwd = 0.1) +
+  scale_fill_viridis_c("Black-white disparity in fetal deaths per 1000 live births", na.value = "grey") +
+  theme_minimal(base_size = 14) +
+  facet_wrap(~year) + 
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    rect = element_blank()
+  ) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(legend.position = "bottom", legend.box = "horizontal")
+
+#To-do: Select different breaks to plot (quintiles or something else) and create same map

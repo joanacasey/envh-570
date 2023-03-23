@@ -1,0 +1,665 @@
+﻿state,state_code,year,mom_race_eth,births
+Alabama,1,2014,Black or African American,18417
+Alabama,1,2014,White,39578
+Alabama,1,2014,,57995
+Alabama,1,2015,Black or African American,18429
+Alabama,1,2015,White,39845
+Alabama,1,2015,,58274
+Alabama,1,2016,Black or African American,18488
+Alabama,1,2016,White,39223
+Alabama,1,2016,,57711
+Alabama,1,2017,Black or African American,18877
+Alabama,1,2017,White,38716
+Alabama,1,2017,,57593
+Alabama,1,,,231573
+Alaska,2,2014,Black or African American,548
+Alaska,2,2014,White,7288
+Alaska,2,2014,,7836
+Alaska,2,2015,Black or African American,509
+Alaska,2,2015,White,7244
+Alaska,2,2015,,7753
+Alaska,2,2016,Black or African American,495
+Alaska,2,2016,White,7072
+Alaska,2,2016,,7567
+Alaska,2,2017,Black or African American,538
+Alaska,2,2017,White,6450
+Alaska,2,2017,,6988
+Alaska,2,,,30144
+Arizona,4,2014,Black or African American,5208
+Arizona,4,2014,White,72687
+Arizona,4,2014,,77895
+Arizona,4,2015,Black or African American,5095
+Arizona,4,2015,White,71422
+Arizona,4,2015,,76517
+Arizona,4,2016,Black or African American,5222
+Arizona,4,2016,White,70274
+Arizona,4,2016,,75496
+Arizona,4,2017,Black or African American,5406
+Arizona,4,2017,White,67792
+Arizona,4,2017,,73198
+Arizona,4,,,303106
+Arkansas,5,2014,Black or African American,7376
+Arkansas,5,2014,White,29632
+Arkansas,5,2014,,37008
+Arkansas,5,2015,Black or African American,7767
+Arkansas,5,2015,White,29532
+Arkansas,5,2015,,37299
+Arkansas,5,2016,Black or African American,7670
+Arkansas,5,2016,White,28922
+Arkansas,5,2016,,36592
+Arkansas,5,2017,Black or African American,7760
+Arkansas,5,2017,White,27963
+Arkansas,5,2017,,35723
+Arkansas,5,,,146622
+California,6,2014,Black or African American,31654
+California,6,2014,White,383492
+California,6,2014,,415146
+California,6,2015,Black or African American,30546
+California,6,2015,White,377423
+California,6,2015,,407969
+California,6,2016,Black or African American,30808
+California,6,2016,White,370521
+California,6,2016,,401329
+California,6,2017,Black or African American,30338
+California,6,2017,White,355505
+California,6,2017,,385843
+California,6,,,1610287
+Colorado,8,2014,Black or African American,3926
+Colorado,8,2014,White,58117
+Colorado,8,2014,,62043
+Colorado,8,2015,Black or African American,4049
+Colorado,8,2015,White,58756
+Colorado,8,2015,,62805
+Colorado,8,2016,Black or African American,4147
+Colorado,8,2016,White,58259
+Colorado,8,2016,,62406
+Colorado,8,2017,Black or African American,4309
+Colorado,8,2017,White,55857
+Colorado,8,2017,,60166
+Colorado,8,,,247420
+Connecticut,9,2014,Black or African American,5154
+Connecticut,9,2014,White,28543
+Connecticut,9,2014,,33697
+Connecticut,9,2015,Black or African American,4988
+Connecticut,9,2015,White,28164
+Connecticut,9,2015,,33152
+Connecticut,9,2016,Black or African American,5675
+Connecticut,9,2016,White,27311
+Connecticut,9,2016,,32986
+Connecticut,9,2017,Black or African American,5576
+Connecticut,9,2017,White,26705
+Connecticut,9,2017,,32281
+Connecticut,9,,,132116
+Delaware,10,2014,Black or African American,2988
+Delaware,10,2014,White,7314
+Delaware,10,2014,,10302
+Delaware,10,2015,Black or African American,3134
+Delaware,10,2015,White,7341
+Delaware,10,2015,,10475
+Delaware,10,2016,Black or African American,3215
+Delaware,10,2016,White,7056
+Delaware,10,2016,,10271
+Delaware,10,2017,Black or African American,3283
+Delaware,10,2017,White,6807
+Delaware,10,2017,,10090
+Delaware,10,,,41138
+District of Columbia,11,2014,Black or African American,5026
+District of Columbia,11,2014,White,3985
+District of Columbia,11,2014,,9011
+District of Columbia,11,2015,Black or African American,5002
+District of Columbia,11,2015,White,4061
+District of Columbia,11,2015,,9063
+District of Columbia,11,2016,Black or African American,5581
+District of Columbia,11,2016,White,3708
+District of Columbia,11,2016,,9289
+District of Columbia,11,2017,Black or African American,5317
+District of Columbia,11,2017,White,3688
+District of Columbia,11,2017,,9005
+District of Columbia,11,,,36368
+Florida,12,2014,Black or African American,53148
+Florida,12,2014,White,159035
+Florida,12,2014,,212183
+Florida,12,2015,Black or African American,53699
+Florida,12,2015,White,162594
+Florida,12,2015,,216293
+Florida,12,2016,Black or African American,57593
+Florida,12,2016,White,158448
+Florida,12,2016,,216041
+Florida,12,2017,Black or African American,58465
+Florida,12,2017,White,156163
+Florida,12,2017,,214628
+Florida,12,,,859145
+Georgia,13,2014,Black or African American,47909
+Georgia,13,2014,White,76226
+Georgia,13,2014,,124135
+Georgia,13,2015,Black or African American,47734
+Georgia,13,2015,White,76904
+Georgia,13,2015,,124638
+Georgia,13,2016,Black or African American,48904
+Georgia,13,2016,White,73999
+Georgia,13,2016,,122903
+Georgia,13,2017,Black or African American,48573
+Georgia,13,2017,White,73456
+Georgia,13,2017,,122029
+Georgia,13,,,493705
+Hawaii,15,2014,Black or African American,617
+Hawaii,15,2014,White,6368
+Hawaii,15,2014,,6985
+Hawaii,15,2015,Black or African American,620
+Hawaii,15,2015,White,6322
+Hawaii,15,2015,,6942
+Hawaii,15,2016,Black or African American,700
+Hawaii,15,2016,White,6103
+Hawaii,15,2016,,6803
+Hawaii,15,2017,Black or African American,619
+Hawaii,15,2017,White,5781
+Hawaii,15,2017,,6400
+Hawaii,15,,,27130
+Idaho,16,2014,Black or African American,250
+Idaho,16,2014,White,21696
+Idaho,16,2014,,21946
+Idaho,16,2015,Black or African American,287
+Idaho,16,2015,White,21618
+Idaho,16,2015,,21905
+Idaho,16,2016,Black or African American,308
+Idaho,16,2016,White,21247
+Idaho,16,2016,,21555
+Idaho,16,2017,Black or African American,362
+Idaho,16,2017,White,20905
+Idaho,16,2017,,21267
+Idaho,16,,,86673
+Illinois,17,2014,Black or African American,28160
+Illinois,17,2014,White,119995
+Illinois,17,2014,,148155
+Illinois,17,2015,Black or African American,28059
+Illinois,17,2015,White,119630
+Illinois,17,2015,,147689
+Illinois,17,2016,Black or African American,27844
+Illinois,17,2016,White,115643
+Illinois,17,2016,,143487
+Illinois,17,2017,Black or African American,27804
+Illinois,17,2017,White,111066
+Illinois,17,2017,,138870
+Illinois,17,,,578201
+Indiana,18,2014,Black or African American,10666
+Indiana,18,2014,White,70967
+Indiana,18,2014,,81633
+Indiana,18,2015,Black or African American,10656
+Indiana,18,2015,White,70741
+Indiana,18,2015,,81397
+Indiana,18,2016,Black or African American,10860
+Indiana,18,2016,White,69408
+Indiana,18,2016,,80268
+Indiana,18,2017,Black or African American,11130
+Indiana,18,2017,White,68143
+Indiana,18,2017,,79273
+Indiana,18,,,322571
+Iowa,19,2014,Black or African American,2467
+Iowa,19,2014,White,35528
+Iowa,19,2014,,37995
+Iowa,19,2015,Black or African American,2597
+Iowa,19,2015,White,35279
+Iowa,19,2015,,37876
+Iowa,19,2016,Black or African American,2831
+Iowa,19,2016,White,34862
+Iowa,19,2016,,37693
+Iowa,19,2017,Black or African American,3079
+Iowa,19,2017,White,33499
+Iowa,19,2017,,36578
+Iowa,19,,,150142
+Kansas,20,2014,Black or African American,3097
+Kansas,20,2014,White,34420
+Kansas,20,2014,,37517
+Kansas,20,2015,Black or African American,3090
+Kansas,20,2015,White,34251
+Kansas,20,2015,,37341
+Kansas,20,2016,Black or African American,3086
+Kansas,20,2016,White,33165
+Kansas,20,2016,,36251
+Kansas,20,2017,Black or African American,3204
+Kansas,20,2017,White,31513
+Kansas,20,2017,,34717
+Kansas,20,,,145826
+Kentucky,21,2014,Black or African American,5571
+Kentucky,21,2014,White,49248
+Kentucky,21,2014,,54819
+Kentucky,21,2015,Black or African American,5507
+Kentucky,21,2015,White,49061
+Kentucky,21,2015,,54568
+Kentucky,21,2016,Black or African American,5601
+Kentucky,21,2016,White,48361
+Kentucky,21,2016,,53962
+Kentucky,21,2017,Black or African American,5695
+Kentucky,21,2017,White,47570
+Kentucky,21,2017,,53265
+Kentucky,21,,,216614
+Louisiana,22,2014,Black or African American,25025
+Louisiana,22,2014,White,37562
+Louisiana,22,2014,,62587
+Louisiana,22,2015,Black or African American,25001
+Louisiana,22,2015,White,37801
+Louisiana,22,2015,,62802
+Louisiana,22,2016,Black or African American,25037
+Louisiana,22,2016,White,36154
+Louisiana,22,2016,,61191
+Louisiana,22,2017,Black or African American,24562
+Louisiana,22,2017,White,34653
+Louisiana,22,2017,,59215
+Louisiana,22,,,245795
+Maine,23,2014,Black or African American,450
+Maine,23,2014,White,11842
+Maine,23,2014,,12292
+Maine,23,2015,Black or African American,473
+Maine,23,2015,White,11805
+Maine,23,2015,,12278
+Maine,23,2016,Black or African American,456
+Maine,23,2016,White,11903
+Maine,23,2016,,12359
+Maine,23,2017,Black or African American,577
+Maine,23,2017,White,11361
+Maine,23,2017,,11938
+Maine,23,,,48867
+Maryland,24,2014,Black or African American,25339
+Maryland,24,2014,White,42525
+Maryland,24,2014,,67864
+Maryland,24,2015,Black or African American,25017
+Maryland,24,2015,White,42471
+Maryland,24,2015,,67488
+Maryland,24,2016,Black or African American,26414
+Maryland,24,2016,White,40308
+Maryland,24,2016,,66722
+Maryland,24,2017,Black or African American,26094
+Maryland,24,2017,White,39071
+Maryland,24,2017,,65165
+Maryland,24,,,267239
+Massachusetts,25,2014,Black or African American,9276
+Massachusetts,25,2014,White,55882
+Massachusetts,25,2014,,65158
+Massachusetts,25,2015,Black or African American,9288
+Massachusetts,25,2015,White,55350
+Massachusetts,25,2015,,64638
+Massachusetts,25,2016,Black or African American,9526
+Massachusetts,25,2016,White,54643
+Massachusetts,25,2016,,64169
+Massachusetts,25,2017,Black or African American,10005
+Massachusetts,25,2017,White,53874
+Massachusetts,25,2017,,63879
+Massachusetts,25,,,257844
+Michigan,26,2014,Black or African American,22237
+Michigan,26,2014,White,87070
+Michigan,26,2014,,109307
+Michigan,26,2015,Black or African American,22394
+Michigan,26,2015,White,85838
+Michigan,26,2015,,108232
+Michigan,26,2016,Black or African American,22260
+Michigan,26,2016,White,85673
+Michigan,26,2016,,107933
+Michigan,26,2017,Black or African American,22668
+Michigan,26,2017,White,83258
+Michigan,26,2017,,105926
+Michigan,26,,,431398
+Minnesota,27,2014,Black or African American,8033
+Minnesota,27,2014,White,54774
+Minnesota,27,2014,,62807
+Minnesota,27,2015,Black or African American,8353
+Minnesota,27,2015,White,54407
+Minnesota,27,2015,,62760
+Minnesota,27,2016,Black or African American,8845
+Minnesota,27,2016,White,53674
+Minnesota,27,2016,,62519
+Minnesota,27,2017,Black or African American,9164
+Minnesota,27,2017,White,52343
+Minnesota,27,2017,,61507
+Minnesota,27,,,249593
+Mississippi,28,2014,Black or African American,17036
+Mississippi,28,2014,White,20894
+Mississippi,28,2014,,37930
+Mississippi,28,2015,Black or African American,16846
+Mississippi,28,2015,White,20730
+Mississippi,28,2015,,37576
+Mississippi,28,2016,Black or African American,16671
+Mississippi,28,2016,White,20466
+Mississippi,28,2016,,37137
+Mississippi,28,2017,Black or African American,16870
+Mississippi,28,2017,White,19688
+Mississippi,28,2017,,36558
+Mississippi,28,,,149201
+Missouri,29,2014,Black or African American,11783
+Missouri,29,2014,White,60968
+Missouri,29,2014,,72751
+Missouri,29,2015,Black or African American,11660
+Missouri,29,2015,White,60913
+Missouri,29,2015,,72573
+Missouri,29,2016,Black or African American,11751
+Missouri,29,2016,White,60235
+Missouri,29,2016,,71986
+Missouri,29,2017,Black or African American,11919
+Missouri,29,2017,White,58472
+Missouri,29,2017,,70391
+Missouri,29,,,287701
+Montana,30,2014,Black or African American,106
+Montana,30,2014,White,10572
+Montana,30,2014,,10678
+Montana,30,2015,Black or African American,103
+Montana,30,2015,White,10768
+Montana,30,2015,,10871
+Montana,30,2016,Black or African American,132
+Montana,30,2016,White,10426
+Montana,30,2016,,10558
+Montana,30,2017,Black or African American,131
+Montana,30,2017,White,10081
+Montana,30,2017,,10212
+Montana,30,,,42319
+Nebraska,31,2014,Black or African American,2015
+Nebraska,31,2014,White,23178
+Nebraska,31,2014,,25193
+Nebraska,31,2015,Black or African American,2009
+Nebraska,31,2015,White,23126
+Nebraska,31,2015,,25135
+Nebraska,31,2016,Black or African American,2179
+Nebraska,31,2016,White,22777
+Nebraska,31,2016,,24956
+Nebraska,31,2017,Black or African American,2219
+Nebraska,31,2017,White,22004
+Nebraska,31,2017,,24223
+Nebraska,31,,,99507
+Nevada,32,2014,Black or African American,4603
+Nevada,32,2014,White,27638
+Nevada,32,2014,,32241
+Nevada,32,2015,Black or African American,4803
+Nevada,32,2015,White,27648
+Nevada,32,2015,,32451
+Nevada,32,2016,Black or African American,5149
+Nevada,32,2016,White,27130
+Nevada,32,2016,,32279
+Nevada,32,2017,Black or African American,5508
+Nevada,32,2017,White,26160
+Nevada,32,2017,,31668
+Nevada,32,,,128639
+New Hampshire,33,2014,Black or African American,259
+New Hampshire,33,2014,White,11494
+New Hampshire,33,2014,,11753
+New Hampshire,33,2015,Black or African American,280
+New Hampshire,33,2015,White,11600
+New Hampshire,33,2015,,11880
+New Hampshire,33,2016,Black or African American,344
+New Hampshire,33,2016,White,11370
+New Hampshire,33,2016,,11714
+New Hampshire,33,2017,Black or African American,337
+New Hampshire,33,2017,White,11236
+New Hampshire,33,2017,,11573
+New Hampshire,33,,,46920
+New Jersey,34,2014,Black or African American,20102
+New Jersey,34,2014,White,71033
+New Jersey,34,2014,,91135
+New Jersey,34,2015,Black or African American,18363
+New Jersey,34,2015,White,72400
+New Jersey,34,2015,,90763
+New Jersey,34,2016,Black or African American,17772
+New Jersey,34,2016,White,71042
+New Jersey,34,2016,,88814
+New Jersey,34,2017,Black or African American,17793
+New Jersey,34,2017,White,69874
+New Jersey,34,2017,,87667
+New Jersey,34,,,358379
+New Mexico,35,2014,Black or African American,732
+New Mexico,35,2014,White,21161
+New Mexico,35,2014,,21893
+New Mexico,35,2015,Black or African American,664
+New Mexico,35,2015,White,21183
+New Mexico,35,2015,,21847
+New Mexico,35,2016,Black or African American,605
+New Mexico,35,2016,White,20357
+New Mexico,35,2016,,20962
+New Mexico,35,2017,Black or African American,661
+New Mexico,35,2017,White,19568
+New Mexico,35,2017,,20229
+New Mexico,35,,,84931
+New York,36,2014,Black or African American,46744
+New York,36,2014,White,164486
+New York,36,2014,,211230
+New York,36,2015,Black or African American,46109
+New York,36,2015,White,163871
+New York,36,2015,,209980
+New York,36,2016,Black or African American,45989
+New York,36,2016,White,157401
+New York,36,2016,,203390
+New York,36,2017,Black or African American,45021
+New York,36,2017,White,155248
+New York,36,2017,,200269
+New York,36,,,824869
+North Carolina,37,2014,Black or African American,31963
+North Carolina,37,2014,White,81257
+North Carolina,37,2014,,113220
+North Carolina,37,2015,Black or African American,31864
+North Carolina,37,2015,White,81154
+North Carolina,37,2015,,113018
+North Carolina,37,2016,Black or African American,32966
+North Carolina,37,2016,White,79747
+North Carolina,37,2016,,112713
+North Carolina,37,2017,Black or African American,33669
+North Carolina,37,2017,White,78265
+North Carolina,37,2017,,111934
+North Carolina,37,,,450885
+North Dakota,38,2014,Black or African American,504
+North Dakota,38,2014,White,9509
+North Dakota,38,2014,,10013
+North Dakota,38,2015,Black or African American,640
+North Dakota,38,2015,White,9345
+North Dakota,38,2015,,9985
+North Dakota,38,2016,Black or African American,741
+North Dakota,38,2016,White,9233
+North Dakota,38,2016,,9974
+North Dakota,38,2017,Black or African American,735
+North Dakota,38,2017,White,8654
+North Dakota,38,2017,,9389
+North Dakota,38,,,39361
+Ohio,39,2014,Black or African American,24931
+Ohio,39,2014,White,110003
+Ohio,39,2014,,134934
+Ohio,39,2015,Black or African American,25078
+Ohio,39,2015,White,109566
+Ohio,39,2015,,134644
+Ohio,39,2016,Black or African American,25161
+Ohio,39,2016,White,107826
+Ohio,39,2016,,132987
+Ohio,39,2017,Black or African American,25268
+Ohio,39,2017,White,106410
+Ohio,39,2017,,131678
+Ohio,39,,,534243
+Oklahoma,40,2014,Black or African American,5296
+Oklahoma,40,2014,White,40258
+Oklahoma,40,2014,,45554
+Oklahoma,40,2015,Black or African American,5293
+Oklahoma,40,2015,White,40143
+Oklahoma,40,2015,,45436
+Oklahoma,40,2016,Black or African American,5561
+Oklahoma,40,2016,White,39053
+Oklahoma,40,2016,,44614
+Oklahoma,40,2017,Black or African American,5321
+Oklahoma,40,2017,White,37271
+Oklahoma,40,2017,,42592
+Oklahoma,40,,,178196
+Oregon,41,2014,Black or African American,1333
+Oregon,41,2014,White,40634
+Oregon,41,2014,,41967
+Oregon,41,2015,Black or African American,1463
+Oregon,41,2015,White,40484
+Oregon,41,2015,,41947
+Oregon,41,2016,Black or African American,1455
+Oregon,41,2016,White,40179
+Oregon,41,2016,,41634
+Oregon,41,2017,Black or African American,1542
+Oregon,41,2017,White,38164
+Oregon,41,2017,,39706
+Oregon,41,,,165254
+Pennsylvania,42,2014,Black or African American,24024
+Pennsylvania,42,2014,White,110809
+Pennsylvania,42,2014,,134833
+Pennsylvania,42,2015,Black or African American,24100
+Pennsylvania,42,2015,White,109595
+Pennsylvania,42,2015,,133695
+Pennsylvania,42,2016,Black or African American,23150
+Pennsylvania,42,2016,White,108413
+Pennsylvania,42,2016,,131563
+Pennsylvania,42,2017,Black or African American,23464
+Pennsylvania,42,2017,White,106465
+Pennsylvania,42,2017,,129929
+Pennsylvania,42,,,530020
+Rhode Island,44,2014,Black or African American,1365
+Rhode Island,44,2014,White,8734
+Rhode Island,44,2014,,10099
+Rhode Island,44,2015,Black or African American,1392
+Rhode Island,44,2015,White,8824
+Rhode Island,44,2015,,10216
+Rhode Island,44,2016,Black or African American,1362
+Rhode Island,44,2016,White,8599
+Rhode Island,44,2016,,9961
+Rhode Island,44,2017,Black or African American,1326
+Rhode Island,44,2017,White,8503
+Rhode Island,44,2017,,9829
+Rhode Island,44,,,40105
+South Carolina,45,2014,Black or African American,18598
+South Carolina,45,2014,White,37543
+South Carolina,45,2014,,56141
+South Carolina,45,2015,Black or African American,18577
+South Carolina,45,2015,White,38056
+South Carolina,45,2015,,56633
+South Carolina,45,2016,Black or African American,18343
+South Carolina,45,2016,White,37382
+South Carolina,45,2016,,55725
+South Carolina,45,2017,Black or African American,18737
+South Carolina,45,2017,White,36680
+South Carolina,45,2017,,55417
+South Carolina,45,,,223916
+South Dakota,46,2014,Black or African American,356
+South Dakota,46,2014,White,9601
+South Dakota,46,2014,,9957
+South Dakota,46,2015,Black or African American,344
+South Dakota,46,2015,White,9504
+South Dakota,46,2015,,9848
+South Dakota,46,2016,Black or African American,429
+South Dakota,46,2016,White,9550
+South Dakota,46,2016,,9979
+South Dakota,46,2017,Black or African American,473
+South Dakota,46,2017,White,9358
+South Dakota,46,2017,,9831
+South Dakota,46,,,39615
+Tennessee,47,2014,Black or African American,17791
+Tennessee,47,2014,White,61391
+Tennessee,47,2014,,79182
+Tennessee,47,2015,Black or African American,17507
+Tennessee,47,2015,White,61814
+Tennessee,47,2015,,79321
+Tennessee,47,2016,Black or African American,17951
+Tennessee,47,2016,White,60395
+Tennessee,47,2016,,78346
+Tennessee,47,2017,Black or African American,18177
+Tennessee,47,2017,White,60360
+Tennessee,47,2017,,78537
+Tennessee,47,,,315386
+Texas,48,2014,Black or African American,51274
+Texas,48,2014,White,326480
+Texas,48,2014,,377754
+Texas,48,2015,Black or African American,53144
+Texas,48,2015,White,327429
+Texas,48,2015,,380573
+Texas,48,2016,Black or African American,56338
+Texas,48,2016,White,316371
+Texas,48,2016,,372709
+Texas,48,2017,Black or African American,56112
+Texas,48,2017,White,301139
+Texas,48,2017,,357251
+Texas,48,,,1488287
+Utah,49,2014,Black or African American,740
+Utah,49,2014,White,47851
+Utah,49,2014,,48591
+Utah,49,2015,Black or African American,823
+Utah,49,2015,White,47381
+Utah,49,2015,,48204
+Utah,49,2016,Black or African American,827
+Utah,49,2016,White,46985
+Utah,49,2016,,47812
+Utah,49,2017,Black or African American,881
+Utah,49,2017,White,45003
+Utah,49,2017,,45884
+Utah,49,,,190491
+Vermont,50,2014,Black or African American,126
+Vermont,50,2014,White,5825
+Vermont,50,2014,,5951
+Vermont,50,2015,Black or African American,149
+Vermont,50,2015,White,5554
+Vermont,50,2015,,5703
+Vermont,50,2016,Black or African American,105
+Vermont,50,2016,White,5451
+Vermont,50,2016,,5556
+Vermont,50,2017,Black or African American,139
+Vermont,50,2017,White,5321
+Vermont,50,2017,,5460
+Vermont,50,,,22670
+Virginia,51,2014,Black or African American,22828
+Virginia,51,2014,White,71861
+Virginia,51,2014,,94689
+Virginia,51,2015,Black or African American,23029
+Virginia,51,2015,White,71485
+Virginia,51,2015,,94514
+Virginia,51,2016,Black or African American,23339
+Virginia,51,2016,White,69409
+Virginia,51,2016,,92748
+Virginia,51,2017,Black or African American,23691
+Virginia,51,2017,White,67207
+Virginia,51,2017,,90898
+Virginia,51,,,372849
+Washington,53,2014,Black or African American,5254
+Washington,53,2014,White,70966
+Washington,53,2014,,76220
+Washington,53,2015,Black or African American,5302
+Washington,53,2015,White,71041
+Washington,53,2015,,76343
+Washington,53,2016,Black or African American,5847
+Washington,53,2016,White,70519
+Washington,53,2016,,76366
+Washington,53,2017,Black or African American,6059
+Washington,53,2017,White,67535
+Washington,53,2017,,73594
+Washington,53,,,302523
+West Virginia,54,2014,Black or African American,813
+West Virginia,54,2014,White,19245
+West Virginia,54,2014,,20058
+West Virginia,54,2015,Black or African American,738
+West Virginia,54,2015,White,18814
+West Virginia,54,2015,,19552
+West Virginia,54,2016,Black or African American,753
+West Virginia,54,2016,White,18078
+West Virginia,54,2016,,18831
+West Virginia,54,2017,Black or African American,796
+West Virginia,54,2017,White,17604
+West Virginia,54,2017,,18400
+West Virginia,54,,,76841
+Wisconsin,55,2014,Black or African American,7328
+Wisconsin,55,2014,White,55520
+Wisconsin,55,2014,,62848
+Wisconsin,55,2015,Black or African American,7386
+Wisconsin,55,2015,White,55350
+Wisconsin,55,2015,,62736
+Wisconsin,55,2016,Black or African American,7456
+Wisconsin,55,2016,White,54782
+Wisconsin,55,2016,,62238
+Wisconsin,55,2017,Black or African American,7749
+Wisconsin,55,2017,White,53031
+Wisconsin,55,2017,,60780
+Wisconsin,55,,,248602
+Wyoming,56,2014,Black or African American,116
+Wyoming,56,2014,White,7178
+Wyoming,56,2014,,7294
+Wyoming,56,2015,Black or African American,119
+Wyoming,56,2015,White,7217
+Wyoming,56,2015,,7336
+Wyoming,56,2016,Black or African American,125
+Wyoming,56,2016,White,6857
+Wyoming,56,2016,,6982
+Wyoming,56,2017,Black or African American,112
+Wyoming,56,2017,White,6405
+Wyoming,56,2017,,6517
+Wyoming,56,,,28129
+,,,,14429356
