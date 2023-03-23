@@ -4,4 +4,4 @@ This repository holds code and data from labs 01-05 for Occupational and Environ
 
 Students will access these data and use them to complete labs at https://rstudio.sph.washington.edu/.
 
-Have fun!
+Welcome and have fun!
