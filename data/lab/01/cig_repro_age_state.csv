@@ -1,0 +1,613 @@
+stateFIPS,state,year,proportion_smok,age_group
+1,Alabama,2014,0.24,18 to 24
+1,Alabama,2014,0.27,25 to 34
+1,Alabama,2014,0.24,35 to 44
+1,Alabama,2015,0.21,18 to 24
+1,Alabama,2015,0.30,25 to 34
+1,Alabama,2015,0.25,35 to 44
+1,Alabama,2016,0.17,18 to 24
+1,Alabama,2016,0.30,25 to 34
+1,Alabama,2016,0.28,35 to 44
+1,Alabama,2017,0.18,18 to 24
+1,Alabama,2017,0.29,25 to 34
+1,Alabama,2017,0.27,35 to 44
+2,Alaska,2014,0.19,18 to 24
+2,Alaska,2014,0.23,25 to 34
+2,Alaska,2014,0.22,35 to 44
+2,Alaska,2015,0.16,18 to 24
+2,Alaska,2015,0.30,25 to 34
+2,Alaska,2015,0.17,35 to 44
+2,Alaska,2016,0.17,18 to 24
+2,Alaska,2016,0.26,25 to 34
+2,Alaska,2016,0.22,35 to 44
+2,Alaska,2017,0.21,18 to 24
+2,Alaska,2017,0.24,25 to 34
+2,Alaska,2017,0.27,35 to 44
+4,Arizona,2014,0.18,18 to 24
+4,Arizona,2014,0.21,25 to 34
+4,Arizona,2014,0.18,35 to 44
+4,Arizona,2015,0.11,18 to 24
+4,Arizona,2015,0.18,25 to 34
+4,Arizona,2015,0.15,35 to 44
+4,Arizona,2016,0.09,18 to 24
+4,Arizona,2016,0.19,25 to 34
+4,Arizona,2016,0.18,35 to 44
+4,Arizona,2017,0.12,18 to 24
+4,Arizona,2017,0.18,25 to 34
+4,Arizona,2017,0.17,35 to 44
+5,Arkansas,2014,0.24,18 to 24
+5,Arkansas,2014,0.34,25 to 34
+5,Arkansas,2014,0.27,35 to 44
+5,Arkansas,2015,0.30,18 to 24
+5,Arkansas,2015,0.33,25 to 34
+5,Arkansas,2015,0.33,35 to 44
+5,Arkansas,2016,0.21,18 to 24
+5,Arkansas,2016,0.29,25 to 34
+5,Arkansas,2016,0.34,35 to 44
+5,Arkansas,2017,0.19,18 to 24
+5,Arkansas,2017,0.31,25 to 34
+5,Arkansas,2017,0.30,35 to 44
+6,California,2014,0.12,18 to 24
+6,California,2014,0.15,25 to 34
+6,California,2014,0.13,35 to 44
+6,California,2015,0.10,18 to 24
+6,California,2015,0.14,25 to 34
+6,California,2015,0.14,35 to 44
+6,California,2016,0.09,18 to 24
+6,California,2016,0.13,25 to 34
+6,California,2016,0.12,35 to 44
+6,California,2017,0.07,18 to 24
+6,California,2017,0.15,25 to 34
+6,California,2017,0.16,35 to 44
+8,Colorado,2014,0.16,18 to 24
+8,Colorado,2014,0.21,25 to 34
+8,Colorado,2014,0.18,35 to 44
+8,Colorado,2015,0.18,18 to 24
+8,Colorado,2015,0.18,25 to 34
+8,Colorado,2015,0.17,35 to 44
+8,Colorado,2016,0.16,18 to 24
+8,Colorado,2016,0.21,25 to 34
+8,Colorado,2016,0.17,35 to 44
+8,Colorado,2017,0.16,18 to 24
+8,Colorado,2017,0.18,25 to 34
+8,Colorado,2017,0.16,35 to 44
+9,Connecticut,2014,0.13,18 to 24
+9,Connecticut,2014,0.24,25 to 34
+9,Connecticut,2014,0.18,35 to 44
+9,Connecticut,2015,0.10,18 to 24
+9,Connecticut,2015,0.21,25 to 34
+9,Connecticut,2015,0.14,35 to 44
+9,Connecticut,2016,0.13,18 to 24
+9,Connecticut,2016,0.17,25 to 34
+9,Connecticut,2016,0.14,35 to 44
+9,Connecticut,2017,0.11,18 to 24
+9,Connecticut,2017,0.19,25 to 34
+9,Connecticut,2017,0.16,35 to 44
+10,Delaware,2014,0.25,18 to 24
+10,Delaware,2014,0.29,25 to 34
+10,Delaware,2014,0.19,35 to 44
+10,Delaware,2015,0.15,18 to 24
+10,Delaware,2015,0.22,25 to 34
+10,Delaware,2015,0.17,35 to 44
+10,Delaware,2016,0.12,18 to 24
+10,Delaware,2016,0.23,25 to 34
+10,Delaware,2016,0.19,35 to 44
+10,Delaware,2017,0.13,18 to 24
+10,Delaware,2017,0.26,25 to 34
+10,Delaware,2017,0.22,35 to 44
+11,District of Columbia,2014,,18 to 24
+11,District of Columbia,2014,0.15,25 to 34
+11,District of Columbia,2014,0.15,35 to 44
+11,District of Columbia,2015,,18 to 24
+11,District of Columbia,2015,0.16,25 to 34
+11,District of Columbia,2015,0.13,35 to 44
+11,District of Columbia,2016,0.13,18 to 24
+11,District of Columbia,2016,0.13,25 to 34
+11,District of Columbia,2016,0.15,35 to 44
+11,District of Columbia,2017,0.08,18 to 24
+11,District of Columbia,2017,0.13,25 to 34
+11,District of Columbia,2017,0.17,35 to 44
+12,Florida,2014,0.17,18 to 24
+12,Florida,2014,0.26,25 to 34
+12,Florida,2014,0.19,35 to 44
+12,Florida,2015,0.11,18 to 24
+12,Florida,2015,0.23,25 to 34
+12,Florida,2015,0.16,35 to 44
+12,Florida,2016,0.11,18 to 24
+12,Florida,2016,0.20,25 to 34
+12,Florida,2016,0.18,35 to 44
+12,Florida,2017,0.11,18 to 24
+12,Florida,2017,0.20,25 to 34
+12,Florida,2017,0.20,35 to 44
+13,Georgia,2014,0.16,18 to 24
+13,Georgia,2014,0.24,25 to 34
+13,Georgia,2014,0.18,35 to 44
+13,Georgia,2015,0.11,18 to 24
+13,Georgia,2015,0.24,25 to 34
+13,Georgia,2015,0.18,35 to 44
+13,Georgia,2016,0.11,18 to 24
+13,Georgia,2016,0.22,25 to 34
+13,Georgia,2016,0.22,35 to 44
+13,Georgia,2017,0.13,18 to 24
+13,Georgia,2017,0.25,25 to 34
+13,Georgia,2017,0.19,35 to 44
+15,Hawaii,2014,0.13,18 to 24
+15,Hawaii,2014,0.20,25 to 34
+15,Hawaii,2014,0.17,35 to 44
+15,Hawaii,2015,0.15,18 to 24
+15,Hawaii,2015,0.20,25 to 34
+15,Hawaii,2015,0.18,35 to 44
+15,Hawaii,2016,0.12,18 to 24
+15,Hawaii,2016,0.21,25 to 34
+15,Hawaii,2016,0.15,35 to 44
+15,Hawaii,2017,0.12,18 to 24
+15,Hawaii,2017,0.17,25 to 34
+15,Hawaii,2017,0.19,35 to 44
+16,Idaho,2014,0.14,18 to 24
+16,Idaho,2014,0.24,25 to 34
+16,Idaho,2014,0.18,35 to 44
+16,Idaho,2015,0.11,18 to 24
+16,Idaho,2015,0.17,25 to 34
+16,Idaho,2015,0.16,35 to 44
+16,Idaho,2016,0.13,18 to 24
+16,Idaho,2016,0.24,25 to 34
+16,Idaho,2016,0.15,35 to 44
+16,Idaho,2017,0.11,18 to 24
+16,Idaho,2017,0.20,25 to 34
+16,Idaho,2017,0.16,35 to 44
+17,Illinois,2014,0.14,18 to 24
+17,Illinois,2014,0.19,25 to 34
+17,Illinois,2014,0.19,35 to 44
+17,Illinois,2015,0.13,18 to 24
+17,Illinois,2015,0.18,25 to 34
+17,Illinois,2015,0.16,35 to 44
+17,Illinois,2016,0.15,18 to 24
+17,Illinois,2016,0.18,25 to 34
+17,Illinois,2016,0.19,35 to 44
+17,Illinois,2017,0.11,18 to 24
+17,Illinois,2017,0.20,25 to 34
+17,Illinois,2017,0.17,35 to 44
+18,Indiana,2014,0.24,18 to 24
+18,Indiana,2014,0.30,25 to 34
+18,Indiana,2014,0.27,35 to 44
+18,Indiana,2015,0.24,18 to 24
+18,Indiana,2015,0.23,25 to 34
+18,Indiana,2015,0.21,35 to 44
+18,Indiana,2016,0.17,18 to 24
+18,Indiana,2016,0.25,25 to 34
+18,Indiana,2016,0.25,35 to 44
+18,Indiana,2017,0.19,18 to 24
+18,Indiana,2017,0.28,25 to 34
+18,Indiana,2017,0.26,35 to 44
+19,Iowa,2014,0.18,18 to 24
+19,Iowa,2014,0.25,25 to 34
+19,Iowa,2014,0.23,35 to 44
+19,Iowa,2015,0.19,18 to 24
+19,Iowa,2015,0.23,25 to 34
+19,Iowa,2015,0.25,35 to 44
+19,Iowa,2016,0.16,18 to 24
+19,Iowa,2016,0.24,25 to 34
+19,Iowa,2016,0.19,35 to 44
+19,Iowa,2017,0.14,18 to 24
+19,Iowa,2017,0.22,25 to 34
+19,Iowa,2017,0.22,35 to 44
+20,Kansas,2014,0.18,18 to 24
+20,Kansas,2014,0.25,25 to 34
+20,Kansas,2014,0.19,35 to 44
+20,Kansas,2015,0.15,18 to 24
+20,Kansas,2015,0.24,25 to 34
+20,Kansas,2015,0.21,35 to 44
+20,Kansas,2016,0.12,18 to 24
+20,Kansas,2016,0.24,25 to 34
+20,Kansas,2016,0.21,35 to 44
+20,Kansas,2017,0.14,18 to 24
+20,Kansas,2017,0.22,25 to 34
+20,Kansas,2017,0.23,35 to 44
+21,Kentucky,2014,0.24,18 to 24
+21,Kentucky,2014,0.36,25 to 34
+21,Kentucky,2014,0.31,35 to 44
+21,Kentucky,2015,0.25,18 to 24
+21,Kentucky,2015,0.33,25 to 34
+21,Kentucky,2015,0.31,35 to 44
+21,Kentucky,2016,0.17,18 to 24
+21,Kentucky,2016,0.33,25 to 34
+21,Kentucky,2016,0.33,35 to 44
+21,Kentucky,2017,0.16,18 to 24
+21,Kentucky,2017,0.33,25 to 34
+21,Kentucky,2017,0.32,35 to 44
+22,Louisiana,2014,0.18,18 to 24
+22,Louisiana,2014,0.32,25 to 34
+22,Louisiana,2014,0.30,35 to 44
+22,Louisiana,2015,0.16,18 to 24
+22,Louisiana,2015,0.28,25 to 34
+22,Louisiana,2015,0.25,35 to 44
+22,Louisiana,2016,0.21,18 to 24
+22,Louisiana,2016,0.30,25 to 34
+22,Louisiana,2016,0.27,35 to 44
+22,Louisiana,2017,0.23,18 to 24
+22,Louisiana,2017,0.30,25 to 34
+22,Louisiana,2017,0.28,35 to 44
+23,Maine,2014,0.23,18 to 24
+23,Maine,2014,0.30,25 to 34
+23,Maine,2014,0.28,35 to 44
+23,Maine,2015,0.21,18 to 24
+23,Maine,2015,0.29,25 to 34
+23,Maine,2015,0.28,35 to 44
+23,Maine,2016,0.17,18 to 24
+23,Maine,2016,0.31,25 to 34
+23,Maine,2016,0.25,35 to 44
+23,Maine,2017,0.15,18 to 24
+23,Maine,2017,0.26,25 to 34
+23,Maine,2017,0.23,35 to 44
+24,Maryland,2014,0.11,18 to 24
+24,Maryland,2014,0.16,25 to 34
+24,Maryland,2014,0.17,35 to 44
+24,Maryland,2015,0.13,18 to 24
+24,Maryland,2015,0.18,25 to 34
+24,Maryland,2015,0.17,35 to 44
+24,Maryland,2016,0.10,18 to 24
+24,Maryland,2016,0.18,25 to 34
+24,Maryland,2016,0.15,35 to 44
+24,Maryland,2017,0.10,18 to 24
+24,Maryland,2017,0.19,25 to 34
+24,Maryland,2017,0.15,35 to 44
+25,Massachusetts,2014,0.12,18 to 24
+25,Massachusetts,2014,0.21,25 to 34
+25,Massachusetts,2014,0.15,35 to 44
+25,Massachusetts,2015,0.12,18 to 24
+25,Massachusetts,2015,0.17,25 to 34
+25,Massachusetts,2015,0.17,35 to 44
+25,Massachusetts,2016,0.11,18 to 24
+25,Massachusetts,2016,0.17,25 to 34
+25,Massachusetts,2016,0.14,35 to 44
+25,Massachusetts,2017,0.07,18 to 24
+25,Massachusetts,2017,0.16,25 to 34
+25,Massachusetts,2017,0.17,35 to 44
+26,Michigan,2014,0.22,18 to 24
+26,Michigan,2014,0.31,25 to 34
+26,Michigan,2014,0.26,35 to 44
+26,Michigan,2015,0.16,18 to 24
+26,Michigan,2015,0.30,25 to 34
+26,Michigan,2015,0.26,35 to 44
+26,Michigan,2016,0.18,18 to 24
+26,Michigan,2016,0.25,25 to 34
+26,Michigan,2016,0.27,35 to 44
+26,Michigan,2017,0.12,18 to 24
+26,Michigan,2017,0.25,25 to 34
+26,Michigan,2017,0.26,35 to 44
+27,Minnesota,2014,0.16,18 to 24
+27,Minnesota,2014,0.23,25 to 34
+27,Minnesota,2014,0.18,35 to 44
+27,Minnesota,2015,0.17,18 to 24
+27,Minnesota,2015,0.23,25 to 34
+27,Minnesota,2015,0.17,35 to 44
+27,Minnesota,2016,0.13,18 to 24
+27,Minnesota,2016,0.21,25 to 34
+27,Minnesota,2016,0.18,35 to 44
+27,Minnesota,2017,0.12,18 to 24
+27,Minnesota,2017,0.20,25 to 34
+27,Minnesota,2017,0.16,35 to 44
+28,Mississippi,2014,0.23,18 to 24
+28,Mississippi,2014,0.31,25 to 34
+28,Mississippi,2014,0.28,35 to 44
+28,Mississippi,2015,0.20,18 to 24
+28,Mississippi,2015,0.27,25 to 34
+28,Mississippi,2015,0.26,35 to 44
+28,Mississippi,2016,0.26,18 to 24
+28,Mississippi,2016,0.27,25 to 34
+28,Mississippi,2016,0.24,35 to 44
+28,Mississippi,2017,0.15,18 to 24
+28,Mississippi,2017,0.30,25 to 34
+28,Mississippi,2017,0.26,35 to 44
+29,Missouri,2014,0.19,18 to 24
+29,Missouri,2014,0.27,25 to 34
+29,Missouri,2014,0.23,35 to 44
+29,Missouri,2015,0.18,18 to 24
+29,Missouri,2015,0.30,25 to 34
+29,Missouri,2015,0.29,35 to 44
+29,Missouri,2016,0.19,18 to 24
+29,Missouri,2016,0.27,25 to 34
+29,Missouri,2016,0.29,35 to 44
+29,Missouri,2017,0.18,18 to 24
+29,Missouri,2017,0.23,25 to 34
+29,Missouri,2017,0.29,35 to 44
+30,Montana,2014,0.26,18 to 24
+30,Montana,2014,0.28,25 to 34
+30,Montana,2014,0.23,35 to 44
+30,Montana,2015,0.21,18 to 24
+30,Montana,2015,0.27,25 to 34
+30,Montana,2015,0.23,35 to 44
+30,Montana,2016,0.19,18 to 24
+30,Montana,2016,0.25,25 to 34
+30,Montana,2016,0.21,35 to 44
+30,Montana,2017,0.17,18 to 24
+30,Montana,2017,0.23,25 to 34
+30,Montana,2017,0.25,35 to 44
+31,Nebraska,2014,0.18,18 to 24
+31,Nebraska,2014,0.23,25 to 34
+31,Nebraska,2014,0.21,35 to 44
+31,Nebraska,2015,0.17,18 to 24
+31,Nebraska,2015,0.23,25 to 34
+31,Nebraska,2015,0.19,35 to 44
+31,Nebraska,2016,0.15,18 to 24
+31,Nebraska,2016,0.23,25 to 34
+31,Nebraska,2016,0.20,35 to 44
+31,Nebraska,2017,0.14,18 to 24
+31,Nebraska,2017,0.20,25 to 34
+31,Nebraska,2017,0.19,35 to 44
+32,Nevada,2014,0.17,18 to 24
+32,Nevada,2014,0.22,25 to 34
+32,Nevada,2014,0.15,35 to 44
+32,Nevada,2015,0.14,18 to 24
+32,Nevada,2015,0.25,25 to 34
+32,Nevada,2015,0.21,35 to 44
+32,Nevada,2016,0.13,18 to 24
+32,Nevada,2016,0.18,25 to 34
+32,Nevada,2016,0.18,35 to 44
+32,Nevada,2017,0.06,18 to 24
+32,Nevada,2017,0.19,25 to 34
+32,Nevada,2017,0.18,35 to 44
+33,New Hampshire,2014,0.22,18 to 24
+33,New Hampshire,2014,0.27,25 to 34
+33,New Hampshire,2014,0.21,35 to 44
+33,New Hampshire,2015,0.15,18 to 24
+33,New Hampshire,2015,0.23,25 to 34
+33,New Hampshire,2015,0.17,35 to 44
+33,New Hampshire,2016,0.24,18 to 24
+33,New Hampshire,2016,0.31,25 to 34
+33,New Hampshire,2016,0.21,35 to 44
+33,New Hampshire,2017,0.16,18 to 24
+33,New Hampshire,2017,0.29,25 to 34
+33,New Hampshire,2017,0.20,35 to 44
+34,New Jersey,2014,0.12,18 to 24
+34,New Jersey,2014,0.21,25 to 34
+34,New Jersey,2014,0.18,35 to 44
+34,New Jersey,2015,0.12,18 to 24
+34,New Jersey,2015,0.18,25 to 34
+34,New Jersey,2015,0.16,35 to 44
+34,New Jersey,2016,0.14,18 to 24
+34,New Jersey,2016,0.15,25 to 34
+34,New Jersey,2016,0.14,35 to 44
+34,New Jersey,2017,0.09,18 to 24
+34,New Jersey,2017,0.19,25 to 34
+34,New Jersey,2017,0.16,35 to 44
+35,New Mexico,2014,0.18,18 to 24
+35,New Mexico,2014,0.29,25 to 34
+35,New Mexico,2014,0.21,35 to 44
+35,New Mexico,2015,0.16,18 to 24
+35,New Mexico,2015,0.23,25 to 34
+35,New Mexico,2015,0.19,35 to 44
+35,New Mexico,2016,0.19,18 to 24
+35,New Mexico,2016,0.23,25 to 34
+35,New Mexico,2016,0.17,35 to 44
+35,New Mexico,2017,0.14,18 to 24
+35,New Mexico,2017,0.23,25 to 34
+35,New Mexico,2017,0.21,35 to 44
+36,New York,2014,0.15,18 to 24
+36,New York,2014,0.19,25 to 34
+36,New York,2014,0.14,35 to 44
+36,New York,2015,0.14,18 to 24
+36,New York,2015,0.19,25 to 34
+36,New York,2015,0.17,35 to 44
+36,New York,2016,0.12,18 to 24
+36,New York,2016,0.17,25 to 34
+36,New York,2016,0.17,35 to 44
+36,New York,2017,0.11,18 to 24
+36,New York,2017,0.17,25 to 34
+36,New York,2017,0.16,35 to 44
+37,North Carolina,2014,0.17,18 to 24
+37,North Carolina,2014,0.25,25 to 34
+37,North Carolina,2014,0.22,35 to 44
+37,North Carolina,2015,0.23,18 to 24
+37,North Carolina,2015,0.21,25 to 34
+37,North Carolina,2015,0.22,35 to 44
+37,North Carolina,2016,0.17,18 to 24
+37,North Carolina,2016,0.20,25 to 34
+37,North Carolina,2016,0.23,35 to 44
+37,North Carolina,2017,0.16,18 to 24
+37,North Carolina,2017,0.20,25 to 34
+37,North Carolina,2017,0.19,35 to 44
+38,North Dakota,2014,0.21,18 to 24
+38,North Dakota,2014,0.24,25 to 34
+38,North Dakota,2014,0.26,35 to 44
+38,North Dakota,2015,0.21,18 to 24
+38,North Dakota,2015,0.22,25 to 34
+38,North Dakota,2015,0.23,35 to 44
+38,North Dakota,2016,0.20,18 to 24
+38,North Dakota,2016,0.25,25 to 34
+38,North Dakota,2016,0.22,35 to 44
+38,North Dakota,2017,0.13,18 to 24
+38,North Dakota,2017,0.23,25 to 34
+38,North Dakota,2017,0.22,35 to 44
+39,Ohio,2014,0.19,18 to 24
+39,Ohio,2014,0.32,25 to 34
+39,Ohio,2014,0.23,35 to 44
+39,Ohio,2015,0.22,18 to 24
+39,Ohio,2015,0.27,25 to 34
+39,Ohio,2015,0.27,35 to 44
+39,Ohio,2016,0.17,18 to 24
+39,Ohio,2016,0.32,25 to 34
+39,Ohio,2016,0.28,35 to 44
+39,Ohio,2017,0.17,18 to 24
+39,Ohio,2017,0.28,25 to 34
+39,Ohio,2017,0.28,35 to 44
+40,Oklahoma,2014,0.24,18 to 24
+40,Oklahoma,2014,0.28,25 to 34
+40,Oklahoma,2014,0.22,35 to 44
+40,Oklahoma,2015,0.22,18 to 24
+40,Oklahoma,2015,0.28,25 to 34
+40,Oklahoma,2015,0.24,35 to 44
+40,Oklahoma,2016,0.21,18 to 24
+40,Oklahoma,2016,0.25,25 to 34
+40,Oklahoma,2016,0.21,35 to 44
+40,Oklahoma,2017,0.21,18 to 24
+40,Oklahoma,2017,0.28,25 to 34
+40,Oklahoma,2017,0.22,35 to 44
+41,Oregon,2014,0.18,18 to 24
+41,Oregon,2014,0.22,25 to 34
+41,Oregon,2014,0.20,35 to 44
+41,Oregon,2015,0.19,18 to 24
+41,Oregon,2015,0.21,25 to 34
+41,Oregon,2015,0.19,35 to 44
+41,Oregon,2016,0.15,18 to 24
+41,Oregon,2016,0.19,25 to 34
+41,Oregon,2016,0.19,35 to 44
+41,Oregon,2017,0.13,18 to 24
+41,Oregon,2017,0.21,25 to 34
+41,Oregon,2017,0.19,35 to 44
+42,Pennsylvania,2014,0.20,18 to 24
+42,Pennsylvania,2014,0.27,25 to 34
+42,Pennsylvania,2014,0.22,35 to 44
+42,Pennsylvania,2015,0.15,18 to 24
+42,Pennsylvania,2015,0.23,25 to 34
+42,Pennsylvania,2015,0.24,35 to 44
+42,Pennsylvania,2016,0.13,18 to 24
+42,Pennsylvania,2016,0.23,25 to 34
+42,Pennsylvania,2016,0.24,35 to 44
+42,Pennsylvania,2017,0.15,18 to 24
+42,Pennsylvania,2017,0.23,25 to 34
+42,Pennsylvania,2017,0.25,35 to 44
+44,Rhode Island,2014,0.14,18 to 24
+44,Rhode Island,2014,0.23,25 to 34
+44,Rhode Island,2014,0.22,35 to 44
+44,Rhode Island,2015,0.12,18 to 24
+44,Rhode Island,2015,0.21,25 to 34
+44,Rhode Island,2015,0.21,35 to 44
+44,Rhode Island,2016,0.09,18 to 24
+44,Rhode Island,2016,0.20,25 to 34
+44,Rhode Island,2016,0.16,35 to 44
+44,Rhode Island,2017,0.11,18 to 24
+44,Rhode Island,2017,0.21,25 to 34
+44,Rhode Island,2017,0.18,35 to 44
+45,South Carolina,2014,0.19,18 to 24
+45,South Carolina,2014,0.32,25 to 34
+45,South Carolina,2014,0.25,35 to 44
+45,South Carolina,2015,0.21,18 to 24
+45,South Carolina,2015,0.26,25 to 34
+45,South Carolina,2015,0.22,35 to 44
+45,South Carolina,2016,0.16,18 to 24
+45,South Carolina,2016,0.25,25 to 34
+45,South Carolina,2016,0.25,35 to 44
+45,South Carolina,2017,0.14,18 to 24
+45,South Carolina,2017,0.27,25 to 34
+45,South Carolina,2017,0.23,35 to 44
+46,South Dakota,2014,0.16,18 to 24
+46,South Dakota,2014,0.26,25 to 34
+46,South Dakota,2014,0.22,35 to 44
+46,South Dakota,2015,0.24,18 to 24
+46,South Dakota,2015,0.25,25 to 34
+46,South Dakota,2015,0.26,35 to 44
+46,South Dakota,2016,0.14,18 to 24
+46,South Dakota,2016,0.24,25 to 34
+46,South Dakota,2016,0.26,35 to 44
+46,South Dakota,2017,0.15,18 to 24
+46,South Dakota,2017,0.27,25 to 34
+46,South Dakota,2017,0.29,35 to 44
+47,Tennessee,2014,0.24,18 to 24
+47,Tennessee,2014,0.30,25 to 34
+47,Tennessee,2014,0.30,35 to 44
+47,Tennessee,2015,0.19,18 to 24
+47,Tennessee,2015,0.23,25 to 34
+47,Tennessee,2015,0.25,35 to 44
+47,Tennessee,2016,0.19,18 to 24
+47,Tennessee,2016,0.24,25 to 34
+47,Tennessee,2016,0.25,35 to 44
+47,Tennessee,2017,0.19,18 to 24
+47,Tennessee,2017,0.26,25 to 34
+47,Tennessee,2017,0.28,35 to 44
+48,Texas,2014,0.12,18 to 24
+48,Texas,2014,0.19,25 to 34
+48,Texas,2014,0.16,35 to 44
+48,Texas,2015,0.16,18 to 24
+48,Texas,2015,0.19,25 to 34
+48,Texas,2015,0.16,35 to 44
+48,Texas,2016,0.08,18 to 24
+48,Texas,2016,0.18,25 to 34
+48,Texas,2016,0.15,35 to 44
+48,Texas,2017,0.13,18 to 24
+48,Texas,2017,0.20,25 to 34
+48,Texas,2017,0.22,35 to 44
+49,Utah,2014,0.09,18 to 24
+49,Utah,2014,0.13,25 to 34
+49,Utah,2014,0.10,35 to 44
+49,Utah,2015,0.08,18 to 24
+49,Utah,2015,0.12,25 to 34
+49,Utah,2015,0.10,35 to 44
+49,Utah,2016,0.07,18 to 24
+49,Utah,2016,0.12,25 to 34
+49,Utah,2016,0.09,35 to 44
+49,Utah,2017,0.08,18 to 24
+49,Utah,2017,0.09,25 to 34
+49,Utah,2017,0.11,35 to 44
+50,Vermont,2014,0.18,18 to 24
+50,Vermont,2014,0.27,25 to 34
+50,Vermont,2014,0.25,35 to 44
+50,Vermont,2015,0.18,18 to 24
+50,Vermont,2015,0.21,25 to 34
+50,Vermont,2015,0.19,35 to 44
+50,Vermont,2016,0.22,18 to 24
+50,Vermont,2016,0.27,25 to 34
+50,Vermont,2016,0.19,35 to 44
+50,Vermont,2017,0.13,18 to 24
+50,Vermont,2017,0.25,25 to 34
+50,Vermont,2017,0.22,35 to 44
+51,Virginia,2014,0.23,18 to 24
+51,Virginia,2014,0.24,25 to 34
+51,Virginia,2014,0.23,35 to 44
+51,Virginia,2015,0.18,18 to 24
+51,Virginia,2015,0.20,25 to 34
+51,Virginia,2015,0.19,35 to 44
+51,Virginia,2016,0.11,18 to 24
+51,Virginia,2016,0.19,25 to 34
+51,Virginia,2016,0.18,35 to 44
+51,Virginia,2017,0.13,18 to 24
+51,Virginia,2017,0.21,25 to 34
+51,Virginia,2017,0.20,35 to 44
+53,Washington,2014,0.14,18 to 24
+53,Washington,2014,0.19,25 to 34
+53,Washington,2014,0.19,35 to 44
+53,Washington,2015,0.14,18 to 24
+53,Washington,2015,0.18,25 to 34
+53,Washington,2015,0.16,35 to 44
+53,Washington,2016,0.15,18 to 24
+53,Washington,2016,0.20,25 to 34
+53,Washington,2016,0.15,35 to 44
+53,Washington,2017,0.10,18 to 24
+53,Washington,2017,0.18,25 to 34
+53,Washington,2017,0.17,35 to 44
+54,West Virginia,2014,0.27,18 to 24
+54,West Virginia,2014,0.44,25 to 34
+54,West Virginia,2014,0.29,35 to 44
+54,West Virginia,2015,0.26,18 to 24
+54,West Virginia,2015,0.36,25 to 34
+54,West Virginia,2015,0.33,35 to 44
+54,West Virginia,2016,0.22,18 to 24
+54,West Virginia,2016,0.36,25 to 34
+54,West Virginia,2016,0.30,35 to 44
+54,West Virginia,2017,0.29,18 to 24
+54,West Virginia,2017,0.35,25 to 34
+54,West Virginia,2017,0.37,35 to 44
+55,Wisconsin,2014,0.17,18 to 24
+55,Wisconsin,2014,0.22,25 to 34
+55,Wisconsin,2014,0.21,35 to 44
+55,Wisconsin,2015,0.19,18 to 24
+55,Wisconsin,2015,0.20,25 to 34
+55,Wisconsin,2015,0.20,35 to 44
+55,Wisconsin,2016,0.14,18 to 24
+55,Wisconsin,2016,0.20,25 to 34
+55,Wisconsin,2016,0.23,35 to 44
+55,Wisconsin,2017,0.13,18 to 24
+55,Wisconsin,2017,0.21,25 to 34
+55,Wisconsin,2017,0.19,35 to 44
+56,Wyoming,2014,0.20,18 to 24
+56,Wyoming,2014,0.25,25 to 34
+56,Wyoming,2014,0.25,35 to 44
+56,Wyoming,2015,0.14,18 to 24
+56,Wyoming,2015,0.30,25 to 34
+56,Wyoming,2015,0.24,35 to 44
+56,Wyoming,2016,0.23,18 to 24
+56,Wyoming,2016,0.26,25 to 34
+56,Wyoming,2016,0.22,35 to 44
+56,Wyoming,2017,0.21,18 to 24
+56,Wyoming,2017,0.24,25 to 34
+56,Wyoming,2017,0.24,35 to 44

@@ -3,7 +3,9 @@
 
 #Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
-pacman::p_load(here, usethis, dplyr, readr, tidyr, rlang, ggplot2, RColorBrewer, sf, viridis)
+pacman::p_load(here, usethis, dplyr, readr, tidyr, rlang, ggplot2, 
+               RColorBrewer, sf, viridis, corrr, marginaleffects, 
+               spdep, cartogram, tmap)
 
 #Read in outcome data (fetal deaths; "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
 fetal_data <- read_csv("data/lab/01/fetal_death.csv")
@@ -256,6 +258,7 @@ fetal_wide <- fetal_wide %>% mutate(fetal_diff = `Black or African American` - W
 fetal_wide <- fetal_wide %>% dplyr::select(state, year, fetal_diff)
 #add back to original data
 fetal_data_new <- left_join(fetal_data_new, fetal_wide)
+#ADD ME HERE
 
 # Add fetal death scaled data to states shapefile
 states <- st_read("data/lab/01/US_State_Albers.shp")
@@ -312,3 +315,124 @@ states %>%
   theme(legend.position = "bottom", legend.box = "horizontal")
 
 #To-do: Select different breaks to plot (quintiles or something else) and create same map
+#ADD ME HERE
+
+#Cartograms
+st_crs(states)
+states <- st_transform(states, 2163) #look up what this projection is at spatialreference.org
+st_crs(states)
+
+#Create cartogram for Black and white fetal deaths in 2017
+states_black <- states %>% filter(mom_race_eth == "Black or African American" & year == 2017)
+states_white <- states %>% filter(mom_race_eth == "White" & year == 2017) 
+
+states_fetaldeath <- cartogram_cont(states_black, "fetal_death_scaled", 
+                                   itermax = 10, 
+                                   threshold = .1)
+states_fetaldeath2 <- cartogram_cont(states_white, 
+                                    "fetal_death_scaled", 
+                                    itermax = 10, 
+                                    threshold = .1)
+
+# Plot the cartograms
+tm_shape(states_fetaldeath) + 
+  tm_polygons("fetal_death_scaled", style = "jenks") +
+  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
+
+tm_shape(states_fetaldeath2) + 
+  tm_polygons("fetal_death_scaled", style = "jenks") +
+  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
+
+#OK in this part, we will add in information on smoking
+# Cigarette smoking data from the EH Tracking Network
+cig <- read_csv("data/lab/01/cig_repro_age_state.csv")
+glimpse(cig)
+
+# Want overall average by state and year in the 18-44 age group
+cig <- cig %>% 
+  group_by(state, year) %>%
+  summarize(prop_smokers = mean(proportion_smok, na.rm = T))
+summary(cig$prop_smokers) # ranges from 9.3% to 33.7%
+
+fetal_data_new <- left_join(fetal_data_new, cig, by = c("state" = "state", "year" = "year"))
+
+# Correlation between smoking and fetal deaths
+fetal_data_new %>% 
+  dplyr::select(prop_smokers, fetal_death_scaled) %>% 
+  corrr::correlate() 
+
+# Add cigarette smoking to states
+states <- st_read("data/lab/01/US_State_Albers.shp")
+head(states)
+
+# Add fetal death data to states shapefile
+states <- left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
+head(states)
+
+# Linear regression
+# Change prop to percent
+states <- states %>% mutate(percent_smokers = prop_smokers*100)
+fetal_data_new <- fetal_data_new %>% mutate(percent_smokers = prop_smokers*100)
+
+# Basic poisson model
+# Check distribution of fetal_deaths
+states %>% ggplot(aes(y=fetal_deaths)) + geom_histogram()
+
+smoke_poisson <- glm(fetal_deaths ~ percent_smokers + factor(year) + factor(mom_race_eth) + offset(log(births)), 
+                     data = states, family = poisson(link = "log"))
+summary(smoke_poisson)
+exp(0.01)
+
+# Is there spatial autocorrelation in the data that we need to account for?
+# Let's look at the residuals of our regression model
+fetal_data_nomiss <-
+  fetal_data_new %>% drop_na(percent_smokers, fetal_deaths, births, mom_race_eth)
+fetal_data_nomiss$residuals <- smoke_poisson$residuals
+fetal_data_nomiss <-
+  fetal_data_nomiss %>% dplyr::select(year, state, mom_race_eth, residuals, mom_race_eth)
+states = left_join(
+  states,
+  fetal_data_nomiss,
+  by = c(
+    "year" = "year",
+    "STATE_NAME" = "state",
+    "mom_race_eth" = "mom_race_eth"
+  )
+)
+
+
+# Do we see a spatial pattern in the residuals?
+states %>%
+  ggplot() +
+  geom_sf(aes(fill = residuals),
+          color = "white",
+          lwd = 0.1) +
+  scale_fill_viridis("Residuals",
+                     na.value = "grey",
+                     option = "A") +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    rect = element_blank()
+  ) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(legend.position = "bottom", legend.box = "horizontal")
+# Does it look random?
+
+# Create a neighbor matrix, queen matrix identifying queen-type neighbors
+nb <- poly2nb(states, queen = TRUE)
+
+# Assigning weights 
+lw <- nb2listw(nb, style = "S", zero.policy = TRUE)
+
+# First polygon's weights
+lw$weights[1]
+
+# Get Moran's I
+MC <- moran.mc(states$fetal_death_scaled,lw, na.action = na.exclude, nsim = 500)
+MC
+# Reject hypothesis that there is no global spatial autocorrelation
+
