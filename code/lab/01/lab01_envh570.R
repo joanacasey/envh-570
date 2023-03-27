@@ -2,10 +2,25 @@
 #Updated 23 Mar 2023 by Joan Casey
 
 #Load packages, installing if needed
-if(!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
-pacman::p_load(here, usethis, dplyr, readr, tidyr, rlang, ggplot2, 
-               RColorBrewer, sf, viridis, corrr, marginaleffects, 
-               spdep, cartogram, tmap)
+if (!requireNamespace("pacman", quietly = TRUE))
+  install.packages("pacman")
+pacman::p_load(
+  here,
+  usethis,
+  dplyr,
+  readr,
+  tidyr,
+  rlang,
+  ggplot2,
+  RColorBrewer,
+  sf,
+  viridis,
+  corrr,
+  marginaleffects,
+  spdep,
+  cartogram,
+  tmap
+)
 
 #Read in outcome data (fetal deaths; "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
 fetal_data <- read_csv("data/lab/01/fetal_death.csv")
@@ -337,11 +352,11 @@ states_fetaldeath2 <- cartogram_cont(states_white,
 # Plot the cartograms
 tm_shape(states_fetaldeath) + 
   tm_polygons("fetal_death_scaled", style = "jenks") +
-  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
+  tm_layout(frame = FALSE, legend.outside = TRUE)
 
 tm_shape(states_fetaldeath2) + 
   tm_polygons("fetal_death_scaled", style = "jenks") +
-  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
+  tm_layout(frame = FALSE, legend.outside = TRUE)
 
 #OK in this part, we will add in information on smoking
 # Cigarette smoking data from the EH Tracking Network
