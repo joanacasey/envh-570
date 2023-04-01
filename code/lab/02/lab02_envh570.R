@@ -19,8 +19,12 @@ pacman::p_load(
   dplyr,
   ggplot2,
   stringr,
-  purrr
+  purrr,
+  mgcv
 )
+
+#Set a seed
+set.seed(570)
 
 #Bring in data on Tulsa and Osage counties oil and gas wells from Enverus (https://www.enverus.com/)
 ##Label the well's production type, replace "other" with "disposal well" 
@@ -49,7 +53,7 @@ wells %>% group_by(comp_year) %>% summarise(n = n()) #Not a useful way to look
 
 
 #EJ analysis #1 (SES/race/ethnicity - modern day)
-# Bringing in ses and density data 
+# Bringing in ses and population density data 
 density <- read.fst("data/lab/02/tract_density")
 
 ses <- read.fst("data/lab/02/tract_dem_pov.fst") %>% 
@@ -73,7 +77,8 @@ ses %>%
   dplyr::select(n, mean, sd, median, min, max)
 
 #Map of tract-level percent American Indian population 
-# Bringing in a shapefile of all census tracts in Oklahoma and filtering to the study area (Tulsa and Osage counties, FIPS = 40143 and 40113).
+# Bringing in a shapefile of all census tracts in Oklahoma 
+# and filtering to the study area (Tulsa and Osage counties, FIPS = 40143 and 40113).
 tract_geo <- st_read("data/lab/02/ok_tract_2010.shp") %>%
   mutate(county_fips = str_c(STATEFP10, COUNTYFP10)) %>%
   filter(county_fips %in% c("40143", "40113")) #What is the projection? Look up here: https://epsg.io/102003
@@ -88,7 +93,6 @@ glimpse(tract_geo_utm14n)
 #What is the tract identifier in ses? tract_fips
 glimpse(ses)
 
-
 # Merging data and shapefile 
 ses_sp <- left_join(tract_geo_utm14n, ses, by = c("GEOID10" = "tract_fips"))
 
@@ -101,6 +105,10 @@ map_pct_amer_in <- ggplot(data = ses_sp, aes(geometry = geometry)) +
   theme_void(base_size = 12) + #use theme void for maps because eliminates background
   theme(legend.position = "right")
 map_pct_amer_in
+
+#To-do: create a map of another census sociodemographic variable
+#Try using a different color scale (change something in scale_fill_viridis)
+#ADD HERE
 
 #Count wells per census tract and look at correlation with % American Indian
 #Create sf (spatial) object from lat/long coordinates
@@ -132,7 +140,7 @@ well_ct_map <- tract_geo_utm14n %>%
   filter(!well_count == 0) %>%
   ggplot() + 
   geom_sf(data = ses_sp, color="black", aes(geometry = geometry), lwd = 0.2, alpha = 0.8) +
-  geom_sf(data = tract_geo_utm17n, aes(fill = well_count), alpha = 0.85) +
+  geom_sf(data = tract_geo_utm14n, aes(fill = well_count), alpha = 0.85) +
   scale_fill_viridis("Well count (n)", limits = c(1, 11500), breaks=c(500, 2500, 5000, 7500, 10000)) +
   geom_point(
     aes(x = lon_centroid, y = lat_centroid, size = well_count),
@@ -183,11 +191,11 @@ overlay_map <- tract_geo_utm14n %>%
   filter(!well_count == 0) %>%
   ggplot() + 
   geom_sf(data = ses_sp, color="black", aes(geometry = geometry, fill = pct_amer_in), lwd = 0.2, alpha = 0.8) +
-  scale_fill_viridis("Percent American Indian (%)") + 
+  scale_fill_viridis("American Indian (%)") + 
   geom_point(
     aes(x = lon_centroid, y = lat_centroid, size = well_count),
     fill = "grey", color = "black", alpha = .5) + 
-  scale_size_continuous("Well count (n)", breaks=c(50, 500, 2500, 5000, 7500))+
+  scale_size_continuous("Wells (n)", breaks=c(50, 500, 2500, 5000, 7500))+
   theme_void(base_size=14) + 
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -195,11 +203,11 @@ overlay_map <- tract_geo_utm14n %>%
         rect=element_blank()) 
 overlay_map
 
-
 #Taking a closer look at Tulsa
-#Notice that census tracts are much smaller and that there are fewer wells overall (scale breaks change)
+#Notice that census tracts are much smaller and that 
+#there are fewer wells overall (scale breaks change)
 overlay_tulsa_map <- tract_geo_utm14n %>% 
-  dplyr::filter(county_fips == 40143) %>%
+  dplyr::filter(county_fips == 40143) %>% #Filtering to Tulsa
   dplyr::filter(!well_count == 0) %>%
   ggplot() + 
   geom_sf(data = ses_sp %>% dplyr::filter(county_fips == 40143),
@@ -231,7 +239,8 @@ tract_geo_utm14n$well_count_modern_day <- lengths(st_intersects(tract_geo_utm14n
 #Make tract_geo_utm14n not spatial so we can join
 tract_geo_utm14n_nonsp <- st_drop_geometry(tract_geo_utm14n)
 ct_ses <- left_join(ses_sp %>% dplyr::select(GISJOIN, starts_with("pct_"), density),
-                    tract_geo_utm14n_nonsp %>% dplyr::select(GISJOIN, well_count_modern_day))
+                    tract_geo_utm14n_nonsp %>% dplyr::select(GISJOIN, well_count_modern_day, #just keeping a few variables
+                                                             lon_centroid, lat_centroid))
 
 # Regression 
 # We run a simple Poisson model and control for population density
@@ -282,6 +291,55 @@ residual_ct_map <- tract_geo_utm14n %>%
 
 residual_ct_map
 
+#### Moran's I - test of global clustering of residuals
+# Creating neighbor matrix - this describes which polygons are neighbors of other polygons
+nb <- poly2nb(tract_geo_utm14n, queen=TRUE)
+
+# Assigning spatial weights based on neighbors 
+nb_lw <- nb2listw(nb, style="B")
+
+# Running Moran's I test -- values will range from -1 to 1 
+moran.test(tract_geo_utm14n$resid, nb_lw) 
+#p-value <0.05  indicating support for non-randomly distributed residuals
+
+#We run a simple Poisson model and control for population density
+#now with a spline on census tract centroid lat/long
+reg_amer_in_sp <- gam(well_count_modern_day ~ pct_amer_in + density + te(lat_centroid, lon_centroid),
+                  family="poisson", data = ct_ses)
+
+#Do results change?
+summary(reg_amer_in_sp)
+
+#Let's look at the residuals now
+#Let's look at the model Pearson residuals spatially
+# Extracting the model residuals
+residuals <- resid(reg_amer_in_sp)
+
+# Adding the residuals to the shapefile -- this makes them spatial
+tract_geo_utm14n$resid <- residuals
+
+# Also adding deciles of residuals for plotting
+tract_geo_utm14n <- tract_geo_utm14n %>% mutate(decile_res=ntile(residuals, 10))
+
+# Quick look at the residuals statistics 
+summary(tract_geo_utm14n$resid)
+
+#Mapping residuals 
+residual_ct_map2 <- tract_geo_utm14n %>% 
+  ggplot() + 
+  geom_sf(data = tract_geo_utm14n,
+          color="black", aes(geometry = geometry, fill = resid), lwd = 0.2, alpha = 0.8) +
+  scale_fill_viridis("Residuals") + 
+  theme_void(base_size=14) + 
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        rect=element_blank()) 
+
+residual_ct_map2
+
+#Plot the residual maps side by side
+residual_ct_map + residual_ct_map2
 
 #### Moran's I - test of global clustering of residuals
 # Creating neighbor matrix - this describes which polygons are neighbors of other polygons
@@ -290,9 +348,9 @@ nb <- poly2nb(tract_geo_utm14n, queen=TRUE)
 # Assigning spatial weights based on neighbors 
 nb_lw <- nb2listw(nb, style="B")
 
-# Running Moran's I test
+# Running Moran's I test -- values will range from -1 to 1 
 moran.test(tract_geo_utm14n$resid, nb_lw) 
-#p-value <0.05  indicating support for non-randomly distributed residuals
+# What does this indicate?
 
 #EJ analysis #2 (redlining - historical perspectives)
 # Analysis of HOLC data (home owner's loan corporation) 
@@ -340,11 +398,8 @@ wells_sp_utm14n %>% tabyl(pre_holc) %>%
   mutate(percent = round(percent*100, 2))
 
 #Type of wells by pre/post HOLC grading
-wells %>% 
-  tabyl(pre_holc, production_type) %>%
-  adorn_percentages("row") %>%
-  adorn_pct_formatting(digits = 1) %>%
-  adorn_ns() 
+#To-do, how many wells drilled pre/post HOLC; show on a figure
+#ADD HERE
 
 # Count of wells in a given radius 
 #Create 1km buffer around each community
@@ -421,8 +476,11 @@ holc_well_map <-
 #Use patchwork to plot side by side 
 holc_map + holc_well_map
 
-#To-do: use patchwork to plot one on top of the other
+#For doctoral students:
+#To-do: use patchwork to plot one above the other instead of side by side
 #ADD CODE HERE
 
 #To-do: plot maps of pre- and post-HOLC map well counts
+
+#To-do: try running a regression model to look at the association between HOLC grade and wells
 #ADD CODE HERE (hint: paste much from maps above and edit a bit of it)

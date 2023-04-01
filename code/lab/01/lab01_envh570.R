@@ -366,7 +366,7 @@ glimpse(cig)
 # Want overall average by state and year in the 18-44 age group
 cig <- cig %>% 
   group_by(state, year) %>%
-  summarize(prop_smokers = mean(proportion_smok, na.rm = T))
+  summarise(prop_smokers = mean(proportion_smok, na.rm = T))
 summary(cig$prop_smokers) # ranges from 9.3% to 33.7%
 
 fetal_data_new <- left_join(fetal_data_new, cig, by = c("state" = "state", "year" = "year"))
@@ -396,7 +396,7 @@ states %>% ggplot(aes(y=fetal_deaths)) + geom_histogram()
 smoke_poisson <- glm(fetal_deaths ~ percent_smokers + factor(year) + factor(mom_race_eth) + offset(log(births)), 
                      data = states, family = poisson(link = "log"))
 summary(smoke_poisson)
-exp(0.01)
+exp( 0.0052174 )
 
 # Is there spatial autocorrelation in the data that we need to account for?
 # Let's look at the residuals of our regression model
@@ -447,6 +447,8 @@ lw <- nb2listw(nb, style = "S", zero.policy = TRUE)
 lw$weights[1]
 
 # Get Moran's I
+#set.seed
+set.seed(111)
 MC <- moran.mc(states$fetal_death_scaled,lw, na.action = na.exclude, nsim = 500)
 MC
 # Reject hypothesis that there is no global spatial autocorrelation
