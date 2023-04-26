@@ -443,7 +443,7 @@ nb <- poly2nb(states, queen = TRUE)
 # Assigning weights 
 lw <- nb2listw(nb, style = "S", zero.policy = TRUE)
 
-# First polygon's weights
+# First polygon's weights,
 lw$weights[1]
 
 # Get Moran's I

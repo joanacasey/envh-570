@@ -104,7 +104,7 @@ map_pct_amer_in <- ggplot(data = ses_sp) +
                      na.value = "maroon2") +
   labs(title = "Tract-level percent American Indian in Tulsa and Osage Counties") +
   theme_void(base_size = 12) + #use theme void for maps because eliminates background
-  theme(legend.position = "right") 
+  theme(legend.position = "bottom") 
 map_pct_amer_in
 
 #To-do: create a map of another census sociodemographic variable
