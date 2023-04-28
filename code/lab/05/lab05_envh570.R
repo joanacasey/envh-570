@@ -87,7 +87,7 @@ mortality <- mortality %>% dplyr::filter(fips %in% dist$fips)
 #Filter to before 2018 and after 1999
 mortality <- mortality %>% dplyr::filter(year>1999 & year<2018) 
 
-#Filter to just Aug (when exposure occurs in 2017)
+#Filter to just September (first full month after exposure in 2017)
 mortality <- mortality %>% dplyr::filter(month==9) 
 
 #Create state fips
