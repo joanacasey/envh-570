@@ -18,7 +18,7 @@ pacman::p_load(
   ggmap,
   raster,
   terra,
-  ggpubr
+  rgdal
 )
 
 ##############################################################################################################
@@ -58,6 +58,9 @@ income <- ggplot() +
 
 
 tree_density + income
+
+#Try adding figure for percent vacant housing below
+##ADD ME##
 
 ##############################################################################################################
 ## PART 2: CROWD-SOURCED NOISE MEASUREMENTS
@@ -146,6 +149,11 @@ ggplot() +
 ##############################################################################################################
 ## PART 4: CROWD-SOURCED NOISE MEASUREMENTS VS NATIONAL NOISE MODEL
 transit_noise <- raster("data/lab/04/seattle_transit.tif")
+
+#Check out specs of the raster data
+transit_noise #How many columnns and rows of data? How many total grid cells?
+
+#Plot it
 plot(transit_noise)
 
 #Extract transit noise levels where we took noise measurements
