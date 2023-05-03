@@ -1,5 +1,5 @@
 #Lab 04 ENV H/EPI 570 - Built environment
-#Updated 02 May 2023 by Joan Casey
+#Updated 03 May 2023 by Joan Casey
 
 #Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE))
@@ -66,6 +66,12 @@ tree_density + income
 ## PART 2: CROWD-SOURCED NOISE MEASUREMENTS
 noise <-
   read_csv("data/lab/04/noise_envh570_seattle.csv") #cool that R recognizes the time column as time of day
+
+#Remove erroneous rows of data
+noise <- drop_na(noise)
+
+#how does these data look? see any problems?
+summary(noise)
 
 #make an sf object with lat/longit
 noise_sf <-
@@ -167,7 +173,10 @@ noise_sf <- noise_sf %>% mutate(transit_noise = noise_from_transit_model)
 ggplot(noise_sf, aes(noise, transit_noise)) + geom_point() + 
   geom_smooth() +
   theme_minimal() +
-  xlab("Our noise measurements (dB)") + ylab("Transit noise model (dB)")
+  geom_abline(linetype="dashed") + #adding a reference line +
+  scale_x_continuous("Our noise measurements (dBA)", limits=c(40,80))+
+  scale_y_continuous("Transit noise model (dBA)", limits=c(40,80))
+
 
 #Pearson and Spearman correlation
 cor.test(noise_sf$noise, noise_sf$transit_noise,
