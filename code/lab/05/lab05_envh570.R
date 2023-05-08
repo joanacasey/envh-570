@@ -119,7 +119,7 @@ summary(mortality)
 mortality <- mortality %>% tidyr::drop_na(death_rate, unemp, med_inc)
 
 #Also need counties to have complete years
-mortality <- mortality %>% group_by(fips) %>% mutate(n=n())
+mortality <- mortality %>% group_by(fips) %>% dplyr::mutate(n=n())
 table(mortality$n)
 mortality <- mortality %>% dplyr::filter(n==17) #just keeping counties with data in all 17 years
 
