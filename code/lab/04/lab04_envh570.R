@@ -73,6 +73,8 @@ noise <- drop_na(noise)
 #how does these data look? see any problems?
 summary(noise)
 
+noise <- noise %>% mutate(longit = ifelse(longit<0, longit, -1*longit))
+
 #make an sf object with lat/longit
 noise_sf <-
   st_as_sf(noise, coords = c("longit", "latit"), crs = "EPSG:4326")
