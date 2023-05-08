@@ -14,7 +14,8 @@ pacman::p_load(
   sf,
   ggplot2,
   MetBrewer,
-  LowRankQP
+  LowRankQP,
+  BiocManager
 )
 ##############################################################################################################
 #Installing and loading the the tidysynth package
@@ -39,13 +40,18 @@ if (!requireNamespace("tidysynth", quietly = TRUE)) {
   remotes::install_github("edunford/tidysynth", upgrade = "never")
 }
 
-if (!requireNamespace("hurricaneexposuredata", quietly = TRUE)) {
-  remotes::install_version("hurricaneexposuredata", 
+if (!requireNamespace("hurricaneexposure", quietly = TRUE)) {
+  remotes::install_version("hurricaneexposure", 
                            repos = "geanders",
                            upgrade = "never")
 }
 
 library(tidysynth) 
+library(hurricaneexposure)
+
+library(drat)
+addRepo("geanders")
+install.packages("hurricaneexposuredata")
 library(hurricaneexposuredata)
 data("hurr_tracks")
 
