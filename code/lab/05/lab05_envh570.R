@@ -69,6 +69,8 @@ hurricaneexposure::map_counties(storm = "Harvey-2017", metric = "wind")
 # Estimated wind gusts in the county
 hurricaneexposure::map_counties(storm = "Harvey-2017", metric = "wind", wind_var = "vmax_gust")
 
+#Reloading
+library(dplyr)
 # Distance from Hurricane
 dist <- hurricaneexposure::filter_storm_data(storm = "Harvey-2017", output_vars = c("fips", "closest_date", "storm_dist"))
 dist <- dist %>% dplyr::mutate(closest_date = as.Date(closest_date))
@@ -113,6 +115,7 @@ mortality <- dplyr::left_join(mortality, dist)
 
 ##############################################################################################################
 ## PART 4: the synthetic control
+library(tidysynth)
 
 #Get rid of missing data because we need complete dataset for this code to work
 summary(mortality)
