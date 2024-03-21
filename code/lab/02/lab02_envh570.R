@@ -6,9 +6,10 @@ if(!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
   here,
+  readr,
   sf,
   janitor,
-  rgeos,
+  #rgeos,  # Note: This package has been deprecated, see below for work-around.
   viridis,
   Hmisc,
   GGally,
@@ -23,13 +24,20 @@ pacman::p_load(
   mgcv
 )
 
+# Since rgeos is deprecated we need to install the last version in the archive.
+# See: https://cran.r-project.org/web/packages/rgeos/index.html
+# And: https://stackoverflow.com/questions/77687036/
+# remotes::install_version("rgeos", version = "0.6-4")
+pacman::p_install_version("rgeos", version = "0.6-4")
+pacman::p_load(rgeos)
+
 ##############################################################################################################
 #Set a seed for reproducibility
 set.seed(570)
 
 #Bring in data on Tulsa and Osage counties oil and gas wells from Enverus (https://www.enverus.com/)
 ##Label the well's production type, replace "other" with "disposal well" 
-wells <- read_csv("data/lab/02/tulsa_wells_no_NA_clean.csv") %>%
+wells <- read_csv(here("data/lab/02/tulsa_wells_no_NA_clean.csv")) %>%
   select(-ends_with("date")) %>%
   select(
     state,
@@ -55,7 +63,7 @@ wells %>% group_by(comp_year) %>% summarise(n = n()) #Not a useful way to look, 
 ##############################################################################################################
 #EJ analysis #1 (SES/race/ethnicity - modern day)
 # Bringing in ses and population density data 
-density <- read.fst("data/lab/02/tract_density")
+density <- read.fst(here("data/lab/02/tract_density"))
 
 ses <- read.fst("data/lab/02/tract_dem_pov.fst") %>% 
   mutate(state_fips = str_pad(statea, width=2, side="left", pad="0"),
@@ -461,3 +469,4 @@ holc_buff_1km$well_count_post <- lengths(st_intersects(holc_buff_1km, post_holc_
 
 #To-do: try running a regression model to look at the association between HOLC grade and wells
 #ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
+
