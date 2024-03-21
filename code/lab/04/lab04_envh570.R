@@ -6,6 +6,7 @@ if (!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
   here,
+  tidyr,
   dplyr,
   sf,
   ggplot2,
@@ -18,14 +19,21 @@ pacman::p_load(
   ggmap,
   raster,
   terra,
-  rgdal
+  # rgdal   # Note: This package has been deprecated, see below for work-around.
 )
+
+# Since rgdal is deprecated we need to install the last version in the archive.
+# See: https://cran.r-project.org/web/packages/rgdal/index.html
+# And: https://stackoverflow.com/questions/76868135/
+# remotes::install_version("rgdal", version = "1.6-7")
+pacman::p_install_version("rgdal", version = "1.6-7")
+pacman::p_load(rgeos)
 
 ##############################################################################################################
 #PART 1#
 # Bring in Seattle data with SES and trees
 # What is the projection?
-seattle <- st_read("data/lab/04/seattle_tree_ses_ct.shp")
+seattle <- st_read(here("data/lab/04/seattle_tree_ses_ct.shp"))
 glimpse(seattle)
 
 #Plot tree density
@@ -186,3 +194,4 @@ cor.test(noise_sf$noise, noise_sf$transit_noise,
 
 #You do Pearson 
 #ADD ME
+
