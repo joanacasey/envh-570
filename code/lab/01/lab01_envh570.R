@@ -23,7 +23,7 @@ pacman::p_load(
 )
 
 #Read in outcome data (fetal deaths; "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
-fetal_data <- read_csv("data/lab/01/fetal_death.csv")
+fetal_data <- read_csv(here("data/lab/01/fetal_death.csv"))
 
 # Explore the data
 glimpse(fetal_data)
@@ -60,7 +60,8 @@ glimpse(fetal_data_new)
 ## Let's create some data visualizations:
 # Look at the data in 2017 for counts of fetal deaths by race/ethnicity
 # First create variable to order the y-axis by total number of fetal deaths
-fetal_data_new <- fetal_data_new %>% group_by(state, year) %>% mutate(total_fetal_deaths=sum(fetal_deaths, na.rm=T))
+fetal_data_new <- fetal_data_new %>% group_by(state, year) %>% 
+  mutate(total_fetal_deaths=sum(fetal_deaths, na.rm=T))
 
 fetal_data_new %>%
   mutate(mom_race_eth = replace(
@@ -191,7 +192,7 @@ summary(states$fetal_deaths)
 
 # Let's create quintiles
 quantile(states$fetal_deaths, c(.2, .4, .6, .8), na.rm = T)
-states = states %>%
+states <- states %>%
   mutate(
     fetal_death_q = case_when(
       fetal_deaths < 47 ~ 1,
@@ -204,6 +205,27 @@ states = states %>%
       fetal_deaths >= 367 ~ 5
     )
   )
+
+### Alternate method of creating this variable... as a factor with cut()
+### No need for case_when() and makes scale_fill_viridis() simpler to use ...
+# qnt <- c(0, quantile(states$fetal_deaths, c(.2, .4, .6, .8), na.rm = T), Inf)
+# qnt_labs <- c(paste('<', qnt[['20%']]),
+#   paste0('[', qnt[['20%']], '-', qnt[['40%']], ')'),
+#   paste0('[', qnt[['40%']], '-', qnt[['60%']], ')'),
+#   paste0('[', qnt[['60%']], '-', qnt[['80%']], ')'),
+#   paste('\u2265', qnt[['80%']]))
+# states <-
+#   states %>% mutate(
+#     fetal_death_q_fctr = cut(
+#       x = fetal_deaths,
+#       breaks = qnt,
+#       labels = qnt_labs,
+#       right = FALSE,
+#       include.lowest = TRUE,
+#       ordered = TRUE
+#     )
+#   )
+
 states %>%
   mutate(mom_race_eth = replace(
     mom_race_eth,
@@ -219,7 +241,7 @@ states %>%
     na.value = "grey",
     discrete = T,
     breaks = c(1, 2, 3, 4, 5),
-    labels = c("< 47", "(47-114]", "(114-230]", "(230-367]", "\u2265 367")
+    labels = c("< 47", "[47-114)", "[114-230)", "[230-367)", "\u2265 367")
   ) +
   theme_minimal(base_size = 14) +
   facet_grid(year ~ mom_race_eth) +
