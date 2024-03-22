@@ -13,13 +13,13 @@ pacman::p_load(
   rlang,
   ggplot2,
   RColorBrewer,
+  tmap,
   sf,
   viridis,
   corrr,
   marginaleffects,
   spdep,
-  cartogram,
-  tmap
+  cartogram
 )
 
 #Read in outcome data (fetal deaths; "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
