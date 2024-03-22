@@ -18,16 +18,19 @@ pacman::p_load(
   leaflegend,
   ggmap,
   raster,
-  terra,
+  terra
   # rgdal   # Note: This package has been deprecated, see below for work-around.
 )
 
 # Since rgdal is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgdal/index.html
 # And: https://stackoverflow.com/questions/76868135/
-# remotes::install_version("rgdal", version = "1.6-7")
-pacman::p_install_version("rgdal", version = "1.6-7")
-pacman::p_load(rgeos)
+options("rgdal_show_exportToProj4_warnings" = "none")
+if(!requireNamespace("rgdal", quietly = TRUE)) {
+  remotes::install_version("rgdal", version = "1.6-7", upgrade = "never")
+  library(rgeos)
+}
+
 
 ##############################################################################################################
 #PART 1#
