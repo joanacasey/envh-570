@@ -10,49 +10,20 @@ pacman::p_load(
   drat,
   dplyr,
   tidyr,
-  hurricaneexposure,
+  # hurricaneexposure,    # See below.
   sf,
   ggplot2,
   MetBrewer,
-  LowRankQP,
+  # LowRankQP,            # See below.
   BiocManager
 )
-##############################################################################################################
-#Installing and loading the the tidysynth package
-if (!requireNamespace("remotes")) install.packages("remotes")
-
-# See: https://stackoverflow.com/questions/24194409/
-if (!requireNamespace("LowRankQP", quietly = TRUE)) {
-  remotes::install_version("LowRankQP", 
-                            version = "1.0.5", 
-                            repos = "http://cran.us.r-project.org",
-                            upgrade = "never")
-}
-
-if (!requireNamespace("Synth", quietly = TRUE)) {
-  remotes::install_version("Synth", 
-                            version = "1.1-6", 
-                            repos = "http://cran.us.r-project.org",
-                            upgrade = "never")
-}
-
-if (!requireNamespace("tidysynth", quietly = TRUE)) {
-  remotes::install_github("edunford/tidysynth", upgrade = "never")
-}
-
-if (!requireNamespace("hurricaneexposure", quietly = TRUE)) {
-  remotes::install_version("hurricaneexposure", 
-                           repos = "geanders",
-                           upgrade = "never")
-}
-
-library(tidysynth) 
-library(hurricaneexposure)
-
-library(drat)
-addRepo("geanders")
-install.packages("hurricaneexposuredata")
-library(hurricaneexposuredata)
+############################################################################
+#Install and load the tidysynth & hurricaneexposure packages and dependencies
+pacman::p_install_version("LowRankQP", version = "1.0.5")
+pacman::p_install_version("Synth", version = "1.1-6")
+pacman::p_install_gh("edunford/tidysynth")
+pacman::p_install_gh("geanders/hurricaneexposure")
+pacman::p_load(LowRankQP, tidysynth, hurricaneexposure, hurricaneexposuredata)
 data("hurr_tracks")
 
 ##############################################################################################################
