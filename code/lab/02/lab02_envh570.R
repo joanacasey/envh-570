@@ -410,7 +410,7 @@ holc_boxplot <- holc_wells %>%
   theme(
     panel.background = element_blank(),
     panel.grid.major.y = element_line(
-      size = 0.25,
+      linewidth = 0.25,
       linetype = 'solid',
       colour = "grey"
     ),
@@ -468,3 +468,4 @@ holc_buff_1km$well_count_post <- lengths(st_intersects(holc_buff_1km, post_holc_
 
 # To-do: try running a regression model to look at the association between HOLC grade and wells
 #ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
+
