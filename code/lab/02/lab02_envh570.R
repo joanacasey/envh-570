@@ -8,6 +8,7 @@ pacman::p_load(
   here,
   sf,
   janitor,
+  readr, 
   #rgeos,  # Note: This package has been deprecated, see below for work-around.
   viridis,
   Hmisc,
