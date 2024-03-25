@@ -22,8 +22,7 @@ pacman::p_load(
   marginaleffects,
   spdep,
   cartogram
-) 
-
+)
 
 #Read in outcome data (fetal deaths = "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
 fetal_data <- read_csv("data/lab/01/fetal_death.csv")
@@ -245,12 +244,12 @@ states_black <- states %>% filter(mom_race_eth == "Black or African American" & 
 states_white <- states %>% filter(mom_race_eth == "White" & year == 2017) 
 
 states_fetaldeath <- cartogram_cont(states_black, "fetal_death_scaled", 
-                                   itermax = 10, 
-                                   threshold = .1)
-states_fetaldeath2 <- cartogram_cont(states_white, 
-                                    "fetal_death_scaled", 
                                     itermax = 10, 
                                     threshold = .1)
+states_fetaldeath2 <- cartogram_cont(states_white, 
+                                     "fetal_death_scaled", 
+                                     itermax = 10, 
+                                     threshold = .1)
 
 # Plot the cartograms
 tm_shape(states_fetaldeath) + 
@@ -354,4 +353,3 @@ set.seed(111)
 MC <- moran.mc(states$fetal_death_scaled,lw, na.action = na.exclude, nsim = 500)
 MC
 # Reject hypothesis that there is no global spatial autocorrelation
-
