@@ -22,9 +22,9 @@ pacman::p_load(
 #Install and load the tidysynth & hurricaneexposure packages and dependencies
 pacman::p_install_version("LowRankQP", version = "1.0.5")
 pacman::p_install_version("Synth", version = "1.1-6")
-pacman::p_install_gh("edunford/tidysynth")
-pacman::p_install_gh("geanders/hurricaneexposure")
-pacman::p_load(LowRankQP, tidysynth, hurricaneexposure, hurricaneexposuredata)
+pacman::p_load(LowRankQP, Synth)
+pacman::p_load_gh("edunford/tidysynth")
+pacman::p_load_gh("geanders/hurricaneexposure")
 data("hurr_tracks")
 
 #############################################################################
