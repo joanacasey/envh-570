@@ -48,7 +48,6 @@ if (!requireNamespace("hurricaneexposure", quietly = TRUE)) {
 
 library(tidysynth) 
 library(hurricaneexposure)
-
 library(drat)
 addRepo("geanders")
 install.packages("hurricaneexposuredata")
@@ -158,7 +157,7 @@ mortality_out <-
   
   # Generate the aggregate predictors used to fit the weights
   generate_predictor(
-    time_window = 2000:201,
+    time_window = 2000:2018,
     mmed_inc = mean(med_inc, na.rm = T),
     muemply = mean(unemp, na.rm = T)
   ) %>%
@@ -176,7 +175,9 @@ mortality_out <-
                    margin_ipop = .02, sigf_ipop = 7, bound_ipop = 6) %>% # time to use in the optimization task
   
   # Generate the synthetic control
-  generate_control()
+  generate_control() 
+  
+
 
 ##############################################################################################################
 #Part 5 plotting etc.
@@ -195,8 +196,6 @@ mortality_out %>% plot_weights()
 #Which counties contribute most to the synthetic control?
 weights <- mortality_out %>% grab_unit_weights()
 View(weights)
-
-
 
 
 

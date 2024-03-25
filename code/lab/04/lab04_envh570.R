@@ -60,7 +60,17 @@ income <- ggplot() +
 tree_density + income
 
 #Try adding figure for percent vacant housing below
-##ADD ME##
+ggplot() +
+  geom_sf(data = seattle, aes(fill = PCT_VAC)) +
+  theme_void(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    rect = element_blank()
+  ) + scale_fill_gradientn("% vacant",
+                           colors = met.brewer("Degas"),
+                           na.value = "grey50")
 
 ##############################################################################################################
 ## PART 2: CROWD-SOURCED NOISE MEASUREMENTS
@@ -69,6 +79,9 @@ noise <-
 
 #Remove erroneous rows of data
 noise <- drop_na(noise)
+
+#time of day
+summary(noise$time)
 
 #how does these data look? see any problems?
 summary(noise)
@@ -138,7 +151,7 @@ noise_sf <- st_transform(noise_sf, crs = st_crs(seattle))
 #Map points on the tree map
 ggplot() +
   geom_sf(data = seattle, aes(fill = tr_dnst)) +
-  geom_sf(data = noise_sf, aes(size=noise), color="grey") +
+  geom_sf(data = noise_sf, aes(size=noise), color="grey", alpha=0.5) +
   theme_void(base_size = 14) +
   theme(
     axis.text.x = element_blank(),
