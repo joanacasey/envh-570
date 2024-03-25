@@ -216,7 +216,7 @@ states %>%
     na.value = "grey",
     discrete = T,
     breaks = c(1, 2, 3, 4, 5),
-    labels = c("< 4.75", "(4.75-5.59]", "(5.59-7.37]", "(7.37-10.17]", "\u2265 10.17")
+    labels = c("< 4.75", "[4.75-5.59)", "[5.59-7.37)", "[7.37-10.17)", "\u2265 10.17")
   ) +
   theme_minimal(base_size = 14) +
   facet_grid(year ~ mom_race_eth) +
