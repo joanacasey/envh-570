@@ -1,9 +1,10 @@
-#Lab 01 ENV H/EPI 570
-#Updated 24 Mar 2024 by Joan Casey
+# Lab 01 ENV H/EPI 570
+# Updated 24 Mar 2024 by Joan Casey
 
-#Objective: This file is meant to get you acclimated to the online RStudio environment and introduce you to basic commands to explore data.
+# Objective: This file is meant to get you acclimated to the online RStudio 
+# environment and introduce you to basic commands to explore data.
 
-#Load packages, installing if needed
+# Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
@@ -12,6 +13,7 @@ pacman::p_load(
   dplyr,
   readr,
   tidyr,
+  explore,
   rlang,
   ggplot2,
   RColorBrewer,
@@ -24,23 +26,30 @@ pacman::p_load(
   cartogram
 )
 
-#Read in outcome data (fetal deaths = "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
-fetal_data <- read_csv("data/lab/01/fetal_death.csv")
+# Read in outcome data (fetal deaths = "spontaneous intrauterine death of a 
+# fetus at any time during pregnancy"), downloaded from CDC Wonder:
+fetal_data <- read_csv(here("data/lab/01/fetal_death.csv"))
 
-# Explore the data using glimpse
+# Explore the data using dplyr::glimpse
 glimpse(fetal_data)
 
 # Explore the data using summary
 summary(fetal_data)
 
+# Explore the data using explore::describe_tbl and explore::describe
+describe_tbl(fetal_data)
+describe(fetal_data)
+
 # Explore the data using View
 View(fetal_data)
 
-#How many states are included in the dataset? Find out using n_distinct. Which package has the n_distinct command?
+# How many states are included in the dataset? Find out using n_distinct. Which 
+# package has the n_distinct command?
 n_distinct(fetal_data$state) # 50 states + DC
 
 # Some states do not have data for each year/race/death combo
-# If table shows two entries for a state, they have counts for both Black and white pregnant people
+# If table shows two entries for a state, they have counts for both Black and 
+# white pregnant people
 table(fetal_data$state, fetal_data$year)
 
 # Expand so we have a row for each year/race/state combo
@@ -48,8 +57,9 @@ table(fetal_data$state, fetal_data$year)
 fetal_data_expanded <- fetal_data %>% tidyr::expand(state, year, mom_race_eth)
 dim(fetal_data_expanded)
 
-# Add this back to our main dataframe, we now have NA where data is not reported due to small numbers
-# We do this using left_join. Please read how this verb works by typing ?left_join into the console
+# Add this back to our main dataframe, we now have NA where data is not 
+# reported due to small numbers. We do this using left_join. Please read how 
+# this verb works by typing ?left_join into the console
 fetal_data_new <- left_join(
   fetal_data_expanded,
   fetal_data,
@@ -66,10 +76,13 @@ glimpse(fetal_data_new)
 ## Let's create some data visualizations:
 # Look at the data in 2017 for counts of fetal deaths by race/ethnicity
 # First create variable to order the y-axis by total number of fetal deaths
-# You group_by state and year (i.e., calculate the total fetal deaths by state and year) then mutate to create a new variable.
-fetal_data_new <- fetal_data_new %>% group_by(state, year) %>% mutate(total_fetal_deaths=sum(fetal_deaths, na.rm=T))
+# You group_by state and year (i.e., calculate the total fetal deaths by 
+# state and year) then mutate to create a new variable.
+fetal_data_new <- fetal_data_new %>% group_by(state, year) %>% 
+  mutate(total_fetal_deaths=sum(fetal_deaths, na.rm=T))
 
-# What are we doing here? First, create a new variable called "mom_race_eth" that replaces "Black or African American" with "Black" for simplicity
+# What are we doing here? First, create a new variable called "mom_race_eth" 
+# that replaces "Black or African American" with "Black" for simplicity
 # Then you will filter to just 2017 (only plot data for 2017)
 # Next use ggplot to create a plot of fetal deaths by state
 fetal_data_new %>%
@@ -107,7 +120,8 @@ fetal_data_new <- left_join(fetal_data_new,
                                    "state_code" = "state_code"))
 
 # Create variable scaling fetal deaths by total life births
-fetal_data_new <- fetal_data_new %>% mutate(fetal_death_scaled = fetal_deaths/births*1000)
+fetal_data_new <- fetal_data_new %>% 
+  mutate(fetal_death_scaled = fetal_deaths/births*1000)
 
 # Look at scaled prevalence
 fetal_data_new %>% 
@@ -123,7 +137,7 @@ fetal_data_new %>%
 #much more informative, what's happening with states with only white rate?
 
 # Reading in a shapefile using st_read
-states <- st_read("data/lab/01/US_State_Albers.shp")
+states <- st_read(here("data/lab/01/US_State_Albers.shp"))
 head(states) 
 
 #What is the CRS? Read about crs here: https://rspatial.org/spatial/6-crs.html
@@ -131,7 +145,8 @@ head(states)
 #read more here: http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm
 st_crs(states)
 
-#Add the fetal death data to the spatial file by state name (note these are different variable names in each dataset)
+#Add the fetal death data to the spatial file by state name (note these are 
+# different variable names in each dataset)
 states <- left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
 glimpse(states)
 
@@ -188,7 +203,7 @@ states %>%
 
 # Let's create quintiles for the legend
 quantile(states$fetal_death_scaled, c(.2, .4, .6, .8), na.rm = T)
-states = states %>%
+states <- states %>%
   mutate(
     fetal_death_q = case_when(
       fetal_death_scaled < 4.746778 ~ 1,
@@ -201,6 +216,27 @@ states = states %>%
       fetal_death_scaled >= 10.169492 ~ 5
     )
   )
+
+### Alternate method of creating this variable... as a factor with cut()
+### No need for case_when() and makes scale_fill_viridis() simpler to use ...
+# qnt <- c(0, quantile(states$fetal_deaths, c(.2, .4, .6, .8), na.rm = T), Inf)
+# qnt_labs <- c(paste('<', qnt[['20%']]),
+#   paste0('[', qnt[['20%']], '-', qnt[['40%']], ')'),
+#   paste0('[', qnt[['40%']], '-', qnt[['60%']], ')'),
+#   paste0('[', qnt[['60%']], '-', qnt[['80%']], ')'),
+#   paste('\u2265', qnt[['80%']]))
+# states <-
+#   states %>% mutate(
+#     fetal_death_q_fctr = cut(
+#       x = fetal_deaths,
+#       breaks = qnt,
+#       labels = qnt_labs,
+#       right = FALSE,
+#       include.lowest = TRUE,
+#       ordered = TRUE
+#     )
+#   )
+
 states %>%
   mutate(mom_race_eth = replace(
     mom_race_eth,
@@ -233,7 +269,7 @@ states %>%
 
 
 
-###############END OF CLASS, IF YOU WISH TO EXPLORE CARTOGRAMS AND REGRESSION SEE BELOW#####################
+### END OF CLASS, IF YOU WISH TO EXPLORE CARTOGRAMS AND REGRESSION SEE BELOW ###
 #Cartograms
 st_crs(states)
 states <- st_transform(states, 2163) #look up what this projection is at spatialreference.org
@@ -302,11 +338,11 @@ exp( 0.0052174 )
 
 # Is there spatial autocorrelation in the data that we need to account for?
 # Let's look at the residuals of our regression model
-fetal_data_nomiss <-
-  fetal_data_new %>% drop_na(percent_smokers, fetal_deaths, births, mom_race_eth)
+fetal_data_nomiss <- fetal_data_new %>% 
+  drop_na(percent_smokers, fetal_deaths, births, mom_race_eth)
 fetal_data_nomiss$residuals <- smoke_poisson$residuals
-fetal_data_nomiss <-
-  fetal_data_nomiss %>% dplyr::select(year, state, mom_race_eth, residuals, mom_race_eth)
+fetal_data_nomiss <- fetal_data_nomiss %>% 
+  dplyr::select(year, state, mom_race_eth, residuals, mom_race_eth)
 states = left_join(
   states,
   fetal_data_nomiss,
