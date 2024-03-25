@@ -22,7 +22,7 @@ pacman::p_load(
   spdep,
   cartogram,
   tmap
-)
+) 
 
 #Read in outcome data (fetal deaths = "spontaneous intrauterine death of a fetus at any time during pregnancy"), downloaded from CDC Wonder:
 fetal_data <- read_csv("data/lab/01/fetal_death.csv")
