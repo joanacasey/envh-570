@@ -1,8 +1,14 @@
 # Package installer for ENV H/EPI 570
 # Updated 2024-03-25 Brian High
 
+# Force use of personal R library folder, creating as needed
+lib_dir <- Sys.getenv("R_LIBS_USER")
+if (!dir.exists(lib_dir)) dir.create(lib_dir, recursive = TRUE)
+.libPaths(lib_dir, include.site = FALSE)
+
 # Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_set_cranrepo("cloud.r-project.org")
 pacman::p_load(
   BiocManager,
   cartogram,
