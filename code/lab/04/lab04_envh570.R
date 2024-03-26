@@ -25,7 +25,9 @@ pacman::p_load(
 # Since rgdal is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgdal/index.html
 # And: https://stackoverflow.com/questions/76868135/
-pacman::p_install_version("rgdal", version = "1.6-7")
+options("rgdal_show_exportToProj4_warnings" = "none")
+if (!requireNamespace("rgdal", quietly = TRUE)) 
+  remotes::install_version("rgdal", version = "1.6-7")
 pacman::p_load(rgdal)
 
 ##############################################################################

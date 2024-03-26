@@ -27,7 +27,8 @@ pacman::p_load(
 # Since rgeos is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgeos/index.html
 # And: https://stackoverflow.com/questions/77687036/
-pacman::p_install_version("rgeos", version = "0.6-4")
+if (!requireNamespace("rgeos", quietly = TRUE)) 
+  remotes::install_version("rgeos", version = "0.6-4")
 pacman::p_load(rgeos)
 
 ##############################################################################################################
