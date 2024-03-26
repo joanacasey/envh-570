@@ -38,15 +38,14 @@ pacman::p_load(
   purrr,
   raster,
   RColorBrewer,
-  readr,
   readr, 
+  remotes,
   rlang,
   sf,
   spdep,
   stringr,
   terra,
   tidyr,
-  tidyr, 
   tmap,
   usethis,
   viridis,
@@ -57,17 +56,15 @@ pacman::p_load(
 # See: https://cran.r-project.org/web/packages/rgdal/index.html
 # And: https://stackoverflow.com/questions/76868135/
 options("rgdal_show_exportToProj4_warnings" = "none")
-if (!requireNamespace("rgdal", quietly = TRUE)) install.packages(
-  'https://cran.r-project.org/src/contrib/Archive/rgdal/rgdal_1.6-7.tar.gz',
-  repos = NULL)
+if (!requireNamespace("rgdal", quietly = TRUE)) 
+  remotes::install_version("rgdal", version = "1.6-7")
 pacman::p_load(rgdal)
 
 # Since rgeos is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgeos/index.html
 # And: https://stackoverflow.com/questions/77687036/
-if (!requireNamespace("rgeos", quietly = TRUE)) install.packages(
-  'https://cran.r-project.org/src/contrib/Archive/rgeos/rgeos_0.6-4.tar.gz',
-  repos = NULL)
+if (!requireNamespace("rgeos", quietly = TRUE)) 
+  remotes::install_version("rgeos", version = "0.6-4")
 pacman::p_load(rgeos)
 
 # Install and load the tidysynth & hurricaneexposure packages and dependencies
