@@ -1,15 +1,20 @@
 # Package installer for ENV H/EPI 570
-# Updated 2024-03-25 Brian High
+# Updated 2024-03-26 Brian High
 
 # Force use of personal R library folder, creating as needed
 lib_dir <- Sys.getenv("R_LIBS_USER")
 if (!dir.exists(lib_dir)) dir.create(lib_dir, recursive = TRUE)
 .libPaths(lib_dir, include.site = FALSE)
 
+# Set default CRAN repo
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "https://cloud.r-project.org"
+  options(repos = r)
+})
+
 # Load packages, installing if needed
-if (!requireNamespace("pacman", quietly = TRUE)) {
-  install.packages("pacman", repos = "cloud.r-project.org")
-}
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(
   BiocManager,
   cartogram,
