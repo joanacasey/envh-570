@@ -7,7 +7,9 @@ if (!dir.exists(lib_dir)) dir.create(lib_dir, recursive = TRUE)
 .libPaths(lib_dir, include.site = FALSE)
 
 # Load packages, installing if needed
-if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  install.packages("pacman", repos = "cloud.r-project.org")
+}
 pacman::p_set_cranrepo("cloud.r-project.org")
 pacman::p_load(
   BiocManager,
