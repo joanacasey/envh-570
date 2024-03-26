@@ -43,7 +43,8 @@ hurricaneexposure::map_counties(storm = "Harvey-2017", metric = "wind",
                                 wind_var = "vmax_gust")
 
 # Reloading
-library(dplyr)
+# library(dplyr)   # Why load this again?
+
 # Distance from Hurricane
 dist <- hurricaneexposure::filter_storm_data(
   storm = "Harvey-2017", output_vars = c("fips", "closest_date", "storm_dist"))
@@ -89,7 +90,7 @@ mortality <- dplyr::left_join(mortality, dist)
 
 ############################################################################
 ## PART 4: the synthetic control
-library(tidysynth)
+# library(tidysynth)   # Why load this again?
 
 # Get rid of missing data because we need complete dataset for this code to work
 summary(mortality)
