@@ -45,20 +45,24 @@ pacman::p_load(
   tmap,
   usethis,
   viridis,
-  weathermetrics,
-  repos = "cloud.r-project.org"
+  weathermetrics
 )
 
 # Since rgdal is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgdal/index.html
 # And: https://stackoverflow.com/questions/76868135/
-pacman::p_install_version("rgdal", version = "1.6-7")
+options("rgdal_show_exportToProj4_warnings" = "none")
+if (!requireNamespace("rgdal", quietly = TRUE)) install.packages(
+  'https://cran.r-project.org/src/contrib/Archive/rgdal/rgdal_1.6-7.tar.gz',
+  repos = NULL)
 pacman::p_load(rgdal)
 
 # Since rgeos is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgeos/index.html
 # And: https://stackoverflow.com/questions/77687036/
-pacman::p_install_version("rgeos", version = "0.6-4")
+if (!requireNamespace("rgeos", quietly = TRUE)) install.packages(
+  'https://cran.r-project.org/src/contrib/Archive/rgeos/rgeos_0.6-4.tar.gz',
+  repos = NULL)
 pacman::p_load(rgeos)
 
 # Install and load the tidysynth & hurricaneexposure packages and dependencies
