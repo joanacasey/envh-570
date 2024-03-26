@@ -7,7 +7,6 @@ if(!requireNamespace("pacman", quietly = TRUE))
 pacman::p_load(
   here,
   weathermetrics,
-  drat,
   dplyr,
   tidyr,
   # hurricaneexposure,   # See below.
@@ -25,6 +24,7 @@ pacman::p_install_version("Synth", version = "1.1-6")
 pacman::p_load(LowRankQP, Synth)
 pacman::p_load_gh("edunford/tidysynth")
 pacman::p_load_gh("geanders/hurricaneexposure")
+pacman::p_load_gh("geanders/hurricaneexposuredata")
 data("hurr_tracks")
 
 #############################################################################
