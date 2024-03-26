@@ -5,7 +5,7 @@
 # environment and introduce you to basic commands to explore data.
 
 # Load packages, installing if needed
-if (!requireNamespace("pacman", quietly = TRUE))
+if (!requireNamespace("pacman", quietly = TRUE)) 
   install.packages("pacman")
 pacman::p_load(
   here,
