@@ -10,7 +10,6 @@ if (!dir.exists(lib_dir)) dir.create(lib_dir, recursive = TRUE)
 if (!requireNamespace("pacman", quietly = TRUE)) {
   install.packages("pacman", repos = "cloud.r-project.org")
 }
-pacman::p_set_cranrepo("cloud.r-project.org")
 pacman::p_load(
   BiocManager,
   cartogram,
@@ -46,7 +45,8 @@ pacman::p_load(
   tmap,
   usethis,
   viridis,
-  weathermetrics
+  weathermetrics,
+  repos = "cloud.r-project.org"
 )
 
 # Since rgdal is deprecated we need to install the last version in the archive.
