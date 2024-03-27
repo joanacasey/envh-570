@@ -4,6 +4,7 @@
 
 - Why are we using RStudio "Server"?
 - Why are we using Github?
+- Why do we make a copy of a provided file before editing? 
 - Why are we using "pacman" and "pak"?
 - Why are we using "here"?
 
