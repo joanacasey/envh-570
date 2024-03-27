@@ -114,10 +114,11 @@ fetal_data_new %>%
   theme_minimal() +
   ylab("") + xlab("Fetal deaths, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-# this sort of looks like a plot of total population, we need denominators
+# This sort of looks like a plot of total population, we need denominators
 
-# Go to CDC Wonder and download total births by state 
-births <- read_csv("data/lab/01/births.csv") 
+# Go to CDC Wonder and download total births by state:
+# https://wonder.cdc.gov/natality.html
+births <- read_csv(here("data/lab/01/births.csv")) 
 glimpse(births)
 
 # Drop births to other race/ethnicities
@@ -147,7 +148,7 @@ fetal_data_new %>%
   ylab("") + 
   xlab("Fetal deaths per 1000 live births, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-# much more informative, what's happening with states with only white rate?
+# Much more informative, what's happening with states with only white rate?
 
 # Reading in a shapefile using st_read
 states <- st_read(here("data/lab/01/US_State_Albers.shp"))
@@ -203,7 +204,9 @@ states %>%
           lwd = 0.1) +
   scale_fill_viridis_c("Fetal deaths per 1000 live births", na.value = "grey") +
   theme_minimal(base_size = 14) +
-  facet_grid(year ~ mom_race_eth) + # does using facet_grid make sense here? seems no to me as you can't see the variability in white fetal death
+  facet_grid(year ~ mom_race_eth) + 
+  # Does using facet_grid make sense here? Seems no to me as you can't see the 
+  # variability in white fetal death
   theme(
     axis.text.x = element_blank(),
     axis.text.y = element_blank(),
@@ -265,7 +268,8 @@ states %>%
     na.value = "grey",
     discrete = T,
     breaks = c(1, 2, 3, 4, 5),
-    labels = c("< 4.75", "[4.75-5.59)", "[5.59-7.37)", "[7.37-10.17)", "\u2265 10.17")
+    labels = c("< 4.75", "[4.75-5.59)", "[5.59-7.37)", "[7.37-10.17)", 
+               "\u2265 10.17")
   ) +
   theme_minimal(base_size = 14) +
   facet_grid(year ~ mom_race_eth) +
@@ -281,16 +285,18 @@ states %>%
         legend.box = "horizontal")
 
 
-
 ### END OF CLASS, IF YOU WISH TO EXPLORE CARTOGRAMS AND REGRESSION SEE BELOW ###
 # Cartograms
 st_crs(states)
-states <- st_transform(states, 2163) #look up what this projection is at spatialreference.org
+# Look up what this projection is at spatialreference.org
+states <- st_transform(states, 2163)
 st_crs(states)
 
 # Create cartogram for Black and white fetal deaths in 2017
-states_black <- states %>% filter(mom_race_eth == "Black or African American" & year == 2017)
-states_white <- states %>% filter(mom_race_eth == "White" & year == 2017) 
+states_black <- states %>% 
+  filter(mom_race_eth == "Black or African American" & year == 2017)
+states_white <- states %>% 
+  filter(mom_race_eth == "White" & year == 2017) 
 
 states_fetaldeath <- cartogram_cont(states_black, "fetal_death_scaled", 
                                     itermax = 10, 
@@ -310,8 +316,9 @@ tm_shape(states_fetaldeath2) +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 
 # OK in this part, we will add in information on smoking
-# Cigarette smoking data from the EH Tracking Network
-cig <- read_csv("data/lab/01/cig_repro_age_state.csv")
+# Cigarette smoking data from the EH Tracking Network:
+# https://www.cdc.gov/nceh/tracking/topics/LifestyleRiskFactors.htm
+cig <- read_csv(here("data/lab/01/cig_repro_age_state.csv"))
 glimpse(cig)
 
 # Want overall average by state and year in the 18-44 age group
@@ -345,7 +352,8 @@ fetal_data_new <- fetal_data_new %>% mutate(percent_smokers = prop_smokers*100)
 # Check distribution of fetal_deaths
 states %>% ggplot(aes(y=fetal_deaths)) + geom_histogram()
 
-smoke_poisson <- glm(fetal_deaths ~ percent_smokers + factor(year) + factor(mom_race_eth) + offset(log(births)), 
+smoke_poisson <- glm(fetal_deaths ~ percent_smokers + factor(year) + 
+                       factor(mom_race_eth) + offset(log(births)), 
                      data = states, family = poisson(link = "log"))
 summary(smoke_poisson)
 exp( 0.0052174 )
