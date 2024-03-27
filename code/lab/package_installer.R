@@ -4,6 +4,14 @@
 # - When run from the shell, expect execution time to be about 3-4 minutes.  
 # Updated 2024-03-26 Brian High
 
+# Clear workspace of all objects and unload all extra (non-base) packages.
+rm(list = ls(all = TRUE))
+if (!is.null(sessionInfo()$otherPkgs)) {
+  res <- suppressWarnings(
+    lapply(paste('package:', names(sessionInfo()$otherPkgs), sep=""),
+           detach, character.only=TRUE, unload=TRUE, force=TRUE))
+}
+
 # Set repo URL for Ubuntu 20.04 (Focal Fossa)
 repo_url <- "https://packagemanager.posit.co/cran/__linux__/focal/latest"
 
