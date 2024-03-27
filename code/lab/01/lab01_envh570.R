@@ -22,6 +22,7 @@ pacman::p_load(
   readr,
   tidyr,
   explore,
+  Hmisc,
   rlang,
   ggplot2,
   RColorBrewer,
@@ -36,6 +37,7 @@ pacman::p_load(
 
 # Read in outcome data (fetal deaths = "spontaneous intrauterine death of a 
 # fetus at any time during pregnancy"), downloaded from CDC Wonder:
+# https://wonder.cdc.gov/fetal-deaths-current.html
 fetal_data <- read_csv(here("data/lab/01/fetal_death.csv"))
 
 # Explore the data using dplyr::glimpse
@@ -47,6 +49,9 @@ summary(fetal_data)
 # Explore the data using explore::describe_tbl and explore::describe
 explore::describe_tbl(fetal_data)
 explore::describe(fetal_data)
+
+# Explore the data using Hmisc::describe
+Hmisc::describe(fetal_data)
 
 # Explore the data using View
 View(fetal_data)
