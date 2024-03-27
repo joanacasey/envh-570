@@ -1,5 +1,13 @@
-#Lab 04 ENV H/EPI 570 - Built environment
-#Updated 03 May 2023 by Joan Casey
+# Lab 04 ENV H/EPI 570 - Built environment
+# Updated 2024-03-26 by Brian High
+
+# Clear workspace of all objects and unload all extra (non-base) packages.
+rm(list = ls(all = TRUE))
+if (!is.null(sessionInfo()$otherPkgs)) {
+  res <- suppressWarnings(
+    lapply(paste('package:', names(sessionInfo()$otherPkgs), sep=""),
+           detach, character.only=TRUE, unload=TRUE, force=TRUE))
+}
 
 #Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE))
@@ -35,7 +43,7 @@ pacman::p_load(rgdal)
 # Bring in Seattle data with SES and trees
 # What is the projection?
 seattle <- st_read(here("data/lab/04/seattle_tree_ses_ct.shp"))
-glimpse(seattle)
+dplyr::glimpse(seattle)
 
 # Plot tree density
 tree_density <- ggplot() +

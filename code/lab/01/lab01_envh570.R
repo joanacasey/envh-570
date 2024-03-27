@@ -1,8 +1,16 @@
 # Lab 01 ENV H/EPI 570
-# Updated 24 Mar 2024 by Joan Casey
+# Updated 2024-03-26 by Brian High
 
 # Objective: This file is meant to get you acclimated to the online RStudio 
 # environment and introduce you to basic commands to explore data.
+
+# Clear workspace of all objects and unload all extra (non-base) packages.
+rm(list = ls(all = TRUE))
+if (!is.null(sessionInfo()$otherPkgs)) {
+  res <- suppressWarnings(
+    lapply(paste('package:', names(sessionInfo()$otherPkgs), sep=""),
+           detach, character.only=TRUE, unload=TRUE, force=TRUE))
+}
 
 # Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE)) 
@@ -37,8 +45,8 @@ glimpse(fetal_data)
 summary(fetal_data)
 
 # Explore the data using explore::describe_tbl and explore::describe
-describe_tbl(fetal_data)
-describe(fetal_data)
+explore::describe_tbl(fetal_data)
+explore::describe(fetal_data)
 
 # Explore the data using View
 View(fetal_data)

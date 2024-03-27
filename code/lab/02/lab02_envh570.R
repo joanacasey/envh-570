@@ -1,5 +1,13 @@
-#Lab 02 ENV H/EPI 570
-#Updated 04 April 2023 by Joan Casey
+# Lab 02 ENV H/EPI 570
+# Updated 2024-03-26 by Brian High
+
+# Clear workspace of all objects and unload all extra (non-base) packages.
+rm(list = ls(all = TRUE))
+if (!is.null(sessionInfo()$otherPkgs)) {
+  res <- suppressWarnings(
+    lapply(paste('package:', names(sessionInfo()$otherPkgs), sep=""),
+           detach, character.only=TRUE, unload=TRUE, force=TRUE))
+}
 
 #Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE))
@@ -38,8 +46,8 @@ set.seed(570)
 # Bring in data on Tulsa and Osage counties oil and gas wells from Enverus (https://www.enverus.com/)
 ## Label the well's production type, replace "other" with "disposal well" 
 wells <- read_csv(here("data/lab/02/tulsa_wells_no_NA_clean.csv")) %>%
-  select(-ends_with("date")) %>%
-  select(
+  dplyr::select(-ends_with("date")) %>%
+  dplyr::select(
     state,
     surface_lat_wgs84, #latitude of well
     surface_long_wgs84, #longitude of well
@@ -50,7 +58,7 @@ wells <- read_csv(here("data/lab/02/tulsa_wells_no_NA_clean.csv")) %>%
   mutate(production_type = recode(production_type, "other" = "disposal well"))
 
 #Look at the data
-glimpse(wells) 
+dplyr::glimpse(wells) 
 
 #Let's look at well status, production type, and year of completion
 wells %>% group_by(well_status) %>% summarise(n = n()) #Very few still active
@@ -73,7 +81,7 @@ ses <- read.fst("data/lab/02/tract_dem_pov.fst") %>%
          tract_fips = str_c(county_fips, tract_code),
          gisjoin = as.character(gisjoin)) %>% 
   filter(county_fips %in% c("40143", "40113")) %>% 
-  select(gisjoin, county_fips, tract_fips, starts_with("pct_")) %>%
+  dplyr::select(gisjoin, county_fips, tract_fips, starts_with("pct_")) %>%
   left_join(density, by = "gisjoin")
 # Remove extra county_fips
 ses <- ses %>% dplyr::select(-county_fips)
@@ -416,7 +424,7 @@ holc_boxplot <- holc_wells %>%
       colour = "grey"
     ),
     panel.grid.major.x = element_line(
-      size = 0.25,
+      linewidth = 0.25,
       linetype = 'solid',
       colour = "grey"
     ),

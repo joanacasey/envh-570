@@ -1,5 +1,13 @@
 # Lab 05 ENV H/EPI 570
-# Updated 28 April 2023 by Joan Casey
+# Updated 2024-03-26 by Brian High
+
+# Clear workspace of all objects and unload all extra (non-base) packages.
+rm(list = ls(all = TRUE))
+if (!is.null(sessionInfo()$otherPkgs)) {
+  res <- suppressWarnings(
+    lapply(paste('package:', names(sessionInfo()$otherPkgs), sep=""),
+           detach, character.only=TRUE, unload=TRUE, force=TRUE))
+}
 
 #Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE))
