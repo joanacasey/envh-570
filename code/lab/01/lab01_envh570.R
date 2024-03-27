@@ -324,7 +324,7 @@ glimpse(cig)
 # Want overall average by state and year in the 18-44 age group
 cig <- cig %>% 
   group_by(state, year) %>%
-  summarise(prop_smokers = mean(proportion_smok, na.rm = T))
+  dplyr::summarise(prop_smokers = mean(proportion_smok, na.rm = T))
 summary(cig$prop_smokers) # ranges from 9.3% to 33.7%
 
 fetal_data_new <- left_join(fetal_data_new, cig, 
