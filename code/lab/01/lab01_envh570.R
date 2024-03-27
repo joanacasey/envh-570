@@ -18,11 +18,11 @@ if (!requireNamespace("pacman", quietly = TRUE))
 pacman::p_load(
   here,
   usethis,
+  Hmisc,
   dplyr,
   readr,
   tidyr,
   explore,
-  Hmisc,
   rlang,
   ggplot2,
   RColorBrewer,
