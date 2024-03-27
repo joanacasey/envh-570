@@ -78,7 +78,7 @@ fetal_data_new <- left_join(
   )
 )
 
-#Glimpse it
+# Glimpse it
 glimpse(fetal_data_new)
 
 ## Let's create some data visualizations:
@@ -109,13 +109,13 @@ fetal_data_new %>%
   theme_minimal() +
   ylab("") + xlab("Fetal deaths, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-#this sort of looks like a plot of total population, we need denominators
+# this sort of looks like a plot of total population, we need denominators
 
 # Go to CDC Wonder and download total births by state 
 births <- read_csv("data/lab/01/births.csv") 
 glimpse(births)
 
-#Drop births to other race/ethnicities
+# Drop births to other race/ethnicities
 births <- drop_na(births)
 table(births$year)
 
@@ -142,18 +142,18 @@ fetal_data_new %>%
   ylab("") + 
   xlab("Fetal deaths per 1000 live births, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-#much more informative, what's happening with states with only white rate?
+# much more informative, what's happening with states with only white rate?
 
 # Reading in a shapefile using st_read
 states <- st_read(here("data/lab/01/US_State_Albers.shp"))
 head(states) 
 
-#What is the CRS? Read about crs here: https://rspatial.org/spatial/6-crs.html
-#Projected CRS = North America Albers Equal Area Conic 
-#read more here: http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm
+# What is the CRS? Read about crs here: https://rspatial.org/spatial/6-crs.html
+# Projected CRS = North America Albers Equal Area Conic 
+# read more here: http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm
 st_crs(states)
 
-#Add the fetal death data to the spatial file by state name (note these are 
+# Add the fetal death data to the spatial file by state name (note these are 
 # different variable names in each dataset)
 states <- left_join(states, fetal_data_new, by = c("STATE_NAME" = "state"))
 glimpse(states)
@@ -184,7 +184,7 @@ states %>%
         panel.grid.minor = element_blank()) +
   theme(legend.position = "bottom", legend.box = "horizontal")
 
-#Map the number of fetal deaths per 1000 live births by race/ethnicity
+# Map the number of fetal deaths per 1000 live births by race/ethnicity
 # Plot all years using facet_grid, read about it using ?facet_grid
 states %>%
   mutate(mom_race_eth = replace(
@@ -198,7 +198,7 @@ states %>%
           lwd = 0.1) +
   scale_fill_viridis_c("Fetal deaths per 1000 live births", na.value = "grey") +
   theme_minimal(base_size = 14) +
-  facet_grid(year ~ mom_race_eth) + #does using facet_grid make sense here? seems no to me as you can't see the variability in white fetal death
+  facet_grid(year ~ mom_race_eth) + # does using facet_grid make sense here? seems no to me as you can't see the variability in white fetal death
   theme(
     axis.text.x = element_blank(),
     axis.text.y = element_blank(),
@@ -278,12 +278,12 @@ states %>%
 
 
 ### END OF CLASS, IF YOU WISH TO EXPLORE CARTOGRAMS AND REGRESSION SEE BELOW ###
-#Cartograms
+# Cartograms
 st_crs(states)
 states <- st_transform(states, 2163) #look up what this projection is at spatialreference.org
 st_crs(states)
 
-#Create cartogram for Black and white fetal deaths in 2017
+# Create cartogram for Black and white fetal deaths in 2017
 states_black <- states %>% filter(mom_race_eth == "Black or African American" & year == 2017)
 states_white <- states %>% filter(mom_race_eth == "White" & year == 2017) 
 
@@ -304,7 +304,7 @@ tm_shape(states_fetaldeath2) +
   tm_polygons("fetal_death_scaled", style = "jenks") +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 
-#OK in this part, we will add in information on smoking
+# OK in this part, we will add in information on smoking
 # Cigarette smoking data from the EH Tracking Network
 cig <- read_csv("data/lab/01/cig_repro_age_state.csv")
 glimpse(cig)
@@ -315,7 +315,8 @@ cig <- cig %>%
   summarise(prop_smokers = mean(proportion_smok, na.rm = T))
 summary(cig$prop_smokers) # ranges from 9.3% to 33.7%
 
-fetal_data_new <- left_join(fetal_data_new, cig, by = c("state" = "state", "year" = "year"))
+fetal_data_new <- left_join(fetal_data_new, cig, 
+                            by = c("state" = "state", "year" = "year"))
 
 # Correlation between smoking and fetal deaths
 fetal_data_new %>% 
@@ -323,7 +324,7 @@ fetal_data_new %>%
   corrr::correlate() 
 
 # Add cigarette smoking to states
-states <- st_read("data/lab/01/US_State_Albers.shp")
+states <- st_read(here("data/lab/01/US_State_Albers.shp"))
 head(states)
 
 # Add fetal death data to states shapefile
@@ -392,7 +393,6 @@ lw <- nb2listw(nb, style = "S", zero.policy = TRUE)
 lw$weights[1]
 
 # Get Moran's I
-#set.seed
 set.seed(111)
 MC <- moran.mc(states$fetal_death_scaled,lw, na.action = na.exclude, nsim = 500)
 MC

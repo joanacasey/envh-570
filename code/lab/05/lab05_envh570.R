@@ -9,7 +9,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
            detach, character.only=TRUE, unload=TRUE, force=TRUE))
 }
 
-#Load packages, installing if needed
+# Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
@@ -26,7 +26,7 @@ pacman::p_load(
 )
 
 ############################################################################
-#Install and load the tidysynth & hurricaneexposure packages and dependencies
+# Install and load the tidysynth & hurricaneexposure packages and dependencies
 pacman::p_install_version("LowRankQP", version = "1.0.5")
 pacman::p_install_version("Synth", version = "1.1-6")
 pacman::p_load(LowRankQP, Synth)
@@ -36,9 +36,9 @@ pacman::p_load_gh("geanders/hurricaneexposuredata")
 data("hurr_tracks")
 
 #############################################################################
-#LAB STARTS HERE#
+# LAB STARTS HERE #
 
-#PART 1#
+# PART 1#
 # Visualize hurricane data 
 # Storm track
 hurricaneexposure::map_tracks(storm = "Harvey-2017")
@@ -66,7 +66,7 @@ dist <- dist %>% dplyr::filter(fips=="48167" | storm_dist>200)
 dist <- dist %>% dplyr::mutate(exposed = ifelse(fips=="48167", 1,0))
                         
 # Check data
-table(dist$exposed) #1 exposed county (Harris)
+table(dist$exposed) # 1 exposed county (Harris)
 
 #############################################################################
 ## PART 2: ALL-CAUSE MORTALITY DATA
@@ -107,7 +107,7 @@ mortality <- mortality %>% tidyr::drop_na(death_rate, unemp, med_inc)
 # Also need counties to have complete years
 mortality <- mortality %>% group_by(fips) %>% dplyr::mutate(n=n())
 table(mortality$n)
-mortality <- mortality %>% dplyr::filter(n==17) #just keeping counties with data in all 17 years
+mortality <- mortality %>% dplyr::filter(n==17) # just keeping counties with data in all 17 years
 
 # Look at the number of counties by state
 table(mortality$state_name)

@@ -9,7 +9,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
            detach, character.only=TRUE, unload=TRUE, force=TRUE))
 }
 
-#Load packages, installing if needed
+# Load packages, installing if needed
 if (!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
@@ -95,27 +95,27 @@ noise <-
   read_csv(here("data/lab/04/noise_envh570_seattle.csv")) 
 # cool that R recognizes the time column as time of day
 
-#Remove erroneous rows of data
+# Remove erroneous rows of data
 noise <- drop_na(noise)
 
-#time of day
+# time of day
 summary(noise$time)
 
-#how does these data look? see any problems?
+# how does these data look? see any problems?
 summary(noise)
 
 noise <- noise %>% mutate(longit = ifelse(longit<0, longit, -1*longit))
 
-#make an sf object with lat/longit
+# make an sf object with lat/longit
 noise_sf <-
   st_as_sf(noise, coords = c("longit", "latit"), crs = "EPSG:4326")
 
-#get coordinates
+# get coordinates
 coords <- st_coordinates(noise_sf)
 lat = coords[, 2]
 long = coords[, 1]
 
-#Make a map of Seattle with leaflet (you can change long/lat/zoom)
+# Make a map of Seattle with leaflet (you can change long/lat/zoom)
 m <- leaflet() %>% setView(lng = -122.38,
                            lat = 47.6,
                            zoom = 11)
@@ -130,7 +130,7 @@ m <- m %>% addProviderTiles(providers$CartoDB.Positron) %>%
   )
 m
 
-#Let's make a proportional symbol map
+# Let's make a proportional symbol map
 symbols <- makeSymbolsSize(
   values = noise_sf$noise,
   shape = 'circle',
@@ -140,7 +140,7 @@ symbols <- makeSymbolsSize(
   baseSize = 10
 )
 
-#Making the map
+# Making the map
 m2 <- leaflet() %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
   addMarkers(
@@ -183,14 +183,14 @@ ggplot() +
   scale_size_continuous("Noise level (dB)")
 
 # Create a similar map with income 
-##ADD ME##
+## ADD ME ##
 
 #############################################################################
 ## PART 4: CROWD-SOURCED NOISE MEASUREMENTS VS NATIONAL NOISE MODEL
 transit_noise <- raster("data/lab/04/seattle_transit.tif")
 
 # Check out specs of the raster data
-transit_noise #How many columnns and rows of data? How many total grid cells?
+transit_noise # How many columnns and rows of data? How many total grid cells?
 
 # Plot it
 plot(transit_noise)
@@ -216,4 +216,4 @@ cor.test(noise_sf$noise, noise_sf$transit_noise,
          method = "spearman")
 
 # You do Pearson 
-#ADD ME
+# ADD ME

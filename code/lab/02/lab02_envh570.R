@@ -9,7 +9,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
            detach, character.only=TRUE, unload=TRUE, force=TRUE))
 }
 
-#Load packages, installing if needed
+# Load packages, installing if needed
 if(!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
@@ -17,7 +17,7 @@ pacman::p_load(
   sf,
   janitor,
   readr, 
-  #rgeos,  # Note: This package has been deprecated, see below for work-around.
+  # rgeos,  # Note: This package has been deprecated, see below for work-around.
   viridis,
   Hmisc,
   GGally,
@@ -49,24 +49,24 @@ wells <- read_csv(here("data/lab/02/tulsa_wells_no_NA_clean.csv")) %>%
   dplyr::select(-ends_with("date")) %>%
   dplyr::select(
     state,
-    surface_lat_wgs84, #latitude of well
-    surface_long_wgs84, #longitude of well
+    surface_lat_wgs84, # latitude of well
+    surface_long_wgs84, # longitude of well
     well_status, 
     production_type,
-    comp_year #year well was completed
+    comp_year # year well was completed
   ) %>%
   mutate(production_type = recode(production_type, "other" = "disposal well"))
 
-#Look at the data
+# Look at the data
 dplyr::glimpse(wells) 
 
-#Let's look at well status, production type, and year of completion
-wells %>% group_by(well_status) %>% summarise(n = n()) #Very few still active
-wells %>% group_by(production_type) %>% summarise(n = n()) #Mostly disposal wells
-wells %>% group_by(comp_year) %>% summarise(n = n()) #Not a useful way to look, too many rows
+# Let's look at well status, production type, and year of completion
+wells %>% group_by(well_status) %>% summarise(n = n()) # Very few still active
+wells %>% group_by(production_type) %>% summarise(n = n()) # Mostly disposal wells
+wells %>% group_by(comp_year) %>% summarise(n = n()) # Not a useful way to look, too many rows
 
 # To-do: create a figure showing year of well completion (comp_year)
-##ADD HERE##
+## ADD HERE##
 
 ##############################################################################################################
 # EJ analysis #1 (SES/race/ethnicity - modern day)
@@ -98,7 +98,7 @@ ses %>%
 # and filtering to the study area (Tulsa and Osage counties, FIPS = 40143 and 40113).
 tract_geo <- st_read("data/lab/02/ok_tract_2010.shp") %>%
   mutate(county_fips = str_c(STATEFP10, COUNTYFP10)) %>%
-  filter(county_fips %in% c("40143", "40113")) #What is the projection? Look up here: https://epsg.io/102003
+  filter(county_fips %in% c("40143", "40113")) # What is the projection? Look up here: https://epsg.io/102003
 
 # Transforming coordinates to UTM 14N projection, so we can be in meters: https://epsg.io/26914 
 # Check which UTM zone for OK here: https://pubs.usgs.gov/fs/2001/0077/report.pdf
@@ -119,13 +119,13 @@ map_pct_amer_in <- ggplot(data = ses_sp) +
   scale_fill_viridis(name = "Percent American Indian (%)",
                      na.value = "maroon2") +
   labs(title = "Tract-level percent American Indian in Tulsa and Osage Counties") +
-  theme_void(base_size = 12) + #use theme void for maps because eliminates background
+  theme_void(base_size = 12) + # use theme void for maps because eliminates background
   theme(legend.position = "bottom") 
 map_pct_amer_in
 
 # To-do: create a map of another census sociodemographic variable
 # Try using a different color scale (change something in scale_fill_viridis)
-#ADD HERE
+# ADD HERE
 
 # Count wells per census tract and look at correlation with % American Indian
 # Create sf (spatial) object from lat/long coordinates
@@ -192,7 +192,7 @@ overlay_map
 # Notice that census tracts are much smaller and that 
 # there are fewer wells overall (scale breaks change)
 overlay_tulsa_map <- tract_geo_utm14n %>% 
-  dplyr::filter(county_fips == 40143) %>% #Filtering to Tulsa
+  dplyr::filter(county_fips == 40143) %>% # Filtering to Tulsa
   dplyr::filter(!well_count == 0) %>%
   ggplot() + 
   geom_sf(data = ses_sp %>% dplyr::filter(county_fips == 40143),
@@ -224,7 +224,7 @@ tract_geo_utm14n$well_count_modern_day <- lengths(st_intersects(tract_geo_utm14n
 # Make tract_geo_utm14n not spatial so we can join
 tract_geo_utm14n_nonsp <- st_drop_geometry(tract_geo_utm14n)
 ct_ses <- left_join(ses_sp %>% dplyr::select(GISJOIN, starts_with("pct_"), density),
-                    tract_geo_utm14n_nonsp %>% dplyr::select(GISJOIN, well_count_modern_day, #just keeping a few variables
+                    tract_geo_utm14n_nonsp %>% dplyr::select(GISJOIN, well_count_modern_day, # just keeping a few variables
                                                              lon_centroid, lat_centroid))
 
 # Regression 
@@ -290,7 +290,7 @@ nb_lw <- nb2listw(nb, style="B")
 
 # Running Moran's I test -- values will range from -1 to 1 
 moran.test(tract_geo_utm14n$resid, nb_lw) 
-#p-value <0.05  indicating support for non-randomly distributed residuals
+# p-value <0.05  indicating support for non-randomly distributed residuals
 
 # We run a simple Poisson model and control for population density
 # now with a spline on census tract centroid lat/long
@@ -299,7 +299,7 @@ reg_amer_in_sp <- gam(well_count_modern_day ~ pct_amer_in + density + s(lat_cent
 
 # Do results change?
 summary(reg_amer_in_sp)
-exp(0.0732) #1.08
+exp(0.0732) # 1.08
 
 # Let's look at the residuals now
 # Let's look at the model Pearson residuals spatially
@@ -453,7 +453,7 @@ holc_map + holc_well_map
 
 # For doctoral students:
 # To-do: use patchwork to plot one above the other instead of side by side
-#ADD CODE HERE
+# ADD CODE HERE
 
 # To-do: work with wells drileld pre/post HOLC
 # HOLC maps were drawn in 1937 for Tulsa, so let's break wells into two groups: pre- and post-1937
@@ -469,12 +469,12 @@ holc_buff_1km$well_count_pre <- lengths(st_intersects(holc_buff_1km, pre_holc_we
 
 # Type of wells by pre/post HOLC grading
 # To-do, how many wells drilled pre/post HOLC; show on a figure
-#ADD HERE
+# ADD HERE
 
 # Count of wells drilled after 1937 in HOLC communities
 holc_buff_1km$well_count_post <- lengths(st_intersects(holc_buff_1km, post_holc_wells_utm14n))
 
 
 # To-do: try running a regression model to look at the association between HOLC grade and wells
-#ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
+# ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
 
