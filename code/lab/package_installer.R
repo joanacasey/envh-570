@@ -1,8 +1,8 @@
 # Package installer for "rstudio.sph" ENV H/EPI 570
-# - Binary package installation for Ubuntu 20.04, optimized for high speed
+# - Binary package installation for Windows, macOS, and Ubuntu (or Debian) Linux
 # - To run from shell: Rscript --vanilla --no-save code/lab/package_installer.R
 # - When run from the shell, expect execution time to be about 3-4 minutes.  
-# Updated 2024-03-26 Brian High
+# Updated 2024-03-28 Brian High
 
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
@@ -12,13 +12,35 @@ if (!is.null(sessionInfo()$otherPkgs)) {
            detach, character.only=TRUE, unload=TRUE, force=TRUE))
 }
 
-# Set repo URL for Ubuntu 20.04 (Focal Fossa)
-repo_url <- "https://packagemanager.posit.co/cran/__linux__/focal/latest"
-
 # Force use of personal R library folder, creating as needed
 lib_dir <- Sys.getenv("R_LIBS_USER")
 if (!dir.exists(lib_dir)) dir.create(lib_dir, recursive = TRUE)
 .libPaths(lib_dir, include.site = FALSE)
+
+# Choose appropriate repository URL based on operating system
+if (Sys.info()["sysname"] == "Linux") {
+  # Find linux distribution and version
+  lsb_release <- system(command = "lsb_release -a", intern = TRUE, 
+                        ignore.stderr = TRUE)
+  x <- as.data.frame(lsb_release)
+  df <- data.frame(strsplit(x$lsb_release, ":\\t"))
+  names(df) <- lapply(df[1, ], as.character)
+  df <- df[-1,] 
+  
+  if (df$`Distributor ID` %in% c("Debian", "Ubuntu")) {
+    # Set repository URL for binary packages hosted by Posit
+    repo_url <- 
+      sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", 
+              df$Codename)
+  } else {
+    # Set repository URL for CRAN mirror
+    repo_url <- "https://cloud.r-project.org"
+  }
+  
+} else {
+  # Set repository URL for binary packages hosted by Posit
+  repo_url <- "https://packagemanager.posit.co/cran/latest"
+}
 
 # Set option for HTTP User Agent to include R version information in header
 # See: https://www.r-bloggers.com/2023/07/posit-package-manager-for-linux-r-binaries/
@@ -33,7 +55,7 @@ local(options(HTTPUserAgent = sprintf(
   )
 )))
 
-# Set binary package repo, as binary packages install faster
+# Set CRAN package repository URL
 local(options(repos = c(CRAN = repo_url)))
 
 # Define a function to conditionally install packages, if needed
