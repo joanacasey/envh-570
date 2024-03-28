@@ -41,7 +41,7 @@
   - Scripts are written with platform-neutral, relative file paths for 
     greater portability.
 - What guidelines for coding style are we following?
-  - We are trying to follow [Google's R Style Guide](https://google.github.io/styleguide/Rguide.html).
+  - We are trying to follow [Tidyverse Style Guide](https://style.tidyverse.org/index.html).
 - What RStudio settings are generally recommended?
   - See [Customization and Global Options](https://github.com/deohs/r_onramp/blob/main/Introduction.md#customization-and-global-options).
   - We also recommend Tools -> Global Options -> General -> Workspace
