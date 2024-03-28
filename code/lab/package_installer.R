@@ -38,8 +38,9 @@ if (Sys.info()["sysname"] == "Linux") {
   }
   
 } else {
-  # Set repository URL for binary packages hosted by Posit
-  repo_url <- "https://packagemanager.posit.co/cran/latest"
+  # Set repository URL for CRAN mirror
+  #repo_url <- "https://packagemanager.posit.co/cran/latest"
+  repo_url <- "https://cloud.r-project.org"
 }
 
 # Set option for HTTP User Agent to include R version information in header
