@@ -58,7 +58,7 @@ wells <- read_csv(here("data/lab/02/tulsa_wells_no_NA_clean.csv")) %>%
   ) %>%
   mutate(production_type = recode(production_type, "other" = "disposal well"))
 
-# Look at the data
+# Look at the data and compare to your codebook in the handout
 dplyr::glimpse(wells) 
 
 # Let's look at well status, production type, and year of completion
@@ -70,7 +70,11 @@ wells %>% group_by(comp_year) %>% summarise(n = n())
 # Not a useful way to look, too many rows
 
 # To-do: create a figure showing year of well completion (comp_year)
-## ADD HERE##
+# Ideas include a bar chart, a line chart, something else?
+# Example for bar chart but please feel free to improve
+wells %>% ggplot(aes(comp_year)) + geom_bar()
+
+## ADD YOURS HERE##
 
 #############################################################################
 # EJ analysis #1 (SES/race/ethnicity - modern day)
@@ -87,7 +91,11 @@ ses <- read.fst("data/lab/02/tract_dem_pov.fst") %>%
   filter(county_fips %in% c("40143", "40113")) %>% 
   dplyr::select(gisjoin, county_fips, tract_fips, starts_with("pct_")) %>%
   left_join(density, by = "gisjoin")
-# Remove extra county_fips
+
+# Look at these data
+ses <- glimpse(ses)
+
+# Remove extra county_fips, don't need it
 ses <- ses %>% dplyr::select(-county_fips)
 
 # Descriptive statistics of tract-level SES variables, what do you observe?
@@ -95,6 +103,7 @@ ses %>%
   dplyr::select(starts_with("pct"), density) %>%
   psych::describe(na.rm = TRUE) %>% 
   as.data.frame(stringsAsFactors = FALSE) %>%
+  #Note that we use the dplyr::selection convention here
   dplyr::select(n, mean, sd, median, min, max)
 
 # Map of tract-level percent American Indian population 
@@ -112,10 +121,10 @@ tract_geo <- st_read("data/lab/02/ok_tract_2010.shp") %>%
 # https://pubs.usgs.gov/fs/2001/0077/report.pdf
 tract_geo_utm14n <- st_transform(tract_geo, crs=26914)
 
-# What is the tract identifier? GEOID10
+# What is the tract identifier? A: GEOID10
 glimpse(tract_geo_utm14n)
 
-# What is the tract identifier in ses? tract_fips
+# What is the tract identifier in ses? A: tract_fips
 glimpse(ses)
 
 # Merging data and shapefile, recall that we merge onto the spatial file to 
@@ -281,7 +290,6 @@ output.table <- coeff.table %>%
 
 output.table
 
-
 # Let's look at the model Pearson residuals spatially
 # Extracting the model residuals
 residuals <- resid(reg_amer_in)
@@ -362,6 +370,7 @@ residual_ct_map2 <- tract_geo_utm14n %>%
 residual_ct_map2
 
 # Plot the residual maps side by side
+# Which is "better?" and why?
 residual_ct_map + residual_ct_map2
 
 #### Moran's I - test of global clustering of residuals
@@ -374,7 +383,7 @@ nb_lw <- nb2listw(nb, style="B")
 
 # Running Moran's I test -- values will range from -1 to 1 
 moran.test(tract_geo_utm14n$resid, nb_lw) 
-# What does this indicate?
+# What does this Morna's I and p-value indicate?
 
 #############################################################################
 # EJ analysis #2 (redlining - historical perspectives)
@@ -406,6 +415,7 @@ colors <- c("#006f3c","#264b96","#f9a73e","#bf212f")
 # Mapping HOLC grades
 holc_map <- 
   holc_utm14n %>% ggplot() + geom_sf(aes(fill=factor(holc_grade))) +
+  #what does scale_fill_manual do? 
   scale_fill_manual("HOLC grade", values=colors) +
   theme_void(base_size=14) + 
   theme(axis.text.x = element_blank(),
@@ -443,7 +453,7 @@ wells_holc_dist <- holc_wells %>% group_by(holc_grade) %>%
             p50_well_count=quantile(well_count, probs=0.5),
             p75_well_count=quantile(well_count, probs=0.75)) %>% 
   knitr::kable()
-wells_holc_dist
+wells_holc_dist #what does the p75_well_count column show us?
 
 # Visualizing boxplot for each HOLC grade
 holc_boxplot <- holc_wells %>%
@@ -487,7 +497,7 @@ holc_well_map <-
 # Use patchwork to plot side by side 
 holc_map + holc_well_map
 
-# For doctoral students:
+# For doctoral students only:
 # To-do: use patchwork to plot one above the other instead of side by side
 # ADD CODE HERE
 
@@ -513,7 +523,6 @@ holc_buff_1km$well_count_pre <-
 # Count of wells drilled after 1937 in HOLC communities
 holc_buff_1km$well_count_post <- 
   lengths(st_intersects(holc_buff_1km, post_holc_wells_utm14n))
-
 
 # To-do: try running a regression model to look at the association between 
 # HOLC grade and wells
