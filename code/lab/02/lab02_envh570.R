@@ -1,5 +1,5 @@
 # Lab 02 ENV H/EPI 570
-# Updated 2024-03-26 by Brian High
+# Updated 2024-03-28 by Joan Casey
 
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
