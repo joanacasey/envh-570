@@ -69,7 +69,7 @@ pkg_inst <- function(pkgs) {
 
 # Install packages as needed
 pkgs <- c("BiocManager", "cartogram", "corrr", "dplyr", "explore", "fst", 
-          "GGally", "ggmap", "ggplot2", "here", "Hmisc", "janitor", 
+          "GGally", "ggmap", "ggplot2", "here", "Hmisc", "janitor", "knitr", 
           "leaflegend", "leaflet", "LowRankQP", "marginaleffects", "MetBrewer", 
           "mgcv", "pacman", "patchwork", "psych", "purrr", "raster", 
           "RColorBrewer", "readr", "remotes", "rlang", "tmap", "sf", "spdep", 
