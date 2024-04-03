@@ -37,7 +37,7 @@
   - Scripts are self-contained, or only refer to files which are in the Git 
     repository. All files (code and data) included in the repository are all 
     you need to reproduce the analysis.
-  - Scripts will install packages for you if there are missing from your system.
+  - Scripts will install packages for you if any are missing from your system.
   - Scripts are written with platform-neutral, relative file paths for 
     greater portability.
 - What guidelines for coding style are we following?
