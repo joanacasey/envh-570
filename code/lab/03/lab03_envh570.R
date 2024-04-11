@@ -68,7 +68,7 @@ table(dist$exposed) # 1 exposed county (Onslow)
 
 #############################################################################
 ## PART 2: ALL-CAUSE MORTALITY DATA
-mortality <- readRDS(here("data/lab/05/county_mortality.RDS"))
+mortality <- readRDS(here("data/lab/03/county_mortality.RDS"))
 
 # Restrict to counties in dist dataframe
 mortality <- mortality %>% dplyr::filter(fips %in% dist$fips)
@@ -90,7 +90,7 @@ mortality <- mortality %>% dplyr::mutate(death_rate = n_deaths/pop * 1000)
 ############################################################################
 ## PART 3: Other data to help generate the synthetic control
 # Annual median income and unemployment
-covar <- readRDS(here("data/lab/05/income_unemp.rds"))
+covar <- readRDS(here("data/lab/03/income_unemp.rds"))
 mortality <- dplyr::left_join(mortality, covar)
 mortality <- dplyr::left_join(mortality, dist)
 
