@@ -105,10 +105,10 @@ mortality <- mortality %>% tidyr::drop_na(death_rate, unemp, med_inc)
 # Look at the number of counties by state
 table(mortality$state_name)
 
-#Look at number of "exposed" counties by state
-table(mortality$state_name, mortality$exposed)
+#Confirm exposed county in the dataframe
+mortality %>% filter(exposed==1) 
 
-# Also going to restrict to counties in Texas, Missouri, North Carolina
+# Also going to restrict to counties in Georgia, Maryland, Virginia
 # because model takes too long to run
 mortality <- mortality %>% dplyr::filter(
   state_name == "Georgia" |
