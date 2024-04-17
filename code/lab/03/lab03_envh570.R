@@ -197,7 +197,7 @@ mortality_out <-
 
 ############################################################################
 # Part 5 plotting etc.
-# Plot Galveston County over time versus other counties included
+# Plot Onslow County over time versus other counties included
 mortality_out %>% plot_trends()
 
 # Plot differences in counties over time
