@@ -37,6 +37,7 @@ data("hurr_tracks")
 
 #############################################################################
 # LAB STARTS HERE #
+glimpse(hurr_tracks)
 
 # PART 1#
 # Visualize hurricane data 
