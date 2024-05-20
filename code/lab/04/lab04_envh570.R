@@ -73,11 +73,11 @@ income <- ggplot() +
                            colors = met.brewer("Degas"),
                            na.value = "grey50")
 
-
+#Plotting these side-by-side using patchwork
 tree_density + income
 
 # Try adding figure for percent vacant housing below
-ggplot() +
+vacant <- ggplot() +
   geom_sf(data = seattle, aes(fill = PCT_VAC)) +
   theme_void(base_size = 14) +
   theme(
@@ -86,24 +86,42 @@ ggplot() +
     axis.ticks = element_blank(),
     rect = element_blank()
   ) + scale_fill_gradientn("% vacant",
-                           colors = met.brewer("Degas"),
+                           colors = met.brewer("Degas"), 
                            na.value = "grey50")
 
+#Plotting these side-by-side using patchwork
+tree_density + income + vacant #Any issues with the color palette here? 
+
+#Plot again with better color for % vacant
+flipped_palette <- rev(met.brewer("Degas"))
+vacant <- ggplot() +
+  geom_sf(data = seattle, aes(fill = PCT_VAC)) +
+  theme_void(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    rect = element_blank()
+  ) + scale_fill_gradientn("% vacant",
+                           colors = flipped_palette, 
+                           na.value = "grey50")
+tree_density + income + vacant 
 #############################################################################
 ## PART 2: CROWD-SOURCED NOISE MEASUREMENTS
 noise <-
-  read_csv(here("data/lab/04/noise_envh570_seattle.csv")) 
+  read_csv(here("data/lab/04/noise_envh570_seattle_2024.csv")) 
 # cool that R recognizes the time column as time of day
+
+#glimpse it
+glimpse(noise)
 
 # Remove erroneous rows of data
 noise <- drop_na(noise)
 
-# time of day
-summary(noise$time)
-
 # how does these data look? see any problems?
 summary(noise)
 
+#correct an error in data entry (someone missed a -)
 noise <- noise %>% mutate(longit = ifelse(longit<0, longit, -1*longit))
 
 # make an sf object with lat/longit
@@ -209,7 +227,6 @@ ggplot(noise_sf, aes(noise, transit_noise)) + geom_point() +
   geom_abline(linetype="dashed") + # adding a reference line +
   scale_x_continuous("Our noise measurements (dBA)", limits=c(40,80))+
   scale_y_continuous("Transit noise model (dBA)", limits=c(40,80))
-
 
 # Pearson and Spearman correlation
 cor.test(noise_sf$noise, noise_sf$transit_noise,
