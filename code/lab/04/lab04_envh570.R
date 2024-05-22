@@ -1,5 +1,5 @@
 # Lab 04 ENV H/EPI 570 - Built environment
-# Updated 2024-03-26 by Brian High
+# Updated 2024-03-26 by Brian High and 2024-05-20 by Joan Casey
 
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
@@ -134,9 +134,9 @@ lat = coords[, 2]
 long = coords[, 1]
 
 # Make a map of Seattle with leaflet (you can change long/lat/zoom)
-m <- leaflet() %>% setView(lng = -122.38,
-                           lat = 47.6,
-                           zoom = 11)
+m <- leaflet() %>% setView(lng = -122.34,
+                           lat = 47.65,
+                           zoom = 12)
 
 m <- m %>% addProviderTiles(providers$CartoDB.Positron) %>%
   addMarkers(
