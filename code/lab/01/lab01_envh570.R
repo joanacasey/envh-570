@@ -16,6 +16,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
 if (!requireNamespace("pacman", quietly = TRUE)) 
   install.packages("pacman")
 pacman::p_load(
+  conflicted, 
   here,
   usethis,
   Hmisc,
@@ -34,6 +35,9 @@ pacman::p_load(
   spdep,
   cartogram
 )
+
+# Declare a package preference for filter() with `conflicts_prefer()`:
+conflicts_prefer(dplyr::filter)
 
 # Read in outcome data (fetal deaths = "spontaneous intrauterine death of a 
 # fetus at any time during pregnancy"), downloaded from CDC Wonder:
@@ -410,3 +414,4 @@ set.seed(111)
 MC <- moran.mc(states$fetal_death_scaled,lw, na.action = na.exclude, nsim = 500)
 MC
 # Reject hypothesis that there is no global spatial autocorrelation
+

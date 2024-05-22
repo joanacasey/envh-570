@@ -13,6 +13,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
 if(!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
+  conflicted, 
   here,
   weathermetrics,
   dplyr,

@@ -13,6 +13,7 @@ if (!is.null(sessionInfo()$otherPkgs)) {
 if(!requireNamespace("pacman", quietly = TRUE))
   install.packages("pacman")
 pacman::p_load(
+  conflicted, 
   here,
   sf,
   janitor,
@@ -31,6 +32,9 @@ pacman::p_load(
   purrr,
   mgcv
 )
+
+# Declare a package preference for filter() with `conflicts_prefer()`:
+conflicts_prefer(dplyr::filter)
 
 # Since rgeos is deprecated we need to install the last version in the archive.
 # See: https://cran.r-project.org/web/packages/rgeos/index.html
@@ -79,9 +83,9 @@ wells %>% ggplot(aes(comp_year)) + geom_bar()
 #############################################################################
 # EJ analysis #1 (SES/race/ethnicity - modern day)
 # Bringing in ses and population density data 
-density <- read.fst("data/lab/02/tract_density")
+density <- read.fst(here("data/lab/02/tract_density"))
 
-ses <- read.fst("data/lab/02/tract_dem_pov.fst") %>% 
+ses <- read.fst(here("data/lab/02/tract_dem_pov.fst")) %>% 
   mutate(state_fips = str_pad(statea, width=2, side="left", pad="0"),
          county_code = str_pad(countya, width=3, side="left", pad="0"),
          tract_code = str_pad(tracta, width=6, side="left", pad="0"),
@@ -110,7 +114,7 @@ ses %>%
 # Bringing in a shapefile of all census tracts in Oklahoma 
 # and filtering to the study area (Tulsa and Osage counties, 
 # FIPS = 40143 and 40113).
-tract_geo <- st_read("data/lab/02/ok_tract_2010.shp") %>%
+tract_geo <- st_read(here("data/lab/02/ok_tract_2010.shp")) %>%
   mutate(county_fips = str_c(STATEFP10, COUNTYFP10)) %>%
   filter(county_fips %in% c("40143", "40113")) 
 # What is the projection? Look up here: https://epsg.io/102003
@@ -392,7 +396,7 @@ moran.test(tract_geo_utm14n$resid, nb_lw)
 # https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-97.217
 
 # Bringing in HOLC boundaries
-holc <- read_sf("data/lab/02/ok_tulsa_holc_utm15n.shp")
+holc <- read_sf(here("data/lab/02/ok_tulsa_holc_utm15n.shp"))
 holc
 
 # Retrieving coordinate reference system from shapefile
