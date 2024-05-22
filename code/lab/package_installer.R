@@ -74,7 +74,7 @@ pkgs <- c("BiocManager", "cartogram", "corrr", "dplyr", "explore", "fst",
           "mgcv", "pacman", "patchwork", "psych", "purrr", "raster", 
           "RColorBrewer", "readr", "remotes", "rlang", "tmap", "sf", "spdep", 
           "stringr", "Synth", "terra", "tidyr", "usethis", "viridis", 
-          "weathermetrics")
+          "weathermetrics", "conflicted")
 pkg_inst(pkgs)
 
 # Since rgdal is deprecated we need to install the last version in the archive.
