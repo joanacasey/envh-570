@@ -205,7 +205,7 @@ ggplot() +
 
 #############################################################################
 ## PART 4: CROWD-SOURCED NOISE MEASUREMENTS VS NATIONAL NOISE MODEL
-transit_noise <- raster("data/lab/04/seattle_transit.tif")
+transit_noise <- raster(here("data/lab/04/seattle_transit.tif"))
 
 # Check out specs of the raster data
 transit_noise # How many columnns and rows of data? How many total grid cells?
@@ -234,3 +234,4 @@ cor.test(noise_sf$noise, noise_sf$transit_noise,
 
 # You do Pearson 
 # ADD ME
+
