@@ -1,9 +1,21 @@
-# Lab 01 ENV H/EPI 570
-# Updated by Brian High and Lauren Wilner
+---
+title: "ENV H 570: Lab 1"
+author: Joan A. Casey
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    html_document:
+        df_print: paged
+        theme: cosmo
+        toc: yes
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "build") })
+---
 
-# Objective: This file is meant to get you acclimated to the online RStudio 
-# environment and introduce you to basic commands to explore data.
+## Objective
+This file is meant to get you acclimated to the online RStudio environment and introduce you to basic commands to explore data. We will use fetal death data and we will examine the data in R, manipulate the data to create meaningful plots, and finally map the data. The last part of this lab contains an optional series of steps to create cartograms and run a simple regression model. 
 
+## Setup
+```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
 if (!is.null(sessionInfo()$otherPkgs)) {
@@ -48,6 +60,11 @@ conflicts_prefer(tidyr::expand)
 conflicts_prefer(corrr::correlate)
 conflicts_prefer(dplyr::select)
 
+```
+
+## Part 1: Fetal death (outcome) data cleaning
+### I. Read in and explore outcome data 
+```{r fetal_deaths, echo=TRUE, warning=FALSE}
 # Read in outcome data (fetal deaths = "spontaneous intrauterine death of a 
 # fetus at any time during pregnancy"), downloaded from CDC Wonder:
 # https://wonder.cdc.gov/fetal-deaths-current.html
@@ -66,13 +83,13 @@ explore::describe(fetal_data)
 # Explore the data using Hmisc::describe
 Hmisc::describe(fetal_data)
 
-# Explore the data using View
-View(fetal_data)
-
 # How many states are included in the dataset? Find out using n_distinct. Which 
 # package has the n_distinct command?
 n_distinct(fetal_data$state) # 50 states + DC
 
+```
+### II. Manipulate outcome data to handle missingness 
+```{r outcome_missingness, echo=TRUE, warning=FALSE}
 # Some states do not have data for each year/race/death combo
 # If table shows two entries for a state, they have counts for both Black and 
 # white pregnant people
@@ -105,16 +122,20 @@ fetal_data_new <- left_join(
 # Glimpse it
 glimpse(fetal_data_new)
 
-## Let's create a visualization of fetal death counts by race/ethnicity in 2017. 
+```
 
-# A few things we want to do for aesthetics of our plot: 
-  # 1. We want to order our y-axis by total fetal deaths for a given state-year
-  # because XXX. 
-  # 2. Our race/ethnicity labels are long right now, so let's make a variable 
-  # with shorter names 
-  # 3. Filter to the year 2017
-  # 4. Plot! 
+### III. Plot outcome data 
+Let's create a visualization of fetal death counts by race/ethnicity in 2017. 
 
+A few things we want to do for aesthetics of our plot:   
+
+1. We want to order our y-axis by total fetal deaths for a given state-year to make it easier to read.  
+2. Our race/ethnicity labels are long right now, so let's make a variable with shorter names   
+3. Filter to the year 2017   
+4. Plot!   
+
+
+```{r plot_outcome, echo=TRUE, warning=FALSE}
 # 1. To do this, first we will create a total fetal deaths variable which will
 # reflect the total fetal deaths by state-year. So,to do this, we `group_by` 
 # state and year and then use `mutate` to create a new variable that is the sum
@@ -146,12 +167,15 @@ ggplot(fetal_data_plot, aes(
   theme_minimal() +
   ylab("") + xlab("Fetal deaths, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-# This sort of looks like a plot of total population, we need denominators
 
-## Let's bring in live births as our denominator. 
-# We will use CDC wonder live births data. This is already in the repo, 
-# but you can find it here if you are interested: 
-# https://wonder.cdc.gov/natality.html
+```
+
+This sort of looks like a plot of total population, we need denominators. Let's use live births as a denominator. 
+
+### IV. Pull in live birth data to use as a denominator, clean, replot!
+We will use CDC wonder live births data. This is already in the repo, but you can find it here if you are interested: https://wonder.cdc.gov/natality.html
+```{r outcome_plot_denom, echo=TRUE, warning=FALSE}
+# Let's bring in live births as our denominator. 
 births <- read_csv(here("data/lab/01/births.csv")) 
 glimpse(births)
 
@@ -195,25 +219,40 @@ ggplot(fetal_data_plot2,
   ylab("") + 
   xlab("Fetal deaths per 1000 live births, N") +
   scale_color_brewer("Mom race/ethnicity", palette = "Set1")
-# Much more informative, what's happening with states with only white rate?
+
+```
+
+Much more informative, but what's happening with states with only white rate?
 
 
-## Let's take a look at the states using a map, which may be easier to interpret! 
+## Part 2: Mapping 
+Let's take a look at the states using a map, which may be easier to interpret! 
+
+
+### I. Read in US states shapefile and join to outcome data 
+```{r prep_outcome_map, echo=TRUE, warning=FALSE}
 # Reading in a shapefile using st_read
 states <- st_read(here("data/lab/01/US_State_Albers.shp"))
 head(states) 
+```
 
-# What is the CRS? Read about crs here: https://rspatial.org/spatial/6-crs.html
-# Projected CRS = North America Albers Equal Area Conic 
-# read more here: http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm
+In order to map things, we use data with a CRS. What is the CRS? A CRS is a coordinate reference system and allows us to geolocate places on Earth using coordinates. You must be careful about CRS when working with spatial data! Read more about CRS [here](https://datacarpentry.github.io/organization-geospatial/03-crs.html) and about CRS in R [here](https://rspatial.org/spatial/6-crs.html)
+
+For this project, we will use a projected CRS calledNorth America Albers Equal Area Conic. You can read more [here](http://www.geo.hunter.cuny.edu/~jochen/gtech201/lectures/lec6concepts/Map%20coordinate%20systems/Albers%20Equal%20Area%20Conic.htm)   
+
+```{r outcome_map, echo=TRUE, warning=FALSE}
 st_crs(states)
 
 # Add the fetal death data to the spatial file by state name (note these are 
 # different variable names in each dataset)
 fetal_spatial <- left_join(states, fetal_data_complete, by = c("STATE_NAME" = "state"))
 glimpse(fetal_spatial)
+```
 
-## Map 1: subset to 2017 and plot, grey shows where we have missing values
+### II. Make some maps using continuous fetal deaths
+
+For our first map, let's just subset to 2017 and plot: 
+```{r outcome_map1, echo=TRUE, warning=FALSE, out.width="150%"}
 fetal_plot3 <- fetal_spatial %>% filter(year == 2017)
 
 ggplot(fetal_plot3) +
@@ -234,9 +273,11 @@ ggplot(fetal_plot3) +
         panel.grid.minor = element_blank()) +
   theme(legend.position = "bottom", legend.box = "horizontal")
 
-# Map the number of fetal deaths per 1000 live births by race/ethnicity
-# Plot all years using facet_grid, read about it using ?facet_grid
+```
 
+Let's try looking at all years. We can map the number of fetal deaths per 1000 live births by race/ethnicity. To plot all years, we can use `facet_grid` and see each year clearly. To read more about this, type `?facet_grid` into your console.
+
+```{r outcome_map2, echo=TRUE, warning=FALSE, out.width="150%"}
 fetal_plot4 <- fetal_spatial # just doing this for consistency 
 
 ggplot(fetal_plot4) +
@@ -245,7 +286,7 @@ ggplot(fetal_plot4) +
           lwd = 0.1) +
   scale_fill_viridis_c("Fetal deaths per 1000 live births", na.value = "grey") +
   theme_minimal(base_size = 14) +
-  facet_grid(year ~ mom_race_eth_plot) + 
+  facet_grid(mom_race_eth_plot ~ year) + 
   # Does using facet_grid make sense here? Seems no to me as you can't see the 
   # variability in white fetal death
   theme(
@@ -257,7 +298,13 @@ ggplot(fetal_plot4) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   theme(legend.position = "bottom", legend.box = "horizontal")
+```
 
+The continuous scale is making it a little harder to see what is happening. Let's create quintiles for the legend to make it a bit easier! 
+
+### III. Reshape data to map quintiles for interpretability 
+
+```{r outcome_map3, echo=TRUE, warning=FALSE}
 # Let's create quintiles for the legend
 qnt <- quantile(fetal_spatial$fetal_death_scaled, c(.2, .4, .6, .8), na.rm = T)
  # take a look at quintiles. we can pull out the values using double brackets. 
@@ -286,12 +333,18 @@ qnt_labs <- c(paste('<', round(qnt[[1]], 2)),
               paste0('[', round(qnt[[2]], 2), '-', round(qnt[[3]], 2), ')'),
               paste0('[', round(qnt[[3]], 2), '-', round(qnt[[4]], 2), ')'),
               paste('\u2265', round(qnt[[4]], 2)))
+# alternate method: 
 # qnt_labs <- c(paste('<', round(qnt[['20%']], 2)),
 #               paste0('[', round(qnt[['20%']], 2), '-', round(qnt[['40%']], 2), ')'),
 #               paste0('[', round(qnt[['40%']], 2), '-', round(qnt[['60%']], 2), ')'),
 #               paste0('[', round(qnt[['60%']], 2), '-', round(qnt[['80%']], 2), ')'),
 #               paste('\u2265', round(qnt[['80%']], 2)))
 
+
+qnt_labs
+```
+
+```{r quintiles2, echo=TRUE, warning=FALSE, out.width="150%"}
 ### Alternate method of creating this variable... as a factor with cut()
 ### No need for case_when() and makes scale_fill_viridis() simpler to use ...
 # Note that you need 0 and infinity included as breaks here, whereas you didn't 
@@ -330,7 +383,7 @@ ggplot(fetal_plot5) +
     labels = qnt_labs
   ) +
   theme_minimal(base_size = 14) +
-  facet_grid(year ~ mom_race_eth) +
+  facet_grid(mom_race_eth_plot ~ year) +
   theme(
     axis.text.x = element_blank(),
     axis.text.y = element_blank(),
@@ -342,14 +395,13 @@ ggplot(fetal_plot5) +
   theme(legend.position = "bottom",
         legend.box = "horizontal")
 
+```
 
 
+This is the end of class. If you wish to explore cartograms and regression, see below! 
 
-
-
-
-
-### END OF CLASS, IF YOU WISH TO EXPLORE CARTOGRAMS AND REGRESSION SEE BELOW ###
+## Part 3 (OPTIONAL): Cartograms
+```{r cartograms, echo=TRUE, warning=FALSE, results='hide', message=FALSE}
 # Cartograms
 st_crs(fetal_spatial)
 # Look up what this projection is at spatialreference.org
@@ -379,11 +431,14 @@ tm_shape(fetal_spatial_fetaldeath2) +
   tm_polygons("fetal_death_scaled", style = "jenks") +
   tm_layout(frame = FALSE, legend.outside = TRUE)
 
+```
 
 
-# OK in this part, we will add in information on smoking
-# Cigarette smoking data from the EH Tracking Network:
-# https://www.cdc.gov/nceh/tracking/topics/LifestyleRiskFactors.htm
+## Part 4 (OPTIONAL): Regression
+In this part, we will add in information on smoking. These data are in the repo already, but you can find the data we are using, which are cigarette smoking data from the EH Tracking Network, here: https://www.cdc.gov/nceh/tracking/topics/LifestyleRiskFactors.htm
+
+### I. Add in smoking data for analysis 
+```{r smoke, echo=FALSE, warning=TRUE, message=FALSE}
 cig <- read_csv(here("data/lab/01/cig_repro_age_state.csv"))
 glimpse(cig)
 
@@ -407,11 +462,17 @@ head(states)
 
 # Add fetal death data to states shapefile
 fetal_data_cigs_spatial <- left_join(states, fetal_data_cigs, by = c("STATE_NAME" = "state"))
-head(fetal_data_cigs_spatial)
 
 # Change prop to percent
 fetal_data_cigs_spatial <- fetal_data_cigs_spatial %>% mutate(percent_smokers = prop_smokers*100)
 
+head(fetal_data_cigs_spatial)
+
+```
+
+### II. Poisson regression
+Now we can try to run some simple regression models. Let's start with linear regression: 
+```{r linear_reg, echo=TRUE, warning=FALSE, message=FALSE}
 # Basic poisson model
 # Check distribution of fetal_deaths
 fetal_data_cigs_spatial %>% ggplot(aes(y=fetal_deaths)) + geom_histogram()
@@ -425,6 +486,17 @@ summary(smoke_poisson)
 coefficient <- coef(smoke_poisson)[["percent_smokers"]]
 exp(coefficient)
 
+# Is there spatial autocorrelation in the data that we need to account for?
+# Let's look at the residuals of our regression model
+fetal_data_nomiss <- fetal_data_cigs_spatial %>% 
+  drop_na(percent_smokers, fetal_deaths, births, mom_race_eth)
+fetal_data_nomiss$residuals <- smoke_poisson$residuals
+fetal_data_nomiss <- fetal_data_nomiss %>% 
+  select(year, STATE_NAME, mom_race_eth, residuals, mom_race_eth)
+```
+
+### III. Plotting and model diagnostics 
+```{r poisson_diagnostics, echo=TRUE, warning=FALSE}
 # Is there spatial autocorrelation in the data that we need to account for?
 # Let's look at the residuals of our regression model
 fetal_data_nomiss <- fetal_data_cigs_spatial %>% 
@@ -452,7 +524,11 @@ ggplot(fetal_data_nomiss) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   theme(legend.position = "bottom", legend.box = "horizontal")
-# Does it look random?
+```
+
+Does it look random?
+
+```{r diagnostics2, echo=TRUE, warning=FALSE}
 
 # Create a neighbor matrix, queen matrix identifying queen-type neighbors
 nb <- poly2nb(fetal_data_cigs_spatial, queen = TRUE)
@@ -467,5 +543,7 @@ lw$weights[1]
 set.seed(111)
 MC <- moran.mc(fetal_data_cigs_spatial$fetal_death_scaled, lw, na.action = na.exclude, nsim = 500)
 MC
-# Reject hypothesis that there is no global spatial autocorrelation
+
+```
+We reject the hypothesis that there is no global spatial autocorrelation here. 
 
