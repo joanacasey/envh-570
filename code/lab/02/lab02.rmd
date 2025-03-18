@@ -10,7 +10,7 @@ output:
 ---
 
 ## Objective
-The goal of this lab is XXX. 
+The goal of this lab is to explore two different environmental justice (EJ) analyses. We will do some data cleaning and then map, model, and examine the association between sociodemographic variables and oil and gas well counts in Tulsa and Osage counties. We will also examine the association between HOLC grades and oil and gas well counts in Tulsa and Osage counties. 
 
 ## Setup
 ```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
