@@ -7,12 +7,10 @@ output:
         df_print: paged
         theme: cosmo
         toc: yes
-knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding, output_dir = "build") })
 ---
 
 ## Objective
-This file is meant to get you acclimated to the online RStudio environment and introduce you to basic commands to explore data. We will use fetal death data and we will examine the data in R, manipulate the data to create meaningful plots, and finally map the data. The last part of this lab contains an optional series of steps to create cartograms and run a simple regression model. 
+The goal of this lab is to get you acquainted with the online RStudio environment on the SPH server and to introduce you to basic commands to explore data. We'll be using fetal death data in R and will examine, manipulate, and plot/map the data in order to better understand what it contains. The final part of this lab will walk you through a series of optional steps to create cartograms and run a simple regression model. 
 
 ## Setup
 ```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}

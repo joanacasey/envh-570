@@ -1,6 +1,19 @@
-# Lab 02 ENV H/EPI 570
-# Updated 2024-03-28 by Joan Casey
+---
+title: "ENV H 570: Lab 2"
+author: Joan A. Casey
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    html_document:
+        df_print: paged
+        theme: cosmo
+        toc: yes
+---
 
+## Objective
+The goal of this lab is XXX. 
+
+## Setup
+```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
 if (!is.null(sessionInfo()$otherPkgs)) {
@@ -18,7 +31,6 @@ pacman::p_load(
   sf,
   janitor,
   readr,
-  # rgeos,  # Note: This package has been deprecated, see below for work-around.
   viridis,
   Hmisc,
   GGally,
@@ -36,22 +48,12 @@ pacman::p_load(
 # Declare a package preference for filter() with `conflicts_prefer()`:
 conflicts_prefer(dplyr::filter)
 
-# Since rgeos is deprecated we need to install the last version in the archive.
-# See: https://cran.r-project.org/web/packages/rgeos/index.html
-# And: https://stackoverflow.com/questions/77687036/
-if (!requireNamespace("rgeos", quietly = TRUE)){
-  remotes::install_version("rgeos", version = "0.6-4")}
-pacman::p_load(rgeos)
-
-## LBW NOTE: THIS CODE DOESNT WORK TO RETRIEVE RGEOS AND MORE IMPORTANTLY
-## YOU DO NOT USE RGEOS IN THIS CODE... 
-
 # Set a seed for reproducibility
 set.seed(570)
+```
 
-#############################################################################
-# Setup: load and clean data
-
+## Load and clean data 
+```{r data_clean, echo=TRUE, warning=FALSE, message=FALSE}
 ## Wells 
 # Bring in data on Tulsa and Osage counties oil and gas wells from Enverus 
 # (https://www.enverus.com/)
@@ -77,14 +79,20 @@ wells %>% group_by(well_status) %>% summarise(n = n())
 wells %>% group_by(production_type) %>% summarise(n = n()) 
 # Mostly disposal wells
 wells %>% group_by(comp_year) %>% summarise(n = n()) 
-# Not a useful way to look, too many rows
+```
+
+This is not a useful way to look since there are too many rows. Let's try to create some visuals for this. 
+
+```{r data_clean2, echo=TRUE, warning=FALSE, message=FALSE}
 
 # To-do: create a figure showing year of well completion (comp_year)
 # Ideas include a bar chart, a line chart, something else?
-# Example for bar chart but please feel free to improve
+# Here is an example for bar chart but please feel free to improve
 wells %>% ggplot(aes(comp_year)) + geom_bar()
-## ADD YOURS HERE##
+## ADD HERE
+```
 
+```{r data_clean3, echo=TRUE, warning=FALSE, message=FALSE}
 ## Population density and sociodemographic data
 density <- read.fst(here("data/lab/02/tract_density"))
 
@@ -134,24 +142,20 @@ glimpse(tract_geo_utm14n)
 # What is the tract identifier in ses? A: tract_fips
 glimpse(ses)
 
+# holc data for EJ analysis 2
+holc <- read_sf(here("data/lab/02/ok_tulsa_holc_utm15n.shp"))
+glimpse(holc)
+```
 
-#############################################################################
-## EJ analysis #1 (SES/race/ethnicity - modern day)
 
-# Our first EJ analysis will focus on the association between percent American
-# Indian population and oil and gas well counts in Tulsa and Osage counties.
-  # 1. Mapping: First we will map our component datasets in order to better understand them
-  # 2. Modeling: Next, we will run a Poisson regression model to assess the association 
-  # between percent American Indian population and well counts controlling for 
-  # population density
-  # 3. Diagnostics: Finally, we will assess our model diagnostics, including maping the residuals
-  # of our model to assess spatial autocorrelation and using Moran's I to test for 
-  # global clustering of residuals
-  # 4. Model rerun: We will rerun our model with a spline on census tract centroid lat/long
-  # and see how it changes things
+## EJ analysis 1 (SES/race/ethnicity - modern day)
+Our first EJ analysis will focus on the association between percent American Indian population and oil and gas well counts in Tulsa and Osage counties.  
 
-#####
-## 1. Mapping
+### I. Mapping: 
+First we will map our component datasets in order to better understand them.
+
+Let's take a look at our SES data and map the percent American Indian population in Tulsa and Osage counties.
+```{r ej1_mapping, echo=TRUE, warning=FALSE}
 # Merging data and shapefile, recall that we merge onto the spatial file to 
 # retain spatail aspect
 ses_sp <- left_join(tract_geo_utm14n, ses, by = c("GEOID10" = "tract_fips"))
@@ -170,8 +174,11 @@ map_pct_amer_in
 
 # To-do: create a map of another census sociodemographic variable
 # Try using a different color scale (change something in scale_fill_viridis)
-# ADD HERE
+## ADD HERE
+```
 
+Now let's look at the distribution of oil and gas wells in Tulsa and Osage counties overlaid with our census tracts.
+```{r ej1_mapping2, echo=TRUE, warning=FALSE}
 # Count wells per census tract and look at correlation with % American Indian
 # Create sf (spatial) object from lat/long coordinates
 # + setting coordinate reference system for well data 
@@ -203,7 +210,7 @@ well_ct_map <- well_count_tract %>%
   ggplot() + 
   geom_sf(data = ses_sp, color="black", aes(geometry = geometry), 
           lwd = 0.2, alpha = 0.8) +
-  geom_sf(data = tract_geo_utm14n, aes(fill = well_count), alpha = 0.85) +
+  geom_sf(data = well_count_tract, aes(fill = well_count), alpha = 0.85) +
   scale_fill_viridis("Well count (n)", limits = c(1, 11500), 
                      breaks=c(500, 2500, 5000, 7500, 10000)) +
   geom_point(
@@ -217,8 +224,11 @@ well_ct_map <- well_count_tract %>%
         rect=element_blank())  
 well_ct_map
 # To-do: change map to show just one of them
-# ADD HERE
+## ADD HERE
+```
 
+Now let's look at these wells overlaid with sociodemographic information.
+```{r ej1_mapping3, echo=TRUE, warning=FALSE}
 # Overlaying wells with sociodemographic information
 # Plot well count on census tract percent American Indian
 overlay_map <- well_count_tract %>% 
@@ -238,7 +248,10 @@ overlay_map <- well_count_tract %>%
         axis.ticks = element_blank(),
         rect=element_blank()) 
 overlay_map
+```
 
+Finally, let's take a closer look at Tulsa!
+```{r ej1_mapping4, echo=TRUE, warning=FALSE}
 # Taking a closer look at Tulsa
 # Notice that census tracts are much smaller and that 
 # there are fewer wells overall (scale breaks change)
@@ -261,9 +274,12 @@ overlay_tulsa_map <- well_count_tract %>%
         rect=element_blank()) 
 
 overlay_tulsa_map
+```
 
-#####
-## 2. Regression 
+### II. Modeling: 
+Next, we will run a Poisson regression model to assess the association between percent American Indian population and well counts controlling for population density.
+```{r ej1_modeling, echo=TRUE, warning=FALSE}
+# Regression model: 
 # Here we focus on wells built in or after 2000
 # Here, we use Poisson regression to assess the association between percent 
 # American Indian and well counts. Restricting study period to modern day 
@@ -294,7 +310,8 @@ reg_amer_in <- glm(well_count_modern_day ~ pct_amer_in + density,
 # Summary
 summary(reg_amer_in)
 coef <- summary(reg_amer_in)$coefficients[2,1]
-exp_coef <- exp(coef) # 1.07 <- how to interpret this value? Discuss.
+exp_coef <- exp(coef)
+exp_coef # 1.07 <- how to interpret this value? Discuss.
 
 # Let's put all the relevant output for our coefficients into a nice table
 # Extracting the coefficient for pct_amer_in and converting to a dataframe
@@ -315,11 +332,13 @@ output.table <- coeff.table %>%
   dplyr::select(model, pt.estimate, lci, uci, "p-value")
 
 output.table
-# this table is great to use for number plugging a manuscript or report! 
+```
 
-#####
-## 3. Diagnostics
+This table is great to use for number plugging a manuscript or report! 
 
+### III. Diagnostics: 
+Finally, we will assess our model diagnostics, including maping the residuals of our model to assess spatial autocorrelation and using Moran's I to test for global clustering of residuals: 
+```{r ej1_dx, echo=TRUE, warning=FALSE}
 # Let's look at the model Pearson residuals spatially
 # Extracting the model residuals
 residuals <- resid(reg_amer_in)
@@ -357,12 +376,16 @@ nb_lw <- nb2listw(nb, style="B")
 
 # Running Moran's I test -- values will range from -1 to 1 
 moran.test(well_count_tract$resid, nb_lw) 
-# p-value <0.05  indicating support for non-randomly distributed residuals
 
+```
 
-####
-# 4. Model rerun
-# Let's rerun our model with a spline on census tract centroid lat/long
+We see that we get a p-value <0.05, indicating support for non-randomly distributed residuals.
+
+### IV. Model rerun: 
+Based on these diagnostics, let's try to rerun our model with a spline on census tract centroid lat/long and see how it changes things.
+
+```{r ej1_rerun, echo=TRUE, warning=FALSE}
+# Let's start with a rerun with a spline on census tract centroid lat/long
 # and see how it changes things
 
 # We run a simple Poisson model and control for population density
@@ -406,9 +429,14 @@ residual_ct_map2 <- well_count_tract %>%
 residual_ct_map2
 
 # Plot the residual maps side by side
-# Which is "better?" and why?
 residual_ct_map + residual_ct_map2
+```
 
+Which residual map do you think is better? Why? 
+
+We can also look at Moran's I again for global clustering of residuals.
+
+```{r ej1_moran, echo=TRUE, warning=FALSE}
 # Moran's I - test of global clustering of residuals
 # Creating neighbor matrix - this describes which polygons are neighbors of 
 # other polygons
@@ -419,17 +447,13 @@ nb_lw <- nb2listw(nb, style="B")
 
 # Running Moran's I test -- values will range from -1 to 1 
 moran.test(well_count_tract$resid, nb_lw) 
-# What does this Morna's I and p-value indicate?
+```
 
-#############################################################################
-## EJ analysis #2 (redlining - historical perspectives)
-# Analysis of HOLC data (home owner's loan corporation) 
-# Data from the Mapping Inequality Project: 
-# https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-97.217
+What does this Moran's I and p-value indicate? 
 
-# Our second EJ analysis will focus on the association between HOLC grades
-# and oil and gas well counts in Tulsa and Osage counties.
-  # 1. Cleaning: First we will clean the HOLC data
+## EJ analysis 2 (redlining - historical perspectives)
+EJ analysis 2 will focus on the association between HOLC grades and oil and gas well counts in Tulsa and Osage counties. We will examine HOLC (home owner's loan corporation) data. We will use data from the [Mapping Inequality Project](https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-97.217) to examine the association between HOLC grades and oil and gas well counts in Tulsa and Osage counties. 
+
   # 2. Mapping: Next, we will map the HOLC data
   # 3. Buffering: We will buffer communities from HOLC data and count 
   # the wells in each one. We will also create well count quantiles.
@@ -443,13 +467,11 @@ moran.test(well_count_tract$resid, nb_lw)
   # 6. Regression: We will run a regression model to examine the association 
   # between HOLC grades and wells.
 
-
-# Bringing in HOLC boundaries
-holc <- read_sf(here("data/lab/02/ok_tulsa_holc_utm15n.shp"))
-holc
-
-# Retrieving coordinate reference system from shapefile
-st_crs(holc) # crs=UTM 15N
+### I. Cleaning: 
+First we will clean the HOLC data.
+```{r ej2_clean, echo=TRUE, warning=FALSE}
+# recall the holc data: 
+holc 
 
 # Let's reproject in UTM 14N for consistency with other files
 holc_utm14n <- st_transform(holc, 26914)
@@ -462,6 +484,11 @@ holc_utm14n %>%
   tabyl(holc_grade) %>% 
   mutate(percent = round(percent*100, 2)) 
 
+```
+
+### II. Mapping: 
+Next, we will map the HOLC data.
+```{r ej2_map, echo=TRUE, warning=FALSE}
 # Creating color scale
 colors <- c("#006f3c","#264b96","#f9a73e","#bf212f")
 
@@ -478,24 +505,30 @@ holc_map <-
   labs(title = "HOLC grade")
 
 holc_map
+```
 
-# Transform wells into UTM zone 14N
+### III. Buffering: 
+We will buffer communities from HOLC data and count the wells in each one. We will also create well count quantiles. To do this, we can first create a buffer around each HOLC community and then count the number of wells in each buffer.
+```{r ej2_buff, echo=TRUE, warning=FALSE}
+# Before we do anything else, let's make sure we are using the same CRS for all data
+
+# we'll first transform wells into UTM zone 14N since thats the CRS we want to use
 wells_sp_utm14n <- st_transform(wells_sp, 26914)
 
-# Count of wells in a given radius 
-# Create 1km buffer around each community
+## Count of wells in a given radius: 
+# First create 1km buffer around each community
 holc_buff_1km <- st_buffer(holc_utm14n, dist = 1000)
 
-# Count of total number of wells overall within 1km
+# Then count of total number of wells overall within 1km
 holc_buff_1km$well_count <- 
   lengths(st_intersects(holc_buff_1km, wells_sp_utm14n))
 
-# Add counts back to orginal HOLC polygon file
+# Finally, add counts back to orginal HOLC polygon file
 holc_buff_counts <-  holc_buff_1km %>% dplyr::select(well_count, neigh_ID)
 holc_buff_counts <- st_drop_geometry(holc_buff_counts) 
 holc_utm14n <- left_join(holc_utm14n, holc_buff_counts)
 
-# Distribution of wells by HOLC grade
+## Distribution of wells by HOLC grade
 # Removing spatial feature to obtain a simple dataframe
 holc_wells <- st_drop_geometry(holc_utm14n)
 
@@ -506,8 +539,14 @@ wells_holc_dist <- holc_wells %>% group_by(holc_grade) %>%
             p50_well_count=quantile(well_count, probs=0.5),
             p75_well_count=quantile(well_count, probs=0.75)) %>% 
   knitr::kable()
-wells_holc_dist #what does the p75_well_count column show us?
+wells_holc_dist 
+```
 
+ What are we seeing in the table? What does the `p75_well_count` column show us?
+
+### IV. Plotting: 
+We will plot the well counts by HOLC grades (box plot) to examine the correlation and map the distribution of well counts. We will also examine the maps of communities and their HOLC grades alongside a map of well counts.
+```{r ej2_plot, echo=TRUE, warning=FALSE}
 # Visualizing boxplot for each HOLC grade
 holc_boxplot <- holc_wells %>%
   ggplot(aes(holc_grade, well_count, fill = holc_grade)) +
@@ -532,7 +571,9 @@ holc_boxplot <- holc_wells %>%
     text = element_text(size = 16)
   )
 holc_boxplot
+```
 
+```{r ej2_plot2, echo=TRUE, warning=FALSE}
 # Maps of well distribution 
 # Overall well count, you may want to pick a different color scheme 
 # (fill colors)
@@ -552,8 +593,14 @@ holc_map + holc_well_map
 
 # For doctoral students only:
 # To-do: use patchwork to plot one above the other instead of side by side
-# ADD CODE HERE
+## ADD HERE
+```
 
+
+
+### V. Stratifying: 
+We will stratify wells as pre/post 1937, which is when the HOLC maps were drawn and examine the counts before and after 1937 in HOLC communities.
+```{r ej2_strat, echo=TRUE, warning=FALSE}
 # Work with wells drileld pre/post HOLC
 # HOLC maps were drawn in 1937 for Tulsa, so let's break wells into two groups: 
 # pre- and post-1937
@@ -577,7 +624,12 @@ holc_buff_1km$well_count_pre <-
 holc_buff_1km$well_count_post <- 
   lengths(st_intersects(holc_buff_1km, post_holc_wells_utm14n))
 
+```
+
+### VI. Regression: 
+Now you will run a regression model to examine the association between HOLC grades and wells.
+```{r ej2_reg, echo=TRUE, warning=FALSE}
 # To-do: try running a regression model to look at the association between 
 # HOLC grade and wells
 # ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
-
+```
