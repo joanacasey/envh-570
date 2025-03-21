@@ -1,6 +1,8 @@
 # Lab 03 ENV H/EPI 570
 # Updated 2024-04-11 by Joan Casey
 
+############################################################################
+## Part I. Setup
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
 if (!is.null(sessionInfo()$otherPkgs)) {
@@ -10,37 +12,52 @@ if (!is.null(sessionInfo()$otherPkgs)) {
 }
 
 # Load packages, installing if needed
-if(!requireNamespace("pacman", quietly = TRUE))
-  install.packages("pacman")
+if(!requireNamespace("pacman", quietly = TRUE)){
+  install.packages("pacman")}
 pacman::p_load(
   conflicted, 
   here,
   weathermetrics,
   dplyr,
   tidyr,
-  # hurricaneexposure,   # See below.
   sf,
   ggplot2,
   MetBrewer,
-  # LowRankQP,           # See below.
-  BiocManager
+  BiocManager,
+  LowRankQP,
+  Synth,
+  drat # need this package to do the special install below
 )
 
-############################################################################
 # Install and load the tidysynth & hurricaneexposure packages and dependencies
+# we do this separately because we are specifying a specific version of the packages. 
 pacman::p_install_version("LowRankQP", version = "1.0.5")
 pacman::p_install_version("Synth", version = "1.1-6")
 pacman::p_load(LowRankQP, Synth)
 pacman::p_load_gh("edunford/tidysynth")
 pacman::p_load_gh("geanders/hurricaneexposure")
-pacman::p_load_gh("geanders/hurricaneexposuredata")
-data("hurr_tracks")
+
+# need to do a special install for this one since it is not maintained on CRAN
+addRepo("geanders")
+pacman::p_load("hurricaneexposuredata")
+
+# Let's use conflict prefer again to make sure that we use these functions
+# from the right package. We'll leave the instances of `hurricaneexposure::` 
+# since this package is new to you and we want you to see which functions come 
+# from it. 
+conflicts_prefer(dplyr::filter)
+conflicts_prefer(dplyr::select)
+conflicts_prefer(dplyr::mutate)
+conflicts_prefer(dplyr::left_join)
+
 
 #############################################################################
-# LAB STARTS HERE #
+## Part II. Load and clean data 
+
+## 1. HURRICANE DATA
+data("hurr_tracks")
 glimpse(hurr_tracks)
 
-# PART 1#
 # Visualize hurricane data 
 # Storm track
 hurricaneexposure::map_tracks(storm = "Florence-2018")
@@ -52,53 +69,49 @@ hurricaneexposure::map_counties(storm = "Florence-2018", metric = "wind")
 hurricaneexposure::map_counties(storm = "Florence-2018", metric = "wind", 
                                 wind_var = "vmax_gust")
 
-
 # Distance from Hurricane
 dist <- hurricaneexposure::filter_storm_data(
   storm = "Florence-2018", output_vars = c("fips", "closest_date", "storm_dist"))
-dist <- dist %>% dplyr::mutate(closest_date = as.Date(closest_date))
+dist <- dist %>% mutate(closest_date = as.Date(closest_date))
 
 # Let's consider Onslow, NC as our exposed county. FIPS = 37133
 # Identifying counties located farther than 200 km (unexposed group)
-dist <- dist %>% dplyr::filter(fips=="37133" | storm_dist>200)
+dist <- dist %>% filter(fips=="37133" | storm_dist>200)
 
 # Create binary exposed variable 
-dist <- dist %>% dplyr::mutate(exposed = ifelse(fips=="37133", 1,0))
+dist <- dist %>% mutate(exposed = ifelse(fips=="37133", 1,0))
 
 # Check data
 table(dist$exposed) # 1 exposed county (Onslow)
 
-#############################################################################
-## PART 2: ALL-CAUSE MORTALITY DATA
+
+## 2. ALL-CAUSE MORTALITY DATA
 mortality <- readRDS(here("data/lab/03/county_mortality.RDS"))
 
 # Restrict to counties in dist dataframe
-mortality <- mortality %>% dplyr::filter(fips %in% dist$fips)
+mortality <- mortality %>% filter(fips %in% dist$fips)
 
 # Filter to before 2018 and after 1999
-mortality <- mortality %>% dplyr::filter(year>1999 & year<2019) 
+mortality <- mortality %>% filter(year>1999 & year<2019) 
 
 # # Filter to September (month of hurricane exposure in 2018)
-mortality <- mortality %>% dplyr::filter(month==9) 
+mortality <- mortality %>% filter(month==9) 
 
 # Create state fips
-mortality  <-  mortality  %>% dplyr::mutate(st_fips = substr(fips, 1, 2))
+mortality  <-  mortality  %>% mutate(st_fips = substr(fips, 1, 2))
 
 # Create a variable that is the death rate per 1,000
-# mortality <- mortality %>% mutate(death_rate = ADD ME HERE)
-mortality <- mortality %>% dplyr::mutate(death_rate = n_deaths/pop * 1000)
+mortality <- mortality %>% mutate(death_rate = n_deaths/pop * 1000)
 
 
-############################################################################
-## PART 3: Other data to help generate the synthetic control
+## 3. Other data to help generate the synthetic control
 # Annual median income and unemployment
 covar <- readRDS(here("data/lab/03/income_unemp.rds"))
-mortality <- dplyr::left_join(mortality, covar)
-mortality <- dplyr::left_join(mortality, dist)
+mortality <- left_join(mortality, covar)
+mortality <- left_join(mortality, dist)
 
-############################################################################
-## PART 4: the synthetic control
-# library(tidysynth)   # Why load this again?
+#############################################################################
+## Part III. The synthetic control
 
 # Get rid of missing data because we need complete dataset for this code to work
 summary(mortality)
@@ -112,20 +125,20 @@ mortality %>% filter(exposed==1)
 
 # Also going to restrict to counties in Georgia, Maryland, Virginia
 # because model takes too long to run
-mortality <- mortality %>% dplyr::filter(
+mortality <- mortality %>% filter(
   state_name == "Georgia" |
     state_name == "Maryland" |
     state_name == "Virginia" |
     fips=="37133" ) #Need to keep county of interest that is outside of TX, MO, NC
 
 # Just keep needed variables
-mortality <- mortality %>% dplyr::select(fips, year, death_rate, unemp, med_inc)
+mortality <- mortality %>% select(fips, year, death_rate, unemp, med_inc)
 
 # Also need counties to have complete years
-mortality <- mortality %>% group_by(fips) %>% dplyr::mutate(n=n())
+mortality <- mortality %>% group_by(fips) %>% mutate(n=n())
 table(mortality$n)
 table(mortality$year)
-mortality <- mortality %>% dplyr::filter(n==18) # just keeping counties with data in all 18 years
+mortality <- mortality %>% filter(n==18) # just keeping counties with data in all 18 years
 
 mortality_out <-
   mortality %>%
@@ -197,7 +210,7 @@ mortality_out <-
   # Generate the synthetic control
   generate_control() 
 
-############################################################################
+  ############################################################################
 # Part 5 plotting etc.
 # Plot Onslow County over time versus other counties included
 mortality_out %>% plot_trends()
