@@ -1,6 +1,19 @@
-# Lab 04 ENV H/EPI 570 - Built environment
-# Updated 2024-03-26 by Brian High and 2024-05-20 by Joan Casey
+---
+title: "ENV H 570: Lab 4"
+author: Joan A. Casey
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    html_document:
+        df_print: paged
+        theme: cosmo
+        toc: yes
+---
 
+## Objective
+The goal of this lab is to work with various spatial data sources and explore different ways to map and visualize them. We will work with some data from Seattle on SES, income, and housing vacancy, in addition to noise data from two different sources -- the data that we collected as a class and data from a national noise model. We will explore different ways of combining and displaying thes data.
+
+## Setup
+```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
 # Clear workspace of all objects and unload all extra (non-base) packages.
 rm(list = ls(all = TRUE))
 if (!is.null(sessionInfo()$otherPkgs)) {
@@ -28,11 +41,12 @@ pacman::p_load(
   ggmap,
   raster
 )
+```
 
-##############################################################################
-# PART 1 
-# Bring in Seattle data with SES and trees
-# What is the projection?
+## Load and clean data 
+### Seattle SES and tree coverage data
+What projection are these data in? Let's also visualize them to get a sense of what is there!
+```{r sea_data, echo=TRUE, warning=FALSE, message=FALSE}
 seattle <- st_read(here("data/lab/04/seattle_tree_ses_ct.shp"))
 dplyr::glimpse(seattle)
 
@@ -81,9 +95,12 @@ vacant <- ggplot() +
                            na.value = "grey50")
 
 #Plotting these side-by-side using patchwork
-tree_density + income + vacant #Any issues with the color palette here? 
+tree_density + income + vacant
+```
 
-#Plot again with better color for % vacant
+Do you notice any issues with the color palette here? Let's try again with a better color palette for percent vacant homes.
+
+```{r sea_data2, echo=TRUE, warning=FALSE, message=FALSE}
 flipped_palette <- rev(met.brewer("Degas"))
 vacant <- ggplot() +
   geom_sf(data = seattle, aes(fill = PCT_VAC)) +
@@ -97,11 +114,13 @@ vacant <- ggplot() +
                            colors = flipped_palette, 
                            na.value = "grey50")
 tree_density + income + vacant 
-#############################################################################
-## PART 2: CROWD-SOURCED NOISE MEASUREMENTS
+```
+
+### Crowd-sourced noise measurements
+Let's now load and clean our crowd-sourced noise measurements. Cool that R recognizes the time column as time of day.
+```{r noise_dat, echo=TRUE, warning=FALSE, message=FALSE}
 noise <-
   read_csv(here("data/lab/04/noise_envh570_seattle_2024.csv")) 
-# cool that R recognizes the time column as time of day
 
 #glimpse it
 glimpse(noise)
@@ -123,8 +142,10 @@ noise_sf <-
 coords <- st_coordinates(noise_sf)
 lat = coords[, 2]
 long = coords[, 1]
+```
 
-# Make a map of Seattle with leaflet (you can change long/lat/zoom)
+Now we can make a map of our noise data in Seattle. You can change long/lat/zoom as you see fit. 
+```{r noise_dat2, echo=TRUE, warning=FALSE, message=FALSE}
 m <- leaflet() %>% setView(lng = -122.34,
                            lat = 47.65,
                            zoom = 12)
@@ -138,7 +159,11 @@ m <- m %>% addProviderTiles(providers$CartoDB.Positron) %>%
     label = m$noise
   )
 m
+```
 
+We can also make a map with symbols proportional to the noise level, rather than uniform markers. 
+
+```{r noise_dat3, echo=TRUE, warning=FALSE, message=FALSE}
 # Let's make a proportional symbol map
 symbols <- makeSymbolsSize(
   values = noise_sf$noise,
@@ -168,9 +193,11 @@ m2 <- leaflet() %>%
     orientation = 'horizontal',
     breaks = 5)
 m2
+```
 
-#############################################################################
-## PART 3: CROWD-SOURCED NOISE MEASUREMENTS + SOCIAL ENVIRONMENT 
+## Noise and social environment
+Now that we have loaded, cleaned, and visualized our data, let's combine our crowd sourced noise data with the data on the social environment in Seattle. We first need to make sure everything we combine is in the same CRS, and then we can map them together.
+```{r noise_soc, echo=TRUE, warning=FALSE, message=FALSE}
 
 # Change noise measurements into same projection as Seattle shapefile
 noise_sf <- st_transform(noise_sf, crs = st_crs(seattle))
@@ -190,28 +217,44 @@ ggplot() +
                        colors = met.brewer("VanGogh3"),
                        na.value = "grey50") +
   scale_size_continuous("Noise level (dB)")
+```
 
-# Create a similar map with income 
-## ADD ME ##
+Now create a similar map with income. 
+```{r noise_soc2, echo=TRUE, warning=FALSE, message=FALSE}
+## ADD HERE ##
+```
 
-#############################################################################
-## PART 4: CROWD-SOURCED NOISE MEASUREMENTS VS NATIONAL NOISE MODEL
+## Crowd-sourced noise vs. national noise model 
+Let's take a look at how our crowd-sourced noise compares to a national noise model! 
+
+### Load and examine
+```{r noise_noise, echo=TRUE, warning=FALSE, message=FALSE}
 transit_noise <- terra::rast(here("data/lab/04/seattle_transit.tif"))
 
 # Check out specs of the raster data
-transit_noise # How many columnns and rows of data? How many total grid cells?
+transit_noise
+```
+How many columnns and rows of data? How many total grid cells?
 
+### Plot
+```{r noise_noise2, echo=TRUE, warning=FALSE, message=FALSE}
 # Plot it
 plot(transit_noise)
+```
 
+### Match up to crowd-sourced noise
+```{r noise_noise3, echo=TRUE, warning=FALSE, message=FALSE}
 # Extract transit noise levels where we took noise measurements
 noise_from_transit_model <- terra::extract(transit_noise, noise_sf)
 
 # Gives us values from from the transit noise raster
 # We need to add them back to the noise_sf shapefile
 noise_sf <- noise_sf %>% mutate(transit_noise = noise_from_transit_model)
+```
 
-# What is the correlation between our measurements and the model?
+### Correlation between noise sources
+What is the correlation between our measurements and the model? We can look at this visually and also can look at a correlation coefficient. Add a Pearson correlation coefficient to the end here. How correlated are our data? 
+```{r noise_noise4, echo=TRUE, warning=FALSE, message=FALSE}
 ggplot(noise_sf, aes(x=noise, y=transit_noise$seattle_transit)) + geom_point() + 
   geom_smooth() +
   theme_minimal() +
@@ -224,5 +267,8 @@ cor.test(noise_sf$noise, noise_sf$transit_noise$seattle_transit,
          method = "spearman")
 
 # You do Pearson 
-# ADD ME
+# ADD HERE
+```
+
+
 
