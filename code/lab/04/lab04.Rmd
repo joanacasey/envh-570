@@ -10,7 +10,7 @@ output:
 ---
 
 ## Objective
-The goal of this lab is to work with various spatial data sources and explore different ways to map and visualize them. We will work with some data from Seattle on SES, income, and housing vacancy, in addition to noise data from two different sources -- the data that we collected as a class and data from a national noise model. We will explore different ways of combining and displaying thes data.
+The goal of this lab is to work with various spatial data sources and explore different ways to map and visualize them. We will work with some data from Seattle on SES, income, and housing vacancy, in addition to noise data from two different sources -- the data that we collected as a class and data from a national noise model. We will explore different ways of combining and displaying these data.
 
 ## Setup
 ```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
