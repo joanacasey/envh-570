@@ -84,6 +84,7 @@ if (!requireNamespace("tidysynth", quietly = TRUE))
 if (!requireNamespace("hurricaneexposure", quietly = TRUE)) 
   pak::pkg_install("geanders/hurricaneexposure")
 
+library("drat")
 addRepo("geanders")
 pacman::p_load("hurricaneexposuredata")
 
