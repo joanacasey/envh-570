@@ -41,6 +41,10 @@ pacman::p_load(
   ggmap,
   raster
 )
+
+# NOTE: We will use the terra package below, and it is automatically loaded with
+# `raster`. If you load it separately, it causes some conflicts and issues, so
+# we load it via `raster`. But, since we use it below, we wanted to flag this! 
 ```
 
 ## Load and clean data 
@@ -117,10 +121,10 @@ tree_density + income + vacant
 ```
 
 ### Crowd-sourced noise measurements
-Let's now load and clean our crowd-sourced noise measurements. Cool that R recognizes the time column as time of day.
+Let's now load and clean our crowd-sourced noise measurements. You can find this on canvas and upload it to your `data/lab/04` folder. Make sure you call it `noise_envh570_seattle_2025.csv` so that this code runs. Also, take a look -- cool that R recognizes the time column as time of day.
 ```{r noise_dat, echo=TRUE, warning=FALSE, message=FALSE}
-noise <-
-  read_csv(here("data/lab/04/noise_envh570_seattle_2024.csv")) 
+# read in the class noise data that you just uploaded 
+noise <- read_csv(here("data/lab/04/noise_envh570_seattle_2025.csv")) 
 
 #glimpse it
 glimpse(noise)
@@ -130,10 +134,20 @@ noise <- drop_na(noise)
 
 # how does these data look? see any problems?
 summary(noise)
+```
 
-#correct an error in data entry (someone missed a -)
-noise <- noise %>% mutate(longit = ifelse(longit<0, longit, -1*longit))
+Let's clean up any data entry errors we found. Below is an example of the error that we found last year, but we will add in cleaning code for anything we see this year! We will fill in the `noise cleaning code` below as a class. 
+```{r noise_dat_clean, echo=TRUE, warning=FALSE, message=FALSE}
+# Below are some problems that we encountered last year: 
+# #correct an error in data entry (someone missed a -)
+# noise <- noise %>% mutate(longit = ifelse(longit<0, longit, -1*longit))
 
+# noise cleaning code 
+## ADD HERE (we will come up with this together as a class)
+```
+
+Now that we have cleaned up data entry errors, let's make this into an `sf` object!
+```{r noise_dat_clean2, echo=TRUE, warning=FALSE, message=FALSE}
 # make an sf object with lat/longit
 noise_sf <-
   st_as_sf(noise, coords = c("longit", "latit"), crs = "EPSG:4326")
@@ -230,6 +244,8 @@ Let's take a look at how our crowd-sourced noise compares to a national noise mo
 ### Load and examine
 ```{r noise_noise, echo=TRUE, warning=FALSE, message=FALSE}
 transit_noise <- terra::rast(here("data/lab/04/seattle_transit.tif"))
+# NOTE: as mentioned above, we use `terra` which was loaded as part of `raster`. 
+# It works best if you load it that way, rather than loading it separately! 
 
 # Check out specs of the raster data
 transit_noise

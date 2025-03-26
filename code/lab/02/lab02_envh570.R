@@ -36,16 +36,6 @@ pacman::p_load(
 # Declare a package preference for filter() with `conflicts_prefer()`:
 conflicts_prefer(dplyr::filter)
 
-# Since rgeos is deprecated we need to install the last version in the archive.
-# See: https://cran.r-project.org/web/packages/rgeos/index.html
-# And: https://stackoverflow.com/questions/77687036/
-if (!requireNamespace("rgeos", quietly = TRUE)){
-  remotes::install_version("rgeos", version = "0.6-4")}
-pacman::p_load(rgeos)
-
-## LBW NOTE: THIS CODE DOESNT WORK TO RETRIEVE RGEOS AND MORE IMPORTANTLY
-## YOU DO NOT USE RGEOS IN THIS CODE... 
-
 # Set a seed for reproducibility
 set.seed(570)
 

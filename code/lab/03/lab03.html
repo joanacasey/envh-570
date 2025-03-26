@@ -1640,7 +1640,7 @@ display: none;
 
 <h1 class="title toc-ignore">ENV H 570: Lab 3</h1>
 <h4 class="author">Joan A. Casey</h4>
-<h4 class="date">21 March, 2025</h4>
+<h4 class="date">26 March, 2025</h4>
 
 </div>
 
@@ -1700,22 +1700,18 @@ pacman::p_load(
   drat # need this package to do the special install below
 )
 
-# Install and load the tidysynth &amp; hurricaneexposure packages and dependencies
-# we do this separately because we are specifying a specific version of the packages. 
-pacman::p_install_version(&quot;LowRankQP&quot;, version = &quot;1.0.5&quot;)
-pacman::p_install_version(&quot;Synth&quot;, version = &quot;1.1-6&quot;)
-pacman::p_load(LowRankQP, Synth)
+# Load packages that have to be pulled directly from github
+# We will install and load the tidysynth &amp; hurricaneexposure packages and dependencies
+# also need to load hurricaneexposuredata in a specific way
 pacman::p_load_gh(&quot;edunford/tidysynth&quot;)
 pacman::p_load_gh(&quot;geanders/hurricaneexposure&quot;)
-
-# need to do a special install for this one since it is not maintained on CRAN
 addRepo(&quot;geanders&quot;)
 pacman::p_load(&quot;hurricaneexposuredata&quot;)
 
 # Let&#39;s use conflict prefer again to make sure that we use these functions
 # from the right package. We&#39;ll leave the instances of `hurricaneexposure::` 
 # since this package is new to you and we want you to see which functions come 
-# from it. 
+# from it.
 conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::select)
 conflicts_prefer(dplyr::mutate)

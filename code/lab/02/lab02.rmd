@@ -1,6 +1,6 @@
 ---
 title: "ENV H 570: Lab 2"
-author: Joan A. Casey
+author: Joan A. Casey, with updates from Lauren B. Wilner and Brian High
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     html_document:
@@ -10,7 +10,7 @@ output:
 ---
 
 ## Objective
-The goal of this lab is to explore two different environmental justice (EJ) analyses. We will do some data cleaning and then map, model, and examine the association between sociodemographic variables and oil and gas well counts in Tulsa and Osage counties. We will also examine the association between HOLC grades and oil and gas well counts in Tulsa and Osage counties. 
+The goal of this lab is to conduct two different environmental justice (EJ) analyses. We will perform data cleaning and then map, model, and examine the association between sociodemographic variables and oil and gas well counts in Oklahoma (Tulsa and Osage counties). We will also examine the association between historical redlining grades and oil and gas well counts in Tulsa and Osage counties.
 
 ## Setup
 ```{r setup, include = TRUE, warning=FALSE, results='hide', message=FALSE}
@@ -151,7 +151,7 @@ glimpse(holc)
 ## EJ analysis 1 (SES/race/ethnicity - modern day)
 Our first EJ analysis will focus on the association between percent American Indian population and oil and gas well counts in Tulsa and Osage counties.  
 
-### I. Mapping: 
+### I. Mapping
 First we will map our component datasets in order to better understand them.
 
 Let's take a look at our SES data and map the percent American Indian population in Tulsa and Osage counties.
@@ -276,7 +276,7 @@ overlay_tulsa_map <- well_count_tract %>%
 overlay_tulsa_map
 ```
 
-### II. Modeling: 
+### II. Modeling
 Next, we will run a Poisson regression model to assess the association between percent American Indian population and well counts controlling for population density.
 ```{r ej1_modeling, echo=TRUE, warning=FALSE}
 # Regression model: 
@@ -336,7 +336,7 @@ output.table
 
 This table is great to use for number plugging a manuscript or report! 
 
-### III. Diagnostics: 
+### III. Diagnostics
 Finally, we will assess our model diagnostics, including maping the residuals of our model to assess spatial autocorrelation and using Moran's I to test for global clustering of residuals: 
 ```{r ej1_dx, echo=TRUE, warning=FALSE}
 # Let's look at the model Pearson residuals spatially
@@ -381,7 +381,7 @@ moran.test(well_count_tract$resid, nb_lw)
 
 We see that we get a p-value <0.05, indicating support for non-randomly distributed residuals.
 
-### IV. Model rerun: 
+### IV. Model rerun
 Based on these diagnostics, let's try to rerun our model with a spline on census tract centroid lat/long and see how it changes things.
 
 ```{r ej1_rerun, echo=TRUE, warning=FALSE}
@@ -467,7 +467,7 @@ EJ analysis 2 will focus on the association between HOLC grades and oil and gas 
   # 6. Regression: We will run a regression model to examine the association 
   # between HOLC grades and wells.
 
-### I. Cleaning: 
+### I. Cleaning
 First we will clean the HOLC data.
 ```{r ej2_clean, echo=TRUE, warning=FALSE}
 # recall the holc data: 
@@ -486,7 +486,7 @@ holc_utm14n %>%
 
 ```
 
-### II. Mapping: 
+### II. Mapping
 Next, we will map the HOLC data.
 ```{r ej2_map, echo=TRUE, warning=FALSE}
 # Creating color scale
@@ -507,7 +507,7 @@ holc_map <-
 holc_map
 ```
 
-### III. Buffering: 
+### III. Buffering
 We will buffer communities from HOLC data and count the wells in each one. We will also create well count quantiles. To do this, we can first create a buffer around each HOLC community and then count the number of wells in each buffer.
 ```{r ej2_buff, echo=TRUE, warning=FALSE}
 # Before we do anything else, let's make sure we are using the same CRS for all data
@@ -544,7 +544,7 @@ wells_holc_dist
 
  What are we seeing in the table? What does the `p75_well_count` column show us?
 
-### IV. Plotting: 
+### IV. Plotting
 We will plot the well counts by HOLC grades (box plot) to examine the correlation and map the distribution of well counts. We will also examine the maps of communities and their HOLC grades alongside a map of well counts.
 ```{r ej2_plot, echo=TRUE, warning=FALSE}
 # Visualizing boxplot for each HOLC grade
@@ -591,14 +591,13 @@ holc_well_map <-
 # Use patchwork to plot side by side 
 holc_map + holc_well_map
 
-# For doctoral students only:
 # To-do: use patchwork to plot one above the other instead of side by side
 ## ADD HERE
 ```
 
 
 
-### V. Stratifying: 
+### V. Stratifying
 We will stratify wells as pre/post 1937, which is when the HOLC maps were drawn and examine the counts before and after 1937 in HOLC communities.
 ```{r ej2_strat, echo=TRUE, warning=FALSE}
 # Work with wells drileld pre/post HOLC
@@ -618,7 +617,7 @@ holc_buff_1km$well_count_pre <-
 
 # Type of wells by pre/post HOLC grading
 # To-do: how many wells drilled pre/post HOLC; show on a figure
-# ADD CODE HERE
+## ADD HERE
 
 # Count of wells drilled after 1937 in HOLC communities
 holc_buff_1km$well_count_post <- 
@@ -626,10 +625,10 @@ holc_buff_1km$well_count_post <-
 
 ```
 
-### VI. Regression: 
+### VI. Regression
 Now you will run a regression model to examine the association between HOLC grades and wells.
 ```{r ej2_reg, echo=TRUE, warning=FALSE}
 # To-do: try running a regression model to look at the association between 
 # HOLC grade and wells
-# ADD CODE HERE (hint: paste much from maps above and edit a bit of it)
+## ADD HERE (hint: paste much from maps above and edit a bit of it)
 ```
