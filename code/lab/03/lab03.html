@@ -1670,7 +1670,9 @@ diagnostics</a></li>
 
 <div id="objective" class="section level2">
 <h2>Objective</h2>
-<p>The objective of this lab is to run a synthetic control model.</p>
+<p>The objective of this lab is to run a synthetic control model. We
+will leverage Dr. Brooke Anderson’s <code>hurricaneexposure</code>
+package and estimate the impact of hurricane exposure on mortality.</p>
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
@@ -1901,82 +1903,82 @@ table(df$n)</code></pre>
 <h3>Run synthetic control</h3>
 <p>Now we can run our model! This may take about 10-15 minutes, so make
 sure you stay connected to the internet and your R session.</p>
-<pre class="r"><code># model &lt;-
-#   df %&gt;%
-#   # initial the synthetic control object
-#   synthetic_control(
-#     outcome = death_rate,
-#     # outcome
-#     unit = fips,
-#     # unit index in the panel data
-#     time = year,
-#     # time index in the panel data
-#     i_unit = &quot;37133&quot;,
-#     # unit where the intervention occurred
-#     i_time = 2018,
-#     # time period when the intervention occurred
-#     generate_placebos = T # generate placebo synthetic controls (for inference)
-#   ) %&gt;%
-#   
-#   # Generate the aggregate predictors used to fit the weights
-#   generate_predictor(
-#     time_window = 2000:2018,
-#     mmed_inc = mean(med_inc, na.rm = T),
-#     muemply = mean(unemp, na.rm = T)
-#   ) %&gt;%
-#   
-#   # Lagged mortality
-#   generate_predictor(time_window = 2000,
-#                      death_2000 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2001,
-#                      death_2001 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2002,
-#                      death_2002 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2003,
-#                      death_2003 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2004,
-#                      death_2004 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2005,
-#                      death_2005 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2006,
-#                      death_2006 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2007,
-#                      death_2007 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2008,
-#                      death_2008 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2009,
-#                      death_2009 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2010,
-#                      death_2010 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2011,
-#                      death_2011 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2012,
-#                      death_2012 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2013,
-#                      death_2013 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2014,
-#                      death_2014 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2015,
-#                      death_2015 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2016,
-#                      death_2016 = death_rate) %&gt;%
-#   generate_predictor(time_window = 2017,
-#                      death_2017 = death_rate) %&gt;%
-# 
-#   
-#   # Generate the fitted weights for the synthetic control
-#   generate_weights(optimization_window = 2000:2018,
-#                    margin_ipop = .02, sigf_ipop = 7, bound_ipop = 6) %&gt;% # time to use in the optimization task
-#   
-#   # Generate the synthetic control
-#   generate_control() </code></pre>
+<pre class="r"><code>model &lt;-
+  df %&gt;%
+  # initial the synthetic control object
+  synthetic_control(
+    outcome = death_rate,
+    # outcome
+    unit = fips,
+    # unit index in the panel data
+    time = year,
+    # time index in the panel data
+    i_unit = &quot;37133&quot;,
+    # unit where the intervention occurred
+    i_time = 2018,
+    # time period when the intervention occurred
+    generate_placebos = T # generate placebo synthetic controls (for inference)
+  ) %&gt;%
+
+  # Generate the aggregate predictors used to fit the weights
+  generate_predictor(
+    time_window = 2000:2018,
+    mmed_inc = mean(med_inc, na.rm = T),
+    muemply = mean(unemp, na.rm = T)
+  ) %&gt;%
+
+  # Lagged mortality
+  generate_predictor(time_window = 2000,
+                     death_2000 = death_rate) %&gt;%
+  generate_predictor(time_window = 2001,
+                     death_2001 = death_rate) %&gt;%
+  generate_predictor(time_window = 2002,
+                     death_2002 = death_rate) %&gt;%
+  generate_predictor(time_window = 2003,
+                     death_2003 = death_rate) %&gt;%
+  generate_predictor(time_window = 2004,
+                     death_2004 = death_rate) %&gt;%
+  generate_predictor(time_window = 2005,
+                     death_2005 = death_rate) %&gt;%
+  generate_predictor(time_window = 2006,
+                     death_2006 = death_rate) %&gt;%
+  generate_predictor(time_window = 2007,
+                     death_2007 = death_rate) %&gt;%
+  generate_predictor(time_window = 2008,
+                     death_2008 = death_rate) %&gt;%
+  generate_predictor(time_window = 2009,
+                     death_2009 = death_rate) %&gt;%
+  generate_predictor(time_window = 2010,
+                     death_2010 = death_rate) %&gt;%
+  generate_predictor(time_window = 2011,
+                     death_2011 = death_rate) %&gt;%
+  generate_predictor(time_window = 2012,
+                     death_2012 = death_rate) %&gt;%
+  generate_predictor(time_window = 2013,
+                     death_2013 = death_rate) %&gt;%
+  generate_predictor(time_window = 2014,
+                     death_2014 = death_rate) %&gt;%
+  generate_predictor(time_window = 2015,
+                     death_2015 = death_rate) %&gt;%
+  generate_predictor(time_window = 2016,
+                     death_2016 = death_rate) %&gt;%
+  generate_predictor(time_window = 2017,
+                     death_2017 = death_rate) %&gt;%
+
+
+  # Generate the fitted weights for the synthetic control
+  generate_weights(optimization_window = 2000:2018,
+                   margin_ipop = .02, sigf_ipop = 7, bound_ipop = 6) %&gt;% # time to use in the optimization task
+
+  # Generate the synthetic control
+  generate_control()</code></pre>
 <p>If this code runs too slowly and never finishes, you can also read in
 the model results from the rds file on Canvas. You can comment out or
 delete the model above and instead pull in model results that we ran and
 saved. You will need to download the file and upload it to the server
 using the upload button under <code>Files</code>. Make sure you read it
 from the filepath where you upload it!</p>
-<pre class="r"><code>model &lt;- readRDS(&quot;~/synth_control_results.rds&quot;)</code></pre>
+<pre class="r"><code># model &lt;- readRDS(&quot;~/synth_control_results.rds&quot;)</code></pre>
 </div>
 </div>
 <div id="plotting-and-model-diagnostics" class="section level2">

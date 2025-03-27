@@ -29,27 +29,22 @@ pacman::p_load(
   drat # need this package to do the special install below
 )
 
-# Install and load the tidysynth & hurricaneexposure packages and dependencies
-# we do this separately because we are specifying a specific version of the packages. 
-pacman::p_install_version("LowRankQP", version = "1.0.5")
-pacman::p_install_version("Synth", version = "1.1-6")
-pacman::p_load(LowRankQP, Synth)
+# Load packages that have to be pulled directly from github
+# We will install and load the tidysynth & hurricaneexposure packages and dependencies
+# also need to load hurricaneexposuredata in a specific way
 pacman::p_load_gh("edunford/tidysynth")
 pacman::p_load_gh("geanders/hurricaneexposure")
-
-# need to do a special install for this one since it is not maintained on CRAN
 addRepo("geanders")
 pacman::p_load("hurricaneexposuredata")
 
 # Let's use conflict prefer again to make sure that we use these functions
 # from the right package. We'll leave the instances of `hurricaneexposure::` 
 # since this package is new to you and we want you to see which functions come 
-# from it. 
+# from it.
 conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::select)
 conflicts_prefer(dplyr::mutate)
 conflicts_prefer(dplyr::left_join)
-
 
 #############################################################################
 ## Part II. Load and clean data 
