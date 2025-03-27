@@ -1,6 +1,6 @@
 ---
 title: "ENV H 570: Lab 1"
-author: Joan A. Casey
+author: Joan A. Casey, with updates from Lauren B. Wilner and Brian High
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     html_document:
